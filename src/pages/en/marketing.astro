@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import MarketingHero from '../../components/marketing/MarketingHero.astro';
+import MarketingDemoSpotlight from '../../components/marketing/MarketingDemoSpotlight.astro';
+import MarketingPillars from '../../components/marketing/MarketingPillars.astro';
+import WorkflowSteps from '../../components/marketing/WorkflowSteps.astro';
+import Packages from '../../components/marketing/Packages.astro';
+import CredentialsSection from '../../components/sections/CredentialsSection.astro';
+import ContactSection from '../../components/sections/ContactSection.astro';
+---
+
+<BaseLayout 
+  locale="en" 
+  currentTrack="marketing"
+  title="Mohamed El-Qalshany — Marketing & Content Creation"
+  description="A full video marketing pipeline in one partner: direct-response copywriting, 4K cinema filming, native studio voiceover, and high-retention video editing."
+>
+  <!-- Marketing Hero -->
+  <MarketingHero locale="en" />
+
+  <!-- Featured Marketing Demo (Saad Zaghawa 2) -->
+  <MarketingDemoSpotlight locale="en" />
+
+  <!-- The 3 Pillars -->
+  <MarketingPillars locale="en" />
+
+  <!-- The 5-Step Methodology -->
+  <WorkflowSteps locale="en" />
+
+  <!-- Packages & Comparison Table -->
+  <Packages locale="en" />
+
+  <!-- Academic & Practical Credentials -->
+  <CredentialsSection locale="en" />
+
+  <!-- Direct Booking & Project Inquiry -->
+  <ContactSection locale="en" />
+</BaseLayout>

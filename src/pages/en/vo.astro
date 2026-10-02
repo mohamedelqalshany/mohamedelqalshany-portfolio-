@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../../components/layout/BaseLayout.astro';
+import VOHero from '../../components/vo/VOHero.astro';
+import MediaCatalog from '../../components/vo/MediaCatalog.astro';
+import WhyMohamed from '../../components/vo/WhyMohamed.astro';
+import CredentialsSection from '../../components/sections/CredentialsSection.astro';
+import ContactSection from '../../components/sections/ContactSection.astro';
+---
+
+<BaseLayout 
+  locale="en" 
+  currentTrack="vo"
+  title="Mohamed El-Qalshany — Voice Over Artist | Studio Reel"
+  description="Professional Arabic and English voice talent delivering nuanced performance across Commercials, Acting, Audiobooks, IVR, and Documentaries with studio acoustics."
+>
+  <!-- VO Hero with Master Showreel -->
+  <VOHero locale="en" />
+
+  <!-- Categorized Filterable Media Grid with Custom Speed & Wave Audio/Video Players -->
+  <MediaCatalog locale="en" />
+
+  <!-- Why Work with Mohamed VO -->
+  <WhyMohamed locale="en" />
+
+  <!-- Credentials & Training -->
+  <CredentialsSection locale="en" />
+
+  <!-- Direct Contact & Project Inquiry -->
+  <ContactSection locale="en" />
+</BaseLayout>

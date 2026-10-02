@@ -1,0 +1,203 @@
+---
+import { getT } from '../../lib/i18n.js';
+import VideoPlayer from '../media/VideoPlayer.astro';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const t = getT(locale);
+const isAr = locale === 'ar';
+---
+
+<section class="section section--demo" id="marketing-demo">
+  <div class="ambient-glow ambient-glow--terracotta" style="top: 10%; right: 15%;" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow--forest" style="bottom: 10%; left: 15%;" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        {isAr ? 'ديمو الإنتاج والتسويق المباشر' : 'Featured Marketing Demo'}
+      </p>
+      <h2 class="section-head__title">
+        {isAr ? 'نموذج عملي متكامل: إعلان سعد زغاوة 2' : 'Full Production Case: Saad Zaghawa 2'}
+      </h2>
+      <p class="section-head__lede">
+        {isAr 
+          ? 'شاهد كيف تتحول الاستراتيجية التسويقية إلى عمل مرئي وسينمائي متماسك من الفكرة والإسكريبت، إلى التصوير، والصوت، والمونتاج النهائي.' 
+          : 'Experience how direct-response strategy transmutes into a cohesive commercial film: from concept and script, to 4K filming, voiceover, and dynamic editing.'}
+      </p>
+    </div>
+
+    <!-- Spotlight Video Player Card -->
+    <div class="demo-spotlight-wrapper">
+      <div class="demo-spotlight-card">
+        <div class="demo-spotlight-header">
+          <div class="header-left">
+            <span class="demo-pulse" aria-hidden="true"></span>
+            <span class="demo-label">{isAr ? 'الديمو الرئيسي للتسويق والإنتاج' : 'Marketing & Production Master Demo'}</span>
+          </div>
+          <span class="badge badge--forest">4K Cinema · Full Cycle</span>
+        </div>
+
+        <VideoPlayer 
+          id="marketing-demo-saad-zaghawa"
+          src="/media/marketing_demo_saad_zaghawa.mp4"
+          title={isAr ? "إعلان سعد زغاوة 2 (Saad Zaghawa 2)" : "Saad Zaghawa 2 Commercial"}
+          category={isAr ? "ديمو تسويق وإنتاج متكامل" : "Full Marketing Demo"}
+          locale={locale}
+          isFeatured={true}
+        />
+
+        <div class="demo-deliverables-strip">
+          <div class="deliv-col">
+            <span class="deliv-icon">✍️</span>
+            <div>
+              <strong class="deliv-title">{isAr ? 'صياغة الإسكريبت والهوك' : 'Script & Hook'}</strong>
+              <p class="deliv-desc">{isAr ? 'كتابة إعلانية تجذب الانتباه' : 'Direct-response narrative'}</p>
+            </div>
+          </div>
+          <div class="deliv-col">
+            <span class="deliv-icon">🎥</span>
+            <div>
+              <strong class="deliv-title">{isAr ? 'تصوير سينمائي 4K' : '4K Cinema Filming'}</strong>
+              <p class="deliv-desc">{isAr ? 'إضاءة وزوايا إخراجية مدروسة' : 'Lighting & directing'}</p>
+            </div>
+          </div>
+          <div class="deliv-col">
+            <span class="deliv-icon">🎙️</span>
+            <div>
+              <strong class="deliv-title">{isAr ? 'تعليق صوتي استوديو' : 'Studio Voiceover'}</strong>
+              <p class="deliv-desc">{isAr ? 'نبرة إعلانية تخدم الهدف البيعي' : 'Nuanced commercial tone'}</p>
+            </div>
+          </div>
+          <div class="deliv-col">
+            <span class="deliv-icon">⚡</span>
+            <div>
+              <strong class="deliv-title">{isAr ? 'مونتاج وتصحيح ألوان' : 'Color Grade & Edit'}</strong>
+              <p class="deliv-desc">{isAr ? 'إخراج نهائي جاهز للنشر والإعلانات' : 'Ready for ad deployment'}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .section--demo {
+    position: relative;
+    overflow: hidden;
+    padding-block: 4rem 5rem;
+  }
+
+  .demo-spotlight-wrapper {
+    max-width: 920px;
+    margin-inline: auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  .demo-spotlight-card {
+    background-color: var(--surface);
+    border: 2px solid var(--rule-strong);
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-lg);
+  }
+
+  @media (min-width: 768px) {
+    .demo-spotlight-card {
+      padding: 2rem;
+    }
+  }
+
+  .demo-spotlight-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .demo-pulse {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 1.8s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+
+  .demo-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .demo-deliverables-strip {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  @media (min-width: 640px) {
+    .demo-deliverables-strip {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .demo-deliverables-strip {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+  }
+
+  .deliv-col {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background-color: var(--bg-soft);
+    padding: 0.85rem 1rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--rule);
+  }
+
+  .deliv-icon {
+    font-size: 1.35rem;
+    flex-shrink: 0;
+  }
+
+  .deliv-title {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--ink);
+    margin-bottom: 0.15rem;
+  }
+
+  .deliv-desc {
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    margin: 0;
+    line-height: 1.35;
+  }
+</style>

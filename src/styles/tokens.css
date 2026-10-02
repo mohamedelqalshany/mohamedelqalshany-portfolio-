@@ -1,0 +1,160 @@
+/* ============================================================================
+   DESIGN TOKENS — MOHAMED EL-QALSHANY
+   Palette: Earthy Warmth (Light & Dark Themes)
+   Strict adherence to prompt hex codes & WCAG 2.2 AA Contrast Compliance
+   ========================================================================== */
+
+:root {
+  /* --- Brand Core Palette (Light Theme R2) --- */
+  --brand-primary:        #1E3A2B; /* Dark Forest Green */
+  --brand-accent:         #E07A5F; /* Warm Terracotta */
+  --brand-secondary:      #F4A261; /* Soft Mustard */
+  --brand-bg-raw:         #FAEDCD; /* Warm Oat */
+  --brand-text-raw:       #1C1C1E; /* Dark Charcoal Gray */
+  --brand-link:           #2A9D8F; /* Deep Teal (Borders, chips, badges) */
+  --color-link:           #2A9D8F; /* Deep Teal decorative token */
+  --link-text:            #1D7368; /* AA Compliant inline text link (4.88:1 on #FAEDCD) */
+
+  /* --- Light Mode Semantic Surfaces --- */
+  --bg:                   #FAEDCD; /* Warm Oat base canvas */
+  --bg-soft:              #F4E4BD; /* Slightly deeper oat */
+  --bg-alt:               #EFE0B4;
+  --surface:              #FFFDF6; /* Elevated pristine warm cream card */
+  --surface-raised:       #FFFFFF;
+  --surface-sunk:         #F3E3BC;
+  --surface-trans:        rgba(250, 237, 205, 0.88);
+
+  /* --- Text / Ink --- */
+  --ink:                  #1C1C1E; /* Primary dark charcoal (14.63:1 AAA on #FAEDCD) */
+  --ink-secondary:        #38383B;
+  --ink-muted:            #5E615F;
+  --ink-faint:            #858885;
+  --ink-inverted:         #FAF3E0;
+
+  /* --- Accent & Interactive --- */
+  --accent:               var(--brand-accent);    /* #E07A5F Terracotta */
+  --accent-hover:         #D4664A;
+  --accent-faint:         rgba(224, 122, 95, 0.12);
+  --on-accent:            #FFFFFF;
+
+  --secondary:            var(--brand-secondary); /* #F4A261 Mustard */
+  --secondary-hover:      #E7924F;
+  --secondary-faint:      rgba(244, 162, 97, 0.15);
+  --on-secondary:         #1C1C1E; /* Dark ink on mustard ensures 8.25:1 AAA contrast */
+
+  --primary-forest:       var(--brand-primary);   /* #1E3A2B */
+  --primary-forest-hover: #162C21;
+  --on-primary:           #FAEDCD;
+
+  --link:                 var(--link-text);       /* #1D7368 (AA Compliant text link) */
+  --link-hover:           #15534B;
+
+  /* --- Rules & Borders --- */
+  --rule:                 rgba(30, 58, 43, 0.12);
+  --rule-strong:          rgba(30, 58, 43, 0.24);
+  --rule-accent:          rgba(224, 122, 95, 0.35);
+
+  /* --- Shadows & Glows --- */
+  --shadow-sm:            0 1px 3px rgba(30, 58, 43, 0.05), 0 1px 2px rgba(30, 58, 43, 0.08);
+  --shadow-md:            0 4px 14px rgba(30, 58, 43, 0.08), 0 2px 6px rgba(30, 58, 43, 0.04);
+  --shadow-lg:            0 12px 28px rgba(30, 58, 43, 0.12), 0 4px 10px rgba(30, 58, 43, 0.06);
+  --shadow-glow:          0 0 24px rgba(224, 122, 95, 0.25);
+
+  /* --- Typography --- */
+  --font-primary:         'Readex Pro Variable', 'Readex Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-artistic:        'Aref Ruqaa', 'Readex Pro', serif;
+
+  /* Typography Scales */
+  --font-size-hero:       clamp(2rem, 5vw, 2.75rem);
+  --font-size-h1:         clamp(1.75rem, 4vw, 2.625rem);
+  --font-size-h2:         clamp(1.35rem, 2.5vw, 1.625rem);
+  --font-size-h3:         1.25rem;
+  --font-size-body:       1rem;
+  --font-size-sm:         0.875rem;
+  --font-size-xs:         0.75rem;
+
+  --leading-tight:        1.2;
+  --leading-snug:         1.35;
+  --leading-normal:       1.6;
+  --leading-relaxed:      1.75;
+
+  /* --- Geometry --- */
+  --radius-xs:            4px;
+  --radius-sm:            8px;
+  --radius-md:            12px;
+  --radius-lg:            18px;
+  --radius-xl:            26px;
+  --radius-pill:          9999px;
+
+  /* --- Transitions --- */
+  --transition-fast:      150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-base:      250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:      400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ============================================================================
+   DARK MODE — DEEP FOREST & OBSIDIAN NOIR (Prompt R2 Exact Specifications)
+   Canvas:       #0E1912
+   Surface:      #16261C
+   Card:         #1C2E23
+   Primary Text: #FAF3E0
+   Accent:       #E07A5F
+   Mustard:      #F4A261
+   Link:         #52B788
+   ========================================================================== */
+html[data-theme='dark'] {
+  /* --- Brand Core Palette In Dark Mode --- */
+  --brand-primary:        #1E3A2B;
+  --brand-accent:         #E07A5F; /* Warm Terracotta */
+  --brand-secondary:      #F4A261; /* Soft Mustard */
+  --brand-bg-raw:         #0E1912; /* Deep Forest Canvas */
+  --brand-text-raw:       #FAF3E0; /* Warm Oat Cream */
+  --brand-link:           #52B788; /* Luminous Mint Teal Link */
+  --color-link:           #52B788;
+  --link-text:            #52B788; /* High-contrast accessible link (7.28:1 AAA on #0E1912) */
+
+  /* --- Dark Mode Semantic Surfaces --- */
+  --bg:                   #0E1912; /* Background Canvas */
+  --bg-soft:              #16261C; /* Background Surface */
+  --bg-alt:               #19291F;
+  --surface:              #1C2E23; /* Card Surface */
+  --surface-raised:       #243A2D;
+  --surface-sunk:         #0A130E;
+  --surface-trans:        rgba(22, 38, 28, 0.88);
+
+  /* --- Text / Ink --- */
+  --ink:                  #FAF3E0; /* Primary Text (16.26:1 AAA on #0E1912) */
+  --ink-secondary:        #D8D0C2;
+  --ink-muted:            #9FA89F;
+  --ink-faint:            #6A756D;
+  --ink-inverted:         #1C1C1E;
+
+  /* --- Accent & Interactive --- */
+  --accent:               #E07A5F; /* Accent: Warm Terracotta (6.10:1 AA on #0E1912) */
+  --accent-hover:         #EB8A70;
+  --accent-faint:         rgba(224, 122, 95, 0.2);
+  --on-accent:            #FFFFFF;
+
+  --secondary:            #F4A261; /* Mustard / Secondary: Soft Mustard (8.73:1 AAA on #0E1912) */
+  --secondary-hover:      #F7B37C;
+  --secondary-faint:      rgba(244, 162, 97, 0.2);
+  --on-secondary:         #0E1912;
+
+  --primary-forest:       #2D5A43; /* Luminous forest */
+  --primary-forest-hover: #376D52;
+  --on-primary:           #FAF3E0;
+
+  --link:                 #52B788; /* Link Color: Luminous Mint Teal (7.28:1 AAA on canvas, 5.80:1 AA on card) */
+  --link-hover:           #74C69D;
+
+  /* --- Rules & Borders --- */
+  --rule:                 rgba(250, 243, 224, 0.1);
+  --rule-strong:          rgba(250, 243, 224, 0.2);
+  --rule-accent:          rgba(224, 122, 95, 0.4);
+
+  /* --- Shadows & Glows --- */
+  --shadow-sm:            0 1px 3px rgba(0, 0, 0, 0.35);
+  --shadow-md:            0 6px 18px rgba(0, 0, 0, 0.45);
+  --shadow-lg:            0 16px 36px rgba(0, 0, 0, 0.6);
+  --shadow-glow:          0 0 32px rgba(224, 122, 95, 0.3);
+}

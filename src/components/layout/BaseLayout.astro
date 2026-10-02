@@ -1,0 +1,14 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  locale?: 'ar' | 'en';
+  currentTrack?: 'gateway' | 'vo' | 'marketing';
+}
+---
+
+<BaseLayout {...Astro.props}>
+  <slot />
+</BaseLayout>

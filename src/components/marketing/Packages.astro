@@ -1,0 +1,296 @@
+---
+import { getT } from '../../lib/i18n.js';
+import mktData from '../../data/marketing.json';
+import siteData from '../../data/site.json';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const t = getT(locale);
+const isAr = locale === 'ar';
+---
+
+<section class="section section--soft" id="packages">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        {isAr ? 'الباقات ونماذج التعاون' : 'Packages & Collaboration'}
+      </p>
+      <h2 class="section-head__title">
+        {isAr ? 'باقات إنتاج واضحة ومحددة النتائج' : 'Defined Deliverables & Clear Timelines'}
+      </h2>
+      <p class="section-head__lede">
+        {isAr 
+          ? 'بدون وعود وهمية أو تكاليف مبهمة. حلول عملية تمنح علامتك التجارية محتوى احترافي جاهز للتحويل والمبيعات.' 
+          : 'Zero vague promises. Practical production sprints built to drive measurable revenue for your brand.'}
+      </p>
+    </div>
+
+    <!-- 3 Pricing/Package Cards -->
+    <div class="packages-grid">
+      {mktData.packages.map((pkg, idx) => (
+        <div class:list={['card', 'pkg-card', { 'pkg-card--featured': idx === 0 }]}>
+          <div class="pkg-card__head">
+            <span class="badge badge--forest">{isAr ? pkg.badgeAr : pkg.badgeEn}</span>
+            <h3 class="pkg-card__title">{isAr ? pkg.titleAr : pkg.titleEn}</h3>
+            <p class="pkg-card__tagline">{isAr ? pkg.taglineAr : pkg.taglineEn}</p>
+          </div>
+
+          <div class="pkg-card__deliverables">
+            <span class="deliv-heading">{isAr ? 'ما تتضمنه الباقة:' : 'What is Included:'}</span>
+            <ul class="deliv-list">
+              {(isAr ? pkg.deliverablesAr : pkg.deliverablesEn).map(item => (
+                <li>
+                  <span class="check-icon" aria-hidden="true">✓</span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="pkg-card__meta">
+            <div class="meta-item">
+              <span class="meta-label">{isAr ? 'مدة التنفيذ' : 'Timeline'}</span>
+              <span class="meta-val font-artistic">{isAr ? pkg.timelineAr : pkg.timelineEn}</span>
+            </div>
+          </div>
+
+          <div class="pkg-card__footer">
+            <a 
+              href={`${siteData.whatsappUrl}&text=${encodeURIComponent(isAr ? `مرحباً أستاذ محمد، أود الاستفسار عن ${pkg.titleAr}` : `Hello Mohamed, I am inquiring about ${pkg.titleEn}`)}`} 
+              target="_blank" 
+              rel="noopener noreferrer"
+              class:list={['btn', idx === 0 ? 'btn--primary' : 'btn--secondary', 'w-full']}
+            >
+              <span>{isAr ? pkg.actionTextAr : pkg.actionTextEn}</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Comparison Table: One-Man Crew vs Traditional Agency -->
+    <div class="comparison-section">
+      <div class="comparison-head">
+        <h3 class="comparison-title">
+          {isAr ? 'لماذا تختار أسلوب الـ (One-Man Crew) مقارنة بالوكالات التقليدية؟' : 'Why Choose the One-Man Crew Model over Traditional Agencies?'}
+        </h3>
+        <p class="comparison-sub">
+          {isAr 
+            ? 'مقارنة شفافة توضح فارق السرعة والتكلفة وجودة المخرج النهائي.' 
+            : 'A transparent comparison highlighting speed, cost-efficiency, and creative unity.'}
+        </p>
+      </div>
+
+      <div class="table-container">
+        <table class="comparison-table">
+          <thead>
+            <tr>
+              <th>{isAr ? 'وجه المقارنة' : 'Evaluation Aspect'}</th>
+              <th class="col-traditional">{isAr ? 'الوكالة التقليدية (Agency)' : 'Traditional Agency'}</th>
+              <th class="col-qalshany">{isAr ? 'محمد القلشاني (One-Man Crew) ★' : 'Mohamed El-Qalshany (One-Man Crew) ★'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {mktData.comparison.map(row => (
+              <tr>
+                <td class="cell-aspect">
+                  <strong>{isAr ? row.aspectAr : row.aspectEn}</strong>
+                </td>
+                <td class="cell-traditional">
+                  {isAr ? row.traditionalAr : row.traditionalEn}
+                </td>
+                <td class="cell-qalshany">
+                  <span>{isAr ? row.qalshanyAr : row.qalshanyEn}</span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .packages-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 5rem;
+  }
+
+  @media (min-width: 992px) {
+    .packages-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .pkg-card {
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    border-radius: var(--radius-xl);
+    position: relative;
+  }
+
+  .pkg-card--featured {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md), 0 0 20px var(--accent-faint);
+  }
+
+  .pkg-card__head {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .pkg-card__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+
+  .pkg-card__tagline {
+    font-size: 0.92rem;
+    color: var(--ink-secondary);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .pkg-card__deliverables {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    margin-bottom: 2rem;
+  }
+
+  .deliv-heading {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .deliv-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+
+  .deliv-list li {
+    font-size: 0.88rem;
+    color: var(--ink-secondary);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    line-height: 1.5;
+  }
+
+  .check-icon {
+    color: var(--brand-link);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .pkg-card__meta {
+    margin-bottom: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .meta-label {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+  }
+
+  .meta-val {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .w-full {
+    width: 100%;
+  }
+
+  /* Comparison Section */
+  .comparison-section {
+    background-color: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-xl);
+    padding: 3rem 2rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .comparison-head {
+    text-align: center;
+    max-width: 680px;
+    margin-inline: auto;
+    margin-bottom: 2.5rem;
+  }
+
+  .comparison-title {
+    font-size: 1.45rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .comparison-sub {
+    font-size: 0.95rem;
+    color: var(--ink-secondary);
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+
+  .comparison-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.92rem;
+  }
+
+  .comparison-table th,
+  .comparison-table td {
+    padding: 1.15rem 1.25rem;
+    border-bottom: 1px solid var(--rule);
+    text-align: right;
+  }
+
+  :global([dir="ltr"]) .comparison-table th,
+  :global([dir="ltr"]) .comparison-table td {
+    text-align: left;
+  }
+
+  .comparison-table th {
+    background-color: var(--bg-soft);
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .col-qalshany {
+    background-color: var(--accent-faint) !important;
+    color: var(--accent) !important;
+  }
+
+  .cell-qalshany {
+    background-color: var(--accent-faint);
+    font-weight: 600;
+    color: var(--ink);
+  }
+</style>

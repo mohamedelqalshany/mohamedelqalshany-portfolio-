@@ -1,0 +1,10 @@
+---
+import Header from '../layout/Header.astro';
+
+interface Props {
+  locale?: 'ar' | 'en';
+  currentTrack?: 'gateway' | 'vo' | 'marketing';
+}
+---
+
+<Header {...Astro.props} />

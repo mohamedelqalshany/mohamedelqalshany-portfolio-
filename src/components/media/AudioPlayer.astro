@@ -1,0 +1,505 @@
+---
+interface Props {
+  id: string;
+  src: string;
+  title: string;
+  category: string;
+  locale?: 'ar' | 'en';
+}
+
+const { id, src, title, category, locale = 'ar' } = Astro.props;
+const isAr = locale === 'ar';
+---
+
+<div class="media-card media-card--audio" data-audio-player data-sample-id={id}>
+  <!-- Top 16:9 Audio Stage (Aligned with VideoPlayer) -->
+  <div class="media-stage audio-stage">
+    <audio class="audio-element" src={src} preload="metadata"></audio>
+
+    <!-- Sleek Acoustic Soundwave Graphic Background -->
+    <div class="audio-ambient-stage" aria-hidden="true">
+      <div class="acoustic-circle"></div>
+      <div class="visualizer-bars">
+        <span class="v-bar bar-1"></span>
+        <span class="v-bar bar-2"></span>
+        <span class="v-bar bar-3"></span>
+        <span class="v-bar bar-4"></span>
+        <span class="v-bar bar-5"></span>
+        <span class="v-bar bar-6"></span>
+        <span class="v-bar bar-7"></span>
+        <span class="v-bar bar-8"></span>
+        <span class="v-bar bar-9"></span>
+      </div>
+    </div>
+
+    <!-- Center Play/Pause Button (Matching VideoPlayer Center Button) -->
+    <button class="stage-center-play" type="button" data-play-btn aria-label={isAr ? "تشغيل المقطع الصوتي" : "Play audio track"}>
+      <svg class="center-icon-play" viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
+        <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      </svg>
+      <svg class="center-icon-pause" viewBox="0 0 24 24" width="32" height="32" fill="currentColor" style="display: none;">
+        <rect x="6" y="4" width="4" height="16"></rect>
+        <rect x="14" y="4" width="4" height="16"></rect>
+      </svg>
+    </button>
+
+    <!-- Overlay Controls Bar -->
+    <div class="media-controls-bar">
+      <!-- Progress Track -->
+      <div class="media-progress-track" data-scrubber>
+        <div class="media-progress-fill" data-fill style="width: 0%;"></div>
+      </div>
+
+      <div class="media-controls-row">
+        <div class="media-left-controls">
+          <!-- Mini Play/Pause -->
+          <button class="m-btn m-play-mini" type="button" data-mini-play-btn aria-label={isAr ? "تشغيل / إيقاف" : "Play/Pause"}>
+            <svg class="m-icon-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+            <svg class="m-icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="display: none;">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+          </button>
+
+          <!-- Time Display -->
+          <div class="m-time-display">
+            <span data-time-current>0:00</span> / <span data-time-duration>--:--</span>
+          </div>
+        </div>
+
+        <div class="media-right-controls">
+          <!-- Speed Control -->
+          <button class="m-btn m-speed-btn" type="button" data-speed-btn aria-label={isAr ? "سرعة التشغيل" : "Playback speed"}>
+            <span data-speed-val>1.0x</span>
+          </button>
+
+          <!-- Mute / Unmute -->
+          <button class="m-btn m-mute-btn" type="button" data-mute-btn aria-label={isAr ? "كتم / تشغيل الصوت" : "Mute/Unmute"}>
+            <svg class="icon-volume" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+            </svg>
+            <svg class="icon-muted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+              <line x1="1" y1="1" x2="23" y2="23"></line>
+              <path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"></path>
+              <path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Meta Section (Identical Geometry to VideoPlayer) -->
+  <div class="media-card__meta">
+    <div class="media-tag-row">
+      <span class="media-badge">{category}</span>
+      <span class="badge badge--forest">{isAr ? "تسجيل استوديو 🎧" : "Studio Audio 🎧"}</span>
+    </div>
+    <h4 class="media-title">{title}</h4>
+  </div>
+</div>
+
+<style>
+  .media-card {
+    background-color: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .media-card:hover {
+    border-color: var(--rule-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .media-card.is-playing {
+    border-color: var(--accent);
+    box-shadow: var(--shadow-md), 0 0 20px var(--accent-faint);
+  }
+
+  /* 16:9 Audio Stage */
+  .media-stage {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: radial-gradient(circle at center, #14281E 0%, #08120C 100%);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .audio-ambient-stage {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .acoustic-circle {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 1px solid rgba(224, 122, 95, 0.25);
+    background: radial-gradient(circle, rgba(244, 162, 97, 0.08) 0%, transparent 70%);
+    transition: transform 0.3s ease;
+  }
+
+  .media-card.is-playing .acoustic-circle {
+    animation: acousticPulse 2s infinite ease-in-out;
+  }
+
+  @keyframes acousticPulse {
+    0% { transform: scale(0.9); opacity: 0.4; }
+    50% { transform: scale(1.15); opacity: 0.8; }
+    100% { transform: scale(0.9); opacity: 0.4; }
+  }
+
+  /* Visualizer Bars */
+  .visualizer-bars {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 40px;
+    z-index: 1;
+    opacity: 0.6;
+  }
+
+  .media-card.is-playing .visualizer-bars {
+    opacity: 0.95;
+  }
+
+  .v-bar {
+    width: 4px;
+    background-color: var(--accent);
+    border-radius: 2px;
+    height: 6px;
+    transition: height 0.15s ease;
+  }
+
+  .media-card.is-playing .bar-1 { animation: vWave1 0.7s infinite alternate ease-in-out; }
+  .media-card.is-playing .bar-2 { animation: vWave2 1.1s infinite alternate 0.1s ease-in-out; }
+  .media-card.is-playing .bar-3 { animation: vWave3 0.8s infinite alternate 0.2s ease-in-out; }
+  .media-card.is-playing .bar-4 { animation: vWave4 1.2s infinite alternate 0.05s ease-in-out; }
+  .media-card.is-playing .bar-5 { animation: vWave5 0.9s infinite alternate 0.15s ease-in-out; }
+  .media-card.is-playing .bar-6 { animation: vWave4 1.1s infinite alternate 0.25s ease-in-out; }
+  .media-card.is-playing .bar-7 { animation: vWave3 0.8s infinite alternate 0.1s ease-in-out; }
+  .media-card.is-playing .bar-8 { animation: vWave2 1.0s infinite alternate 0.3s ease-in-out; }
+  .media-card.is-playing .bar-9 { animation: vWave1 0.7s infinite alternate 0.15s ease-in-out; }
+
+  @keyframes vWave1 { 0% { height: 6px; } 100% { height: 18px; } }
+  @keyframes vWave2 { 0% { height: 8px; } 100% { height: 30px; } }
+  @keyframes vWave3 { 0% { height: 10px; } 100% { height: 42px; } }
+  @keyframes vWave4 { 0% { height: 12px; } 100% { height: 50px; } }
+  @keyframes vWave5 { 0% { height: 14px; } 100% { height: 56px; } }
+
+  /* Center Play Button */
+  .stage-center-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: rgba(224, 122, 95, 0.95);
+    color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+    transition: transform var(--transition-fast), background-color var(--transition-fast), box-shadow var(--transition-fast);
+    z-index: 10;
+  }
+
+  .media-card:hover .stage-center-play {
+    transform: translate(-50%, -50%) scale(1.08);
+    background-color: var(--accent);
+    box-shadow: 0 6px 24px var(--accent-faint), 0 0 16px rgba(224, 122, 95, 0.5);
+  }
+
+  .stage-center-play:hover {
+    transform: translate(-50%, -50%) scale(1.15) !important;
+    background-color: var(--accent);
+  }
+
+  /* Controls Bar */
+  .media-controls-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 70%, transparent 100%);
+    padding: 0.75rem 1rem 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    z-index: 15;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .media-stage:hover .media-controls-bar,
+  .media-card.is-playing .media-controls-bar {
+    opacity: 1;
+  }
+
+  .media-progress-track {
+    width: 100%;
+    height: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .media-progress-fill {
+    height: 100%;
+    background-color: var(--accent);
+    border-radius: 3px;
+    transition: width 0.1s linear;
+  }
+
+  .media-controls-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #fff;
+  }
+
+  .media-left-controls, .media-right-controls {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .m-btn {
+    background: transparent;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.2rem;
+    border-radius: var(--radius-xs);
+    transition: color var(--transition-fast);
+  }
+
+  .m-btn:hover {
+    color: var(--accent);
+  }
+
+  .m-time-display {
+    font-size: 0.75rem;
+    font-variant-numeric: tabular-nums;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .m-speed-btn {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .m-speed-btn:hover {
+    background-color: var(--accent);
+    color: #fff;
+  }
+
+  /* Bottom Metadata (Identical to VideoPlayer) */
+  .media-card__meta {
+    padding: 1.15rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    flex: 1;
+  }
+
+  .media-tag-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .media-badge {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--brand-primary);
+    background-color: rgba(30, 58, 43, 0.1);
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-pill);
+  }
+
+  html[data-theme='dark'] .media-badge {
+    color: var(--secondary);
+    background-color: rgba(244, 162, 97, 0.15);
+  }
+
+  .media-title {
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1.35;
+  }
+</style>
+
+<script>
+  function setupAudioPlayers() {
+    const players = document.querySelectorAll('[data-audio-player]');
+    
+    function pauseAllOtherMedia(currentAudio: HTMLAudioElement) {
+      document.querySelectorAll('audio, video').forEach(media => {
+        if (media !== currentAudio && !media.paused) {
+          media.pause();
+        }
+      });
+      players.forEach(p => {
+        const audio = p.querySelector('audio');
+        if (audio !== currentAudio) {
+          p.classList.remove('is-playing');
+          const cPlay = p.querySelector('.center-icon-play') as HTMLElement;
+          const cPause = p.querySelector('.center-icon-pause') as HTMLElement;
+          const mPlay = p.querySelector('.m-icon-play') as HTMLElement;
+          const mPause = p.querySelector('.m-icon-pause') as HTMLElement;
+          if (cPlay && cPause) { cPlay.style.display = 'block'; cPause.style.display = 'none'; }
+          if (mPlay && mPause) { mPlay.style.display = 'block'; mPause.style.display = 'none'; }
+        }
+      });
+    }
+
+    players.forEach(player => {
+      const audio = player.querySelector('.audio-element') as HTMLAudioElement;
+      const centerBtn = player.querySelector('[data-play-btn]') as HTMLButtonElement;
+      const miniPlayBtn = player.querySelector('[data-mini-play-btn]') as HTMLButtonElement;
+      const centerPlayIcon = player.querySelector('.center-icon-play') as HTMLElement;
+      const centerPauseIcon = player.querySelector('.center-icon-pause') as HTMLElement;
+      const miniPlayIcon = player.querySelector('.m-icon-play') as HTMLElement;
+      const miniPauseIcon = player.querySelector('.m-icon-pause') as HTMLElement;
+      const scrubber = player.querySelector('[data-scrubber]') as HTMLElement;
+      const fill = player.querySelector('[data-fill]') as HTMLElement;
+      const timeCurrent = player.querySelector('[data-time-current]') as HTMLElement;
+      const timeDuration = player.querySelector('[data-time-duration]') as HTMLElement;
+      const speedBtn = player.querySelector('[data-speed-btn]') as HTMLButtonElement;
+      const speedVal = player.querySelector('[data-speed-val]') as HTMLElement;
+      const muteBtn = player.querySelector('[data-mute-btn]') as HTMLButtonElement;
+      const volIcon = player.querySelector('.icon-volume') as HTMLElement;
+      const mutedIcon = player.querySelector('.icon-muted') as HTMLElement;
+
+      if (!audio) return;
+
+      const speeds = [1.0, 1.25, 1.5, 2.0, 0.75];
+      let speedIdx = 0;
+
+      function formatTime(seconds: number) {
+        if (isNaN(seconds)) return '0:00';
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+      }
+
+      function updatePlayState(isPlaying: boolean) {
+        if (isPlaying) {
+          player.classList.add('is-playing');
+          if (centerPlayIcon) centerPlayIcon.style.display = 'none';
+          if (centerPauseIcon) centerPauseIcon.style.display = 'block';
+          if (miniPlayIcon) miniPlayIcon.style.display = 'none';
+          if (miniPauseIcon) miniPauseIcon.style.display = 'block';
+        } else {
+          player.classList.remove('is-playing');
+          if (centerPlayIcon) centerPlayIcon.style.display = 'block';
+          if (centerPauseIcon) centerPauseIcon.style.display = 'none';
+          if (miniPlayIcon) miniPlayIcon.style.display = 'block';
+          if (miniPauseIcon) miniPauseIcon.style.display = 'none';
+        }
+      }
+
+      function togglePlay() {
+        if (audio.paused) {
+          pauseAllOtherMedia(audio);
+          audio.play();
+          updatePlayState(true);
+        } else {
+          audio.pause();
+          updatePlayState(false);
+        }
+      }
+
+      if (centerBtn) centerBtn.addEventListener('click', togglePlay);
+      if (miniPlayBtn) miniPlayBtn.addEventListener('click', togglePlay);
+
+      audio.addEventListener('loadedmetadata', () => {
+        if (timeDuration) timeDuration.textContent = formatTime(audio.duration);
+      });
+
+      audio.addEventListener('timeupdate', () => {
+        if (audio.duration) {
+          const pct = (audio.currentTime / audio.duration) * 100;
+          if (fill) fill.style.width = `${pct}%`;
+          if (timeCurrent) timeCurrent.textContent = formatTime(audio.currentTime);
+        }
+      });
+
+      audio.addEventListener('ended', () => {
+        updatePlayState(false);
+        if (fill) fill.style.width = '0%';
+        if (timeCurrent) timeCurrent.textContent = '0:00';
+      });
+
+      // Seeking
+      if (scrubber) {
+        scrubber.addEventListener('click', (e) => {
+          const rect = scrubber.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          const pct = Math.max(0, Math.min(1, clickX / rect.width));
+          if (audio.duration) {
+            audio.currentTime = pct * audio.duration;
+          }
+        });
+      }
+
+      // Speed control
+      if (speedBtn && speedVal) {
+        speedBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          speedIdx = (speedIdx + 1) % speeds.length;
+          const s = speeds[speedIdx];
+          audio.playbackRate = s;
+          speedVal.textContent = `${s.toFixed(s === 1 ? 1 : 2)}x`;
+        });
+      }
+
+      // Mute toggle
+      if (muteBtn && volIcon && mutedIcon) {
+        muteBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          audio.muted = !audio.muted;
+          if (audio.muted) {
+            volIcon.style.display = 'none';
+            mutedIcon.style.display = 'block';
+          } else {
+            volIcon.style.display = 'block';
+            mutedIcon.style.display = 'none';
+          }
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupAudioPlayers);
+</script>

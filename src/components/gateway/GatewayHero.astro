@@ -1,0 +1,599 @@
+---
+import { getT } from '../../lib/i18n.js';
+import siteData from '../../data/site.json';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const t = getT(locale);
+const isAr = locale === 'ar';
+const poemLines = isAr ? siteData.introPoemAr : siteData.introPoemEn;
+
+const voHref = isAr ? '/vo' : '/en/vo';
+const mktHref = isAr ? '/marketing' : '/en/marketing';
+---
+
+<section class="gateway-stop-page">
+  <div class="container gateway-container">
+    <!-- Top Area: The Intro Scroll -->
+    <div class="intro-scroll-card">
+      <div class="intro-scroll-header">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        <span class="intro-scroll-tag">{t.gatewayEyebrow}</span>
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+      </div>
+
+      <div class="intro-scroll-viewport">
+        <blockquote class="intro-poem font-artistic">
+          {poemLines.map((line, idx) => (
+            <span class:list={['poem-segment', { 'poem-segment--punch': idx === 8, 'poem-segment--final': idx === 9 }]}>
+              {line}
+              {idx < poemLines.length - 1 ? ' · ' : ''}
+            </span>
+          ))}
+        </blockquote>
+      </div>
+
+      <!-- Breathing Sound Resonance Waveform -->
+      <div class="intro-soundwave-wrap" aria-hidden="true">
+        <svg class="intro-soundwave-svg" viewBox="0 0 240 16" fill="none">
+          <path class="wave-path" d="M0 8 Q30 0, 60 8 T120 8 T180 8 T240 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path>
+        </svg>
+      </div>
+
+      <div class="intro-author">
+        <img 
+          src="/images/mohamed-el-qalshany.png" 
+          alt={isAr ? siteData.nameAr : siteData.nameEn} 
+          class="intro-author-avatar"
+          width="24"
+          height="24"
+          loading="eager"
+        />
+        <span class="author-label">— {isAr ? siteData.nameAr : siteData.nameEn}</span>
+      </div>
+    </div>
+
+    <!-- Center/Bottom Area: The Two Sections in the Exact Same Light -->
+    <div class="two-sections-grid">
+      <!-- Section 1: Voice Over -->
+      <a href={voHref} class="section-card section-card--vo">
+        <div class="card-lighting-halo" aria-hidden="true"></div>
+        <div class="card-top-row">
+          <div class="icon-wrap icon-wrap--vo">
+            <span class="section-icon">🎙️</span>
+            <!-- Live Studio Audio Equalizer -->
+            <div class="mini-eq-bars" aria-hidden="true">
+              <span class="eq-bar bar-1"></span>
+              <span class="eq-bar bar-2"></span>
+              <span class="eq-bar bar-3"></span>
+              <span class="eq-bar bar-4"></span>
+            </div>
+          </div>
+          <div class="card-badges-row">
+            <span class="badge badge--forest">{isAr ? 'التعليق الصوتي' : 'Voice Over'}</span>
+            <span class="live-signal-badge">
+              <span class="signal-dot"></span>
+              <span>{isAr ? 'استوديو احترافي معزول' : 'Acoustically Isolated'}</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <h2 class="section-title">{t.gatewayCardVOTitle}</h2>
+          <span class="section-sub">{t.gatewayCardVOSubtitle}</span>
+          <p class="section-desc">{t.gatewayCardVODesc}</p>
+        </div>
+
+        <div class="card-action">
+          <span class="action-text">{t.gatewayCardVOAction}</span>
+          <span class="action-arrow" aria-hidden="true">{isAr ? '←' : '→'}</span>
+        </div>
+      </a>
+
+      <!-- Section 2: Marketing -->
+      <a href={mktHref} class="section-card section-card--marketing">
+        <div class="card-lighting-halo" aria-hidden="true"></div>
+        <div class="card-top-row">
+          <div class="icon-wrap icon-wrap--marketing">
+            <span class="section-icon clapper-icon">🎬</span>
+            <!-- Live Cinema REC Badge -->
+            <div class="mini-rec-signal" aria-hidden="true">
+              <span class="rec-blink-dot"></span>
+              <span class="rec-code">4K</span>
+            </div>
+          </div>
+          <div class="card-badges-row">
+            <span class="badge badge--secondary">{isAr ? 'التسويق وصناعة الإعلانات' : 'Marketing & Production'}</span>
+            <span class="live-signal-badge live-signal-badge--mustard">
+              <span class="signal-dot signal-dot--mustard"></span>
+              <span>{isAr ? 'إنتاج إعلاني 4K' : '4K Video Production'}</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="card-content">
+          <h2 class="section-title">{t.gatewayCardMarketingTitle}</h2>
+          <span class="section-sub">{t.gatewayCardMarketingSubtitle}</span>
+          <p class="section-desc">{t.gatewayCardMarketingDesc}</p>
+        </div>
+
+        <div class="card-action">
+          <span class="action-text">{t.gatewayCardMarketingAction}</span>
+          <span class="action-arrow" aria-hidden="true">{isAr ? '←' : '→'}</span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Discreet Single-line Bottom Anchor -->
+    <footer class="gateway-footer-bar">
+      <span>{t.siteName} © 2026 · {isAr ? siteData.locationAr : siteData.locationEn}</span>
+    </footer>
+  </div>
+</section>
+
+<style>
+  /* Full Stop Page Container (Fits in 100vh without page scroll on desktop) */
+  .gateway-stop-page {
+    position: relative;
+    height: 100%;
+    min-height: calc(100vh - 72px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding-block: 1rem;
+  }
+
+  @media (min-width: 900px) {
+    .gateway-stop-page {
+      height: calc(100vh - 72px);
+      max-height: calc(100vh - 72px);
+      padding-block: 1.25rem;
+    }
+  }
+
+  .gateway-container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    max-width: 1080px;
+    gap: 1.25rem;
+  }
+
+  /* 1. Intro Scroll Card */
+  .intro-scroll-card {
+    background-color: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-lg);
+    padding: 1.25rem 1.75rem 1rem;
+    text-align: center;
+    box-shadow: var(--shadow-sm);
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .intro-scroll-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-bottom: 0.65rem;
+  }
+
+  .intro-scroll-tag {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+
+  .intro-scroll-viewport {
+    max-height: 110px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--accent) transparent;
+    padding-inline: 0.5rem;
+  }
+
+  .intro-scroll-viewport::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .intro-scroll-viewport::-webkit-scrollbar-thumb {
+    background-color: var(--accent);
+    border-radius: 4px;
+  }
+
+  .intro-poem {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: var(--ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  @media (min-width: 768px) {
+    .intro-poem {
+      font-size: 1.25rem;
+    }
+  }
+
+  .poem-segment {
+    display: inline;
+  }
+
+  .poem-segment--punch {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .poem-segment--final {
+    color: var(--brand-primary);
+    font-weight: 700;
+  }
+
+  html[data-theme='dark'] .poem-segment--final {
+    color: var(--secondary);
+  }
+
+  .intro-author {
+    margin-top: 0.4rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+  }
+
+  .intro-author-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    border: 1.5px solid var(--accent);
+    background: radial-gradient(circle at 50% 30%, var(--surface), var(--rule));
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+  }
+
+  .author-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+
+  /* 2. The Two Sections Grid (Equally Illuminated in the Same Light) */
+  .two-sections-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+    flex: 1;
+    align-items: stretch;
+  }
+
+  @media (min-width: 768px) {
+    .two-sections-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+
+    /* Lock spatial positions across languages: Marketing on Left, Voice Over on Right */
+    :global(html[lang='en']) .two-sections-grid .section-card--marketing {
+      order: 1;
+      grid-column: 1;
+    }
+    :global(html[lang='en']) .two-sections-grid .section-card--vo {
+      order: 2;
+      grid-column: 2;
+    }
+  }
+
+  .section-card {
+    position: relative;
+    background-color: var(--surface);
+    border: 2px solid var(--rule);
+    border-radius: var(--radius-xl);
+    padding: 1.75rem 2rem;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 1rem;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-base), border-color var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .section-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--accent);
+    box-shadow: var(--shadow-lg), var(--shadow-glow);
+  }
+
+  /* Internal illumination halo removed for pure, uniform card surface */
+  .card-lighting-halo {
+    display: none;
+  }
+
+  /* Breathing Sound Resonance Waveform */
+  .intro-soundwave-wrap {
+    display: flex;
+    justify-content: center;
+    margin-block: 0.35rem 0.2rem;
+    opacity: 0.45;
+  }
+
+  .intro-soundwave-svg {
+    width: 160px;
+    height: 12px;
+    color: var(--accent);
+  }
+
+  .wave-path {
+    stroke-dasharray: 120;
+    stroke-dashoffset: 0;
+    animation: soundwaveUndulate 6s linear infinite;
+  }
+
+  @keyframes soundwaveUndulate {
+    0% { stroke-dashoffset: 120; }
+    50% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: -120; }
+  }
+
+  .card-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .card-badges-row {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    flex-wrap: wrap;
+  }
+
+  /* Live Signal Badge */
+  .live-signal-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--link);
+    background-color: rgba(42, 157, 143, 0.12);
+    padding: 0.15rem 0.5rem;
+    border-radius: var(--radius-pill);
+    border: 1px solid rgba(42, 157, 143, 0.25);
+  }
+
+  .signal-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--link);
+    box-shadow: 0 0 6px var(--link);
+    animation: beaconPulse 1.8s infinite;
+  }
+
+  @keyframes beaconPulse {
+    0%, 100% { opacity: 0.4; transform: scale(0.85); }
+    50% { opacity: 1; transform: scale(1.2); }
+  }
+
+  .live-signal-badge--mustard {
+    color: var(--secondary);
+    background-color: rgba(244, 162, 97, 0.12);
+    border-color: rgba(244, 162, 97, 0.25);
+  }
+
+  .signal-dot--mustard {
+    background-color: var(--secondary);
+    box-shadow: 0 0 6px var(--secondary);
+  }
+
+  /* Icon Wrap with Dynamic Elements */
+  .icon-wrap {
+    min-width: 52px;
+    height: 48px;
+    padding-inline: 0.65rem;
+    border-radius: var(--radius-md);
+    background-color: var(--bg-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    border: 1px solid var(--rule);
+    transition: all var(--transition-fast);
+  }
+
+  .section-card:hover .icon-wrap {
+    border-color: var(--accent);
+    transform: scale(1.04);
+  }
+
+  /* Live Studio Audio Equalizer Bars */
+  .mini-eq-bars {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 14px;
+  }
+
+  .eq-bar {
+    width: 2.5px;
+    background-color: var(--accent);
+    border-radius: 1px;
+    animation: eqBounce 1.2s infinite ease-in-out;
+  }
+
+  .bar-1 { height: 6px; animation-delay: 0.1s; }
+  .bar-2 { height: 12px; animation-delay: 0.3s; }
+  .bar-3 { height: 8px; animation-delay: 0.2s; }
+  .bar-4 { height: 14px; animation-delay: 0.4s; }
+
+  @keyframes eqBounce {
+    0%, 100% { transform: scaleY(0.4); }
+    50% { transform: scaleY(1.1); }
+  }
+
+  .section-card--vo:hover .eq-bar {
+    animation-duration: 0.6s;
+    background-color: var(--secondary);
+  }
+
+  /* Live Cinema REC Badge */
+  .mini-rec-signal {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.62rem;
+    font-weight: 700;
+    font-family: monospace;
+    color: var(--accent);
+    background: rgba(224, 122, 95, 0.15);
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  .rec-blink-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: #e63946;
+    animation: recBlink 1.2s infinite;
+  }
+
+  @keyframes recBlink {
+    0%, 100% { opacity: 0.25; transform: scale(0.85); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  .clapper-icon {
+    display: inline-block;
+    transition: transform var(--transition-fast);
+  }
+
+  .section-card--marketing:hover .clapper-icon {
+    transform: rotate(-10deg) scale(1.1);
+  }
+
+  .section-icon {
+    font-size: 1.6rem;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .section-title {
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  .section-sub {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .section-desc {
+    font-size: 0.92rem;
+    color: var(--ink-secondary);
+    line-height: 1.6;
+    margin-top: 0.4rem;
+  }
+
+  .card-action {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .action-text {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .action-arrow {
+    font-size: 1.25rem;
+    color: var(--accent);
+    display: inline-block;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .section-card:hover .action-arrow {
+    transform: translateX(-7px);
+  }
+
+  :global([dir="ltr"]) .section-card:hover .action-arrow {
+    transform: translateX(7px);
+  }
+
+  /* Page Entrance Animations */
+  .intro-scroll-card {
+    animation: entranceFadeDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .section-card--vo {
+    animation: entranceFadeUp 0.65s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .section-card--marketing {
+    animation: entranceFadeUp 0.65s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  @keyframes entranceFadeDown {
+    from {
+      opacity: 0;
+      transform: translateY(-12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes entranceFadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro-scroll-card, .section-card--vo, .section-card--marketing, .eq-bar, .rec-blink-dot, .signal-dot, .wave-path {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  /* 3. Footer Anchor Bar */
+  .gateway-footer-bar {
+    text-align: center;
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    padding-top: 0.25rem;
+    flex-shrink: 0;
+  }
+</style>

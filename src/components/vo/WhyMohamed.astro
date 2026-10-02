@@ -1,0 +1,223 @@
+---
+import { getT } from '../../lib/i18n.js';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const t = getT(locale);
+const isAr = locale === 'ar';
+---
+
+<section class="section" id="why-me">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        {t.whyVoEyebrow}
+      </p>
+      <h2 class="section-head__title">
+        {t.whyVoTitle}
+      </h2>
+      <p class="section-head__lede">
+        {isAr 
+          ? 'الخبرة في الإعلام والتسويق أضافت لي كثيراً في الأداء الصوتي. أنا لا أقرأ النص فقط؛ أفهم رسالته، وأعرف لمن يتكلم، ثم أختار الأداء الذي يوصله بالشكل الصحيح.'
+          : 'Combining media studies and conversion marketing elevates the voiceover beyond recitation into deliberate audience persuasion.'}
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <!-- Feature 1 -->
+      <div class="card feature-card">
+        <div class="feature-card__num font-artistic">01</div>
+        <h3 class="feature-card__title">{t.whyVo1Title}</h3>
+        <p class="feature-card__desc">{t.whyVo1Desc}</p>
+        <div class="feature-card__tag">
+          <span class="badge badge--forest">{isAr ? 'خلفية إعلامية' : 'Media Context'}</span>
+        </div>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="card feature-card">
+        <div class="feature-card__num font-artistic">02</div>
+        <h3 class="feature-card__title">{t.whyVo2Title}</h3>
+        <p class="feature-card__desc">{t.whyVo2Desc}</p>
+        <div class="feature-card__tag">
+          <span class="badge badge--secondary">{isAr ? 'تلوين صوتي' : 'Vocal Flexibility'}</span>
+        </div>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="card feature-card">
+        <div class="feature-card__num font-artistic">03</div>
+        <h3 class="feature-card__title">{t.whyVo3Title}</h3>
+        <p class="feature-card__desc">{t.whyVo3Desc}</p>
+        <div class="feature-card__tag">
+          <span class="badge badge--forest">{isAr ? 'استوديو احترافي معزول' : 'Pro Acoustics'}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quote Banner -->
+    <div class="quote-banner">
+      <div class="quote-avatar-container">
+        <div class="quote-avatar-halo" aria-hidden="true"></div>
+        <img 
+          src="/images/mohamed-el-qalshany.png" 
+          alt={t.siteName} 
+          class="quote-avatar-img"
+          width="100"
+          height="100"
+          loading="lazy"
+        />
+      </div>
+      <blockquote class="quote-text font-artistic">
+        {isAr 
+          ? '“الصوت المناسب مش بس بيوصل الرسالة — بيخليها تتعاش.”' 
+          : '“The right voice doesn\'t just transmit a message — it brings it to life.”'}
+      </blockquote>
+      <div class="quote-meta">
+        <span class="quote-author">{t.siteName}</span>
+        <span class="quote-role-badge">{isAr ? 'مؤدي صوتي ومسوّق رقمي' : 'Voice Talent & Digital Marketer'}</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .features-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    margin-bottom: 4rem;
+  }
+
+  @media (min-width: 768px) {
+    .features-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    position: relative;
+    padding: 2.25rem 1.75rem;
+  }
+
+  .feature-card__num {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+    line-height: 1;
+    opacity: 0.9;
+  }
+
+  .feature-card__title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .feature-card__desc {
+    font-size: 0.95rem;
+    color: var(--ink-secondary);
+    line-height: 1.65;
+    flex: 1;
+  }
+
+  .feature-card__tag {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Quote Banner */
+  .quote-banner {
+    background-color: var(--surface);
+    border: 2px solid var(--rule-strong);
+    border-radius: var(--radius-xl);
+    padding: 2.75rem 2rem 2.25rem;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-avatar-container {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.25rem;
+  }
+
+  .quote-avatar-halo {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--secondary));
+    opacity: 0.35;
+    filter: blur(6px);
+  }
+
+  .quote-avatar-img {
+    position: relative;
+    z-index: 1;
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    border: 2.5px solid var(--accent);
+    background: radial-gradient(circle at 50% 30%, var(--surface), var(--bg-soft));
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+  }
+
+  .quote-text {
+    font-size: 1.65rem;
+    line-height: 1.6;
+    color: var(--brand-primary);
+    margin: 0;
+  }
+
+  html[data-theme='dark'] .quote-text {
+    color: var(--secondary);
+  }
+
+  @media (min-width: 768px) {
+    .quote-text {
+      font-size: 2rem;
+    }
+  }
+
+  .quote-meta {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem;
+    margin-top: 0.5rem;
+  }
+
+  .quote-author {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+
+  .quote-role-badge {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--accent);
+  }
+</style>

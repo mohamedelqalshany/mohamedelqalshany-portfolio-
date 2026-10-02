@@ -1,0 +1,235 @@
+---
+import { getT } from '../../lib/i18n.js';
+import VideoPlayer from '../media/VideoPlayer.astro';
+import samplesData from '../../data/samples.json';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const t = getT(locale);
+const isAr = locale === 'ar';
+
+// Find the master showreel sample
+const masterShowreel = samplesData.find(s => s.categorySlug === 'demo') || samplesData[0];
+---
+
+<section class="vo-hero" id="showreel">
+  <div class="ambient-glow ambient-glow--terracotta" style="top: 5%; right: 10%;" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow--forest" style="bottom: 10%; left: 5%;" aria-hidden="true"></div>
+
+  <div class="container vo-hero__inner">
+    <div class="vo-hero__content">
+      <div class="vo-hero__badge-row">
+        <span class="badge badge--forest">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          {t.voHeroBadge}
+        </span>
+        <span class="badge badge--secondary">{isAr ? 'عزل صوتي احترافي · تسليم 24 ساعة' : 'Studio Isolated · 24-48h Delivery'}</span>
+      </div>
+
+      <h1 class="vo-hero__headline">
+        {t.voHeroHeadline}
+      </h1>
+
+      <p class="vo-hero__sub">
+        {t.voHeroSub}
+      </p>
+
+      <div class="vo-hero__actions">
+        <a href="#samples-library" class="btn btn--primary btn--lg">
+          <span>{t.voListenSamples}</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+        <a href="#contact" class="btn btn--secondary btn--lg">
+          <span>{t.ctaTalk}</span>
+          <span aria-hidden="true">💬</span>
+        </a>
+      </div>
+
+      <!-- Quick Metrics Strip -->
+      <div class="vo-hero__metrics">
+        <div class="metric-item">
+          <span class="metric-num font-artistic">+8</span>
+          <span class="metric-label">{isAr ? 'مجالات تعليق متنوعة' : 'Vocal Genres'}</span>
+        </div>
+        <div class="metric-divider" aria-hidden="true"></div>
+        <div class="metric-item">
+          <span class="metric-num font-artistic">100%</span>
+          <span class="metric-label">{isAr ? 'عزل استوديو احترافي' : 'Acoustic Isolation'}</span>
+        </div>
+        <div class="metric-divider" aria-hidden="true"></div>
+        <div class="metric-item">
+          <span class="metric-num font-artistic">24h</span>
+          <span class="metric-label">{isAr ? 'سرعة تسليم المشاريع' : 'Fast Delivery'}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Master Showreel Spotlight Card -->
+    <div class="vo-hero__spotlight">
+      <div class="spotlight-card">
+        <div class="spotlight-card__header">
+          <span class="spotlight-pulse" aria-hidden="true"></span>
+          <span class="spotlight-tag">{t.voShowreelHeading}</span>
+        </div>
+
+        <VideoPlayer 
+          id={masterShowreel.id}
+          src={masterShowreel.url}
+          title={isAr ? masterShowreel.titleAr : masterShowreel.titleEn}
+          category={isAr ? masterShowreel.categoryAr : masterShowreel.categoryEn}
+          locale={locale}
+          isFeatured={true}
+        />
+        
+        <p class="spotlight-note">
+          {isAr ? 'استمع إلى تنوع الطبقات الصوتية والتحكم في النبرة والإيقاع في فيديو واحد.' : 'Experience the breadth of tone, tempo, and vocal coloring in one consolidated cut.'}
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .vo-hero {
+    position: relative;
+    padding-block: 3.5rem 5rem;
+    overflow: hidden;
+  }
+
+  @media (min-width: 992px) {
+    .vo-hero {
+      padding-block: 5rem 6.5rem;
+    }
+  }
+
+  .vo-hero__inner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 992px) {
+    .vo-hero__inner {
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 4rem;
+    }
+  }
+
+  .vo-hero__badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .vo-hero__headline {
+    font-size: var(--font-size-h1);
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 1.25rem;
+  }
+
+  .vo-hero__sub {
+    font-size: 1.125rem;
+    color: var(--ink-secondary);
+    line-height: 1.7;
+    margin-bottom: 2rem;
+    max-width: 620px;
+  }
+
+  .vo-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.75rem;
+  }
+
+  .vo-hero__metrics {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .metric-item {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .metric-num {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+    line-height: 1;
+  }
+
+  html[data-theme='dark'] .metric-num {
+    color: var(--secondary);
+  }
+
+  .metric-label {
+    font-size: 0.8rem;
+    color: var(--ink-muted);
+    font-weight: 500;
+    margin-top: 0.35rem;
+  }
+
+  .metric-divider {
+    width: 1px;
+    height: 34px;
+    background-color: var(--rule-strong);
+  }
+
+  /* Spotlight Card */
+  .spotlight-card {
+    background-color: var(--surface);
+    border: 2px solid var(--rule-accent);
+    border-radius: var(--radius-xl);
+    padding: 1.25rem;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .spotlight-card__header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.5rem 0.85rem;
+  }
+
+  .spotlight-pulse {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--accent);
+    box-shadow: 0 0 10px var(--accent);
+    animation: pulse 1.8s infinite;
+  }
+
+  @keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.8; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.8; }
+  }
+
+  .spotlight-tag {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: 0.03em;
+  }
+
+  .spotlight-note {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    line-height: 1.5;
+    padding: 0.85rem 0.5rem 0.25rem;
+    margin: 0;
+  }
+</style>

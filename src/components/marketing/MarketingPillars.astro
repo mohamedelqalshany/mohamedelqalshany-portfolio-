@@ -1,0 +1,154 @@
+---
+import { getT } from '../../lib/i18n.js';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const t = getT(locale);
+const isAr = locale === 'ar';
+---
+
+<section class="section section--soft" id="pillars">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        {isAr ? 'الركائز الأساسية الثلاث' : 'The Three Pillars'}
+      </p>
+      <h2 class="section-head__title">
+        {isAr ? 'كل ما تحتاجه لصناعة إعلان يبيع، تحت سقف واحد' : 'Everything Needed for High-Converting Video, Under One Roof'}
+      </h2>
+      <p class="section-head__lede">
+        {isAr 
+          ? 'تخلص من صداع التنسيق بين عدة أطراف واضمن وصول رسالتك التسويقية برؤية متماسكة وسرعة قياسية.' 
+          : 'Eliminate coordination friction and deliver your brand narrative with a unified voice and cinema-grade precision.'}
+      </p>
+    </div>
+
+    <div class="pillars-grid">
+      <!-- Pillar 1 -->
+      <div class="card pillar-card">
+        <div class="pillar-card__icon">✍️</div>
+        <div class="pillar-card__num font-artistic">01</div>
+        <h3 class="pillar-card__title">{t.pillar1Title}</h3>
+        <p class="pillar-card__desc">{t.pillar1Desc}</p>
+        <ul class="pillar-features">
+          <li>{isAr ? 'تحليل عميق لدوافع الشراء واعتراضات العميل' : 'Deep customer objections & desires analysis'}</li>
+          <li>{isAr ? 'هوك أول 3 ثوانٍ يوقف تصفح الجمهور' : 'Scroll-stopping first 3-second hook design'}</li>
+          <li>{isAr ? 'دعوة واضحة لاتخاذ القرار (Direct CTA)' : 'High-urgency direct conversion CTA'}</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 2 -->
+      <div class="card pillar-card">
+        <div class="pillar-card__icon">🎥</div>
+        <div class="pillar-card__num font-artistic">02</div>
+        <h3 class="pillar-card__title">{t.pillar2Title}</h3>
+        <p class="pillar-card__desc">{t.pillar2Desc}</p>
+        <ul class="pillar-features">
+          <li>{isAr ? 'تصوير سينمائي 4K بأحدث كاميرات وعدسات السنما' : 'Cinema 4K capture with high-speed lenses'}</li>
+          <li>{isAr ? 'إضاءة سوفت بوكس احترافية وإبراز جمالي للمنتج' : 'Studio lighting rigs highlighting product details'}</li>
+          <li>{isAr ? 'تسجيل صوتي لاسلكي نقي أثناء الحركة والمقابلات' : 'Wireless dual-channel broadcast sound recording'}</li>
+        </ul>
+      </div>
+
+      <!-- Pillar 3 -->
+      <div class="card pillar-card">
+        <div class="pillar-card__icon">🎙️</div>
+        <div class="pillar-card__num font-artistic">03</div>
+        <h3 class="pillar-card__title">{t.pillar3Title}</h3>
+        <p class="pillar-card__desc">{t.pillar3Desc}</p>
+        <ul class="pillar-features">
+          <li>{isAr ? 'تعليق صوتي استوديو احترافي بنبرة تناسب البراند' : 'Broadcast voiceover narration directly recorded'}</li>
+          <li>{isAr ? 'مونتاج إيقاعي سريع يحافظ على انتباه المشاهد' : 'Dynamic pacing and sound design holding viewer attention'}</li>
+          <li>{isAr ? 'تجهيز بمقاسات السوشيال (Reels, TikTok, YouTube)' : 'Optimized multi-platform exports for immediate ad spend'}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 900px) {
+    .pillars-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .pillar-card {
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border-radius: var(--radius-xl);
+  }
+
+  .pillar-card__icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .pillar-card__num {
+    position: absolute;
+    top: 1.75rem;
+    left: 2rem;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    opacity: 0.6;
+  }
+
+  :global([dir="ltr"]) .pillar-card__num {
+    left: auto;
+    right: 2rem;
+  }
+
+  .pillar-card__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    line-height: 1.35;
+  }
+
+  .pillar-card__desc {
+    font-size: 0.95rem;
+    color: var(--ink-secondary);
+    line-height: 1.65;
+    margin-bottom: 1.5rem;
+  }
+
+  .pillar-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    margin-top: auto;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .pillar-features li {
+    font-size: 0.88rem;
+    color: var(--ink-secondary);
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    line-height: 1.45;
+  }
+
+  .pillar-features li::before {
+    content: "✓";
+    color: var(--brand-link);
+    font-weight: 700;
+  }
+</style>

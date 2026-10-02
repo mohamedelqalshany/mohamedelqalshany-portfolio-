@@ -1,0 +1,206 @@
+---
+import { getT } from '../../lib/i18n.js';
+import samplesData from '../../data/samples.json';
+import AudioPlayer from '../media/AudioPlayer.astro';
+import VideoPlayer from '../media/VideoPlayer.astro';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const t = getT(locale);
+const isAr = locale === 'ar';
+
+// Define categories for filter tabs
+const categories = [
+  { slug: 'all', labelAr: t.voFilterAll, labelEn: t.voFilterAll },
+  { slug: 'commercial', labelAr: t.voCategoryCommercial, labelEn: t.voCategoryCommercial },
+  { slug: 'acting', labelAr: t.voCategoryActing, labelEn: t.voCategoryActing },
+  { slug: 'motivational', labelAr: t.voCategoryMotivational, labelEn: t.voCategoryMotivational },
+  { slug: 'educational', labelAr: t.voCategoryEducational, labelEn: t.voCategoryEducational },
+  { slug: 'reflections', labelAr: t.voCategoryReflections, labelEn: t.voCategoryReflections },
+  { slug: 'ivr', labelAr: t.voCategoryIVR, labelEn: t.voCategoryIVR },
+  { slug: 'documentary', labelAr: t.voCategoryDocumentary, labelEn: t.voCategoryDocumentary },
+];
+---
+
+<section class="section section--soft" id="samples-library">
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        {isAr ? 'مكتبة العينات الصوتية والمرئية' : 'Voice & Video Catalog'}
+      </p>
+      <h2 class="section-head__title">
+        {isAr ? 'استمع وشاهد تنوع الأداء والمجالات' : 'Explore Diverse Performance Styles'}
+      </h2>
+      <p class="section-head__lede">
+        {isAr 
+          ? 'عينات مسجلة وموثقة بجودة استوديو احترافية عبر 8 مجالات صوتية مختلفة.' 
+          : 'Studio-recorded samples across 8 distinct vocal categories with interactive controls.'}
+      </p>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="filter-wrapper" role="tablist" aria-label="Media Categories">
+      <div class="filter-scroll">
+        {categories.map((cat, idx) => (
+          <button 
+            type="button" 
+            class:list={['filter-tab', { 'is-active': idx === 0 }]}
+            data-filter-slug={cat.slug}
+            role="tab"
+            aria-selected={idx === 0 ? "true" : "false"}
+          >
+            {isAr ? cat.labelAr : cat.labelEn}
+          </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Media Grid -->
+    <div class="media-grid" data-media-grid>
+      {samplesData.map(sample => (
+        <div class="media-grid-item" data-category={sample.categorySlug}>
+          {sample.type === 'video' ? (
+            <VideoPlayer 
+              id={sample.id}
+              src={sample.url}
+              title={isAr ? sample.titleAr : sample.titleEn}
+              category={isAr ? sample.categoryAr : sample.categoryEn}
+              locale={locale}
+              isFeatured={sample.isFeatured}
+            />
+          ) : (
+            <AudioPlayer 
+              id={sample.id}
+              src={sample.url}
+              title={isAr ? sample.titleAr : sample.titleEn}
+              category={isAr ? sample.categoryAr : sample.categoryEn}
+              locale={locale}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Filter Tabs */
+  .filter-wrapper {
+    margin-bottom: 2.75rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .filter-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .filter-scroll {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.6rem;
+    padding-bottom: 0.5rem;
+  }
+
+  @media (min-width: 900px) {
+    .filter-scroll {
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
+  .filter-tab {
+    font-family: inherit;
+    font-size: 0.88rem;
+    font-weight: 600;
+    padding: 0.55rem 1.15rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--surface);
+    color: var(--ink-secondary);
+    border: 1px solid var(--rule);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all var(--transition-fast);
+  }
+
+  .filter-tab:hover {
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+
+  .filter-tab.is-active {
+    background-color: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Media Grid */
+  .media-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .media-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.75rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .media-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+  }
+
+  .media-grid-item {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+
+  .media-grid-item.is-hidden {
+    display: none;
+  }
+</style>
+
+<script>
+  function setupFilters() {
+    const tabs = document.querySelectorAll('.filter-tab');
+    const items = document.querySelectorAll('.media-grid-item');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        const slug = tab.getAttribute('data-filter-slug');
+
+        tabs.forEach(t => {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+
+        items.forEach(item => {
+          const itemCat = item.getAttribute('data-category');
+          if (slug === 'all' || itemCat === slug) {
+            item.classList.remove('is-hidden');
+          } else {
+            item.classList.add('is-hidden');
+          }
+        });
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupFilters);
+</script>

@@ -1,0 +1,345 @@
+---
+import { getT } from '../../lib/i18n.js';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const t = getT(locale);
+const isAr = locale === 'ar';
+---
+
+<section class="mkt-hero">
+  <div class="ambient-glow ambient-glow--terracotta" style="top: 10%; left: 10%;" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow--forest" style="bottom: 15%; right: 5%;" aria-hidden="true"></div>
+
+  <div class="container mkt-hero__container">
+    <div class="mkt-hero__content">
+      <div class="badge-group">
+        <span class="badge badge--forest">
+          <span class="eyebrow-dot" aria-hidden="true"></span>
+          {t.mktHeroBadge}
+        </span>
+        <span class="badge badge--secondary">Script · 4K Shoot · Pro VO · Edit</span>
+      </div>
+
+      <h1 class="mkt-hero__headline">
+        {t.mktHeroHeadline}
+      </h1>
+
+      <!-- Featured Marketing Bio -->
+      <div class="mkt-hero__bio-card">
+        <div class="bio-accent-bar" aria-hidden="true"></div>
+        <div class="bio-inner-content">
+          <p class="bio-statement">
+            {t.marketingBio}
+          </p>
+          <div class="bio-author-row">
+            <img 
+              src="/images/mohamed-el-qalshany.png" 
+              alt={t.siteName} 
+              class="bio-avatar-img"
+              width="44" 
+              height="44" 
+              loading="eager"
+            />
+            <div class="bio-author-info">
+              <span class="bio-author-name">{t.siteName}</span>
+              <span class="bio-author-title">{isAr ? 'خبير تسويق وصانع محتوى' : 'Marketer & Content Creator'}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="mkt-hero__sub">
+        {t.mktHeroSub}
+      </p>
+
+      <div class="mkt-hero__actions">
+        <a href="#packages" class="btn btn--primary btn--lg">
+          <span>{t.mktExplorePackages}</span>
+          <span aria-hidden="true">↓</span>
+        </a>
+        <a href="#marketing-demo" class="btn btn--secondary btn--lg">
+          <span>{isAr ? 'شاهد ديمو العمل' : 'Watch Demo'}</span>
+          <span aria-hidden="true">🎬</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Right Side Value Architecture Card -->
+    <div class="mkt-hero__card-box">
+      <div class="mkt-engine-card">
+        <div class="engine-header">
+          <span class="engine-badge">{isAr ? 'منظومة الإنتاج الموحدة' : 'Unified Production Engine'}</span>
+          <span class="engine-dot" aria-hidden="true"></span>
+        </div>
+
+        <div class="engine-pipeline">
+          <div class="pipeline-node">
+            <span class="node-icon">✍️</span>
+            <div>
+              <h4 class="node-title">{isAr ? 'الإسكريبت البيعي' : 'Conversion Copy'}</h4>
+              <p class="node-desc">{isAr ? 'هوك قوي يوقف التمرير وسيناريو يقنع العميل' : 'Psychological hook & sales storytelling'}</p>
+            </div>
+          </div>
+          <div class="pipeline-connector" aria-hidden="true"></div>
+          <div class="pipeline-node">
+            <span class="node-icon">🎥</span>
+            <div>
+              <h4 class="node-title">{isAr ? 'تصوير 4K وإضاءة سينمائية' : '4K Cinema Shooting'}</h4>
+              <p class="node-desc">{isAr ? 'معدات متنقلة، عدسات برايم، ومايكات وايرلس' : 'Mobile cinema rig & wireless audio'}</p>
+            </div>
+          </div>
+          <div class="pipeline-connector" aria-hidden="true"></div>
+          <div class="pipeline-node">
+            <span class="node-icon">🎙️</span>
+            <div>
+              <h4 class="node-title">{isAr ? 'تعليق صوتي استوديو مدمج' : 'Native Studio Voice'}</h4>
+              <p class="node-desc">{isAr ? 'بدون انتظار مؤدي خارجي؛ التسجيل الفوري بصوتي' : 'Zero vendor lag; recorded in-house'}</p>
+            </div>
+          </div>
+          <div class="pipeline-connector" aria-hidden="true"></div>
+          <div class="pipeline-node">
+            <span class="node-icon">⚡</span>
+            <div>
+              <h4 class="node-title">{isAr ? 'مونتاج إيقاعي جاهز للإعلان' : 'Dynamic Edit & Ads'}</h4>
+              <p class="node-desc">{isAr ? 'مؤثرات، ترند، ألوان سينمائية، وتنسيق منصات' : 'Sound design, kinetic text, Meta specs'}</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="engine-footer">
+          <span class="result-highlight">
+            {isAr ? 'النتيجة: إعلانك يخرج بأعلى جودة في ربع الوقت المعتاد.' : 'Result: Broadcast quality delivered in 1/4 the typical agency timeline.'}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .mkt-hero {
+    position: relative;
+    padding-block: 4rem 6rem;
+    overflow: hidden;
+  }
+
+  @media (min-width: 992px) {
+    .mkt-hero {
+      padding-block: 5.5rem 7.5rem;
+    }
+  }
+
+  .mkt-hero__container {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  @media (min-width: 992px) {
+    .mkt-hero__container {
+      grid-template-columns: 1.15fr 0.95fr;
+      gap: 4rem;
+    }
+  }
+
+  .badge-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .mkt-hero__headline {
+    font-size: var(--font-size-h1);
+    color: var(--ink);
+    line-height: 1.25;
+    margin-bottom: 1.15rem;
+  }
+
+  .mkt-hero__bio-card {
+    position: relative;
+    background-color: var(--surface);
+    border: 1px solid var(--rule-strong);
+    border-radius: var(--radius-lg);
+    padding: 1.15rem 1.35rem;
+    margin-bottom: 1.25rem;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    align-items: stretch;
+    gap: 0.9rem;
+  }
+
+  .bio-accent-bar {
+    width: 4px;
+    background: linear-gradient(180deg, var(--accent) 0%, var(--secondary) 100%);
+    border-radius: 4px;
+    flex-shrink: 0;
+  }
+
+  .bio-inner-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    flex: 1;
+  }
+
+  .bio-statement {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--ink);
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .bio-author-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.25rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--rule);
+  }
+
+  .bio-avatar-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: top center;
+    border: 2px solid var(--accent);
+    background: radial-gradient(circle at 50% 30%, var(--surface), var(--bg-soft));
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+  }
+
+  .bio-author-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  .bio-author-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .bio-author-title {
+    font-size: 0.76rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .mkt-hero__sub {
+    font-size: 1.02rem;
+    color: var(--ink-secondary);
+    line-height: 1.65;
+    margin-bottom: 2rem;
+  }
+
+  .mkt-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  /* Engine Card */
+  .mkt-engine-card {
+    background-color: var(--surface);
+    border: 2px solid var(--rule-strong);
+    border-radius: var(--radius-xl);
+    padding: 2.25rem 2rem;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .engine-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .engine-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .engine-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--secondary);
+    box-shadow: 0 0 10px var(--secondary);
+  }
+
+  .engine-pipeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .pipeline-node {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background-color: var(--bg-soft);
+    padding: 1rem 1.15rem;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--rule);
+  }
+
+  .node-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .node-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 0.2rem;
+  }
+
+  .node-desc {
+    font-size: 0.84rem;
+    color: var(--ink-muted);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .pipeline-connector {
+    width: 2px;
+    height: 12px;
+    background-color: var(--accent);
+    margin-inline: 1.75rem;
+  }
+
+  .engine-footer {
+    margin-top: 1.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--rule);
+    text-align: center;
+  }
+
+  .result-highlight {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--brand-primary);
+  }
+
+  html[data-theme='dark'] .result-highlight {
+    color: var(--secondary);
+  }
+</style>

@@ -1,0 +1,296 @@
+---
+// BackgroundWaves.astro
+// Ambient Multi-Color Living Soundwaves System
+// Provides living audio wave motion across brand colors (Terracotta, Mustard, Teal, Forest)
+// Hardware-accelerated, zero-dependency, non-blocking, CLS = 0
+---
+
+<div class="ambient-soundscape-bg" aria-hidden="true">
+  <!-- Subtle Chromatic Resonance Orbs -->
+  <div class="resonance-orb resonance-orb--terracotta"></div>
+  <div class="resonance-orb resonance-orb--mustard"></div>
+  <div class="resonance-orb resonance-orb--teal"></div>
+
+  <!-- Wave Band 1: Upper Atmospheric Wave Stream -->
+  <div class="wave-stream wave-stream--top">
+    <svg class="wave-svg wave-svg--slow" viewBox="0 0 2880 120" preserveAspectRatio="none">
+      <!-- Wave 1: Warm Terracotta Primary Harmonic -->
+      <path 
+        class="wave-line wave-line--terracotta"
+        d="M 0 60 Q 180.0 32.0, 360.0 60 Q 540.0 88.0, 720.0 60 Q 900.0 32.0, 1080.0 60 Q 1260.0 88.0, 1440.0 60 Q 1620.0 32.0, 1800.0 60 Q 1980.0 88.0, 2160.0 60 Q 2340.0 32.0, 2520.0 60 Q 2700.0 88.0, 2880.0 60"
+        stroke="var(--brand-accent)"
+        stroke-width="2.2"
+        fill="none"
+        stroke-linecap="round"
+      />
+      <!-- Wave 2: Soft Mustard Secondary Frequency -->
+      <path 
+        class="wave-line wave-line--mustard wave-line--dash"
+        d="M 0 60 Q 120.0 40.0, 240.0 60 Q 360.0 80.0, 480.0 60 Q 600.0 40.0, 720.0 60 Q 840.0 80.0, 960.0 60 Q 1080.0 40.0, 1200.0 60 Q 1320.0 80.0, 1440.0 60 Q 1560.0 40.0, 1680.0 60 Q 1800.0 80.0, 1920.0 60 Q 2040.0 40.0, 2160.0 60 Q 2280.0 80.0, 2400.0 60 Q 2520.0 40.0, 2640.0 60 Q 2760.0 80.0, 2880.0 60"
+        stroke="var(--brand-secondary)"
+        stroke-width="1.8"
+        fill="none"
+        stroke-linecap="round"
+      />
+      <!-- Wave 3: Deep Teal High Resonance Line -->
+      <path 
+        class="wave-line wave-line--teal"
+        d="M 0 60 Q 240.0 25.0, 480.0 60 Q 720.0 95.0, 960.0 60 Q 1200.0 25.0, 1440.0 60 Q 1680.0 95.0, 1920.0 60 Q 2160.0 25.0, 2400.0 60 Q 2640.0 95.0, 2880.0 60"
+        stroke="var(--color-link)"
+        stroke-width="1.4"
+        fill="none"
+        stroke-linecap="round"
+      />
+    </svg>
+  </div>
+
+  <!-- Wave Band 2: Mid-Section Counter-Current Stream -->
+  <div class="wave-stream wave-stream--mid">
+    <svg class="wave-svg wave-svg--reverse" viewBox="0 0 2880 120" preserveAspectRatio="none">
+      <!-- Wave 4: Deep Teal Wide Oscillation -->
+      <path 
+        class="wave-line wave-line--teal"
+        d="M 0 60 Q 240.0 28.0, 480.0 60 Q 720.0 92.0, 960.0 60 Q 1200.0 28.0, 1440.0 60 Q 1680.0 92.0, 1920.0 60 Q 2160.0 28.0, 2400.0 60 Q 2640.0 92.0, 2880.0 60"
+        stroke="var(--color-link)"
+        stroke-width="2.4"
+        fill="none"
+        stroke-linecap="round"
+      />
+      <!-- Wave 5: Terracotta Animated Audio Pulse -->
+      <path 
+        class="wave-line wave-line--terracotta wave-line--dash"
+        d="M 0 60 Q 180.0 35.0, 360.0 60 Q 540.0 85.0, 720.0 60 Q 900.0 35.0, 1080.0 60 Q 1260.0 85.0, 1440.0 60 Q 1620.0 35.0, 1800.0 60 Q 1980.0 85.0, 2160.0 60 Q 2340.0 35.0, 2520.0 60 Q 2700.0 85.0, 2880.0 60"
+        stroke="var(--brand-accent)"
+        stroke-width="1.8"
+        fill="none"
+        stroke-linecap="round"
+      />
+      <!-- Wave 6: Soft Mustard Harmonic Echo -->
+      <path 
+        class="wave-line wave-line--mustard"
+        d="M 0 60 Q 120.0 42.0, 240.0 60 Q 360.0 78.0, 480.0 60 Q 600.0 42.0, 720.0 60 Q 840.0 78.0, 960.0 60 Q 1080.0 42.0, 1200.0 60 Q 1320.0 78.0, 1440.0 60 Q 1560.0 42.0, 1680.0 60 Q 1800.0 78.0, 1920.0 60 Q 2040.0 42.0, 2160.0 60 Q 2280.0 78.0, 2400.0 60 Q 2520.0 42.0, 2640.0 60 Q 2760.0 78.0, 2880.0 60"
+        stroke="var(--brand-secondary)"
+        stroke-width="1.5"
+        fill="none"
+        stroke-linecap="round"
+      />
+    </svg>
+  </div>
+
+  <!-- Wave Band 3: Deep Foundation Resonance Stream -->
+  <div class="wave-stream wave-stream--bottom">
+    <svg class="wave-svg wave-svg--drift" viewBox="0 0 2880 120" preserveAspectRatio="none">
+      <!-- Wave 7: Forest / Sage Deep Fundamental -->
+      <path 
+        class="wave-line wave-line--forest"
+        d="M 0 60 Q 240.0 30.0, 480.0 60 Q 720.0 90.0, 960.0 60 Q 1200.0 30.0, 1440.0 60 Q 1680.0 90.0, 1920.0 60 Q 2160.0 30.0, 2400.0 60 Q 2640.0 90.0, 2880.0 60"
+        stroke="var(--brand-primary)"
+        stroke-width="2.6"
+        fill="none"
+        stroke-linecap="round"
+      />
+      <!-- Wave 8: Terracotta Sub-Harmonic Wave -->
+      <path 
+        class="wave-line wave-line--terracotta"
+        d="M 0 60 Q 180.0 38.0, 360.0 60 Q 540.0 82.0, 720.0 60 Q 900.0 38.0, 1080.0 60 Q 1260.0 82.0, 1440.0 60 Q 1620.0 38.0, 1800.0 60 Q 1980.0 82.0, 2160.0 60 Q 2340.0 38.0, 2520.0 60 Q 2700.0 82.0, 2880.0 60"
+        stroke="var(--brand-accent)"
+        stroke-width="1.6"
+        fill="none"
+        stroke-linecap="round"
+      />
+      <!-- Wave 9: Soft Mustard Sub-Frequency Pulsing Line -->
+      <path 
+        class="wave-line wave-line--mustard wave-line--dash"
+        d="M 0 60 Q 120.0 44.0, 240.0 60 Q 360.0 76.0, 480.0 60 Q 600.0 44.0, 720.0 60 Q 840.0 76.0, 960.0 60 Q 1080.0 44.0, 1200.0 60 Q 1320.0 76.0, 1440.0 60 Q 1560.0 44.0, 1680.0 60 Q 1800.0 76.0, 1920.0 60 Q 2040.0 44.0, 2160.0 60 Q 2280.0 76.0, 2400.0 60 Q 2520.0 44.0, 2640.0 60 Q 2760.0 76.0, 2880.0 60"
+        stroke="var(--brand-secondary)"
+        stroke-width="1.8"
+        fill="none"
+        stroke-linecap="round"
+      />
+    </svg>
+  </div>
+</div>
+
+<style>
+  /* Fixed full-viewport ambient canvas */
+  .ambient-soundscape-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+    opacity: 0.9;
+    transition: opacity var(--transition-base);
+  }
+
+  /* 1. Chromatic Resonance Orbs (Soft Watercolor Atmosphere) */
+  .resonance-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    pointer-events: none;
+    opacity: 0.16;
+    animation: orbPulse 16s ease-in-out infinite alternate;
+  }
+
+  .resonance-orb--terracotta {
+    top: -10%;
+    right: -5%;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(circle, var(--brand-accent) 0%, transparent 70%);
+    animation-delay: 0s;
+  }
+
+  .resonance-orb--mustard {
+    top: 40%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, var(--brand-secondary) 0%, transparent 70%);
+    animation-delay: -5s;
+  }
+
+  .resonance-orb--teal {
+    bottom: -15%;
+    right: 15%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, var(--color-link) 0%, transparent 70%);
+    animation-delay: -10s;
+  }
+
+  @keyframes orbPulse {
+    0% { transform: scale(0.9) translate3d(0, 0, 0); opacity: 0.12; }
+    50% { transform: scale(1.15) translate3d(30px, -20px, 0); opacity: 0.22; }
+    100% { transform: scale(1) translate3d(-20px, 20px, 0); opacity: 0.14; }
+  }
+
+  /* 2. Wave Streams Layout */
+  .wave-stream {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 110px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+  }
+
+  .wave-stream--top {
+    top: 10%;
+  }
+
+  .wave-stream--mid {
+    top: 48%;
+  }
+
+  .wave-stream--bottom {
+    top: 80%;
+  }
+
+  /* Wave SVG Container (Double Width for Seamless Loop) */
+  .wave-svg {
+    width: 2880px;
+    min-width: 2880px;
+    height: 100%;
+    will-change: transform;
+  }
+
+  /* Smooth GPU-Accelerated Glide Animations */
+  .wave-svg--slow {
+    animation: waveGlideForward 26s linear infinite;
+  }
+
+  .wave-svg--reverse {
+    animation: waveGlideReverse 32s linear infinite;
+  }
+
+  .wave-svg--drift {
+    animation: waveGlideForward 38s linear infinite;
+  }
+
+  @keyframes waveGlideForward {
+    0% { transform: translate3d(0, 0, 0); }
+    100% { transform: translate3d(-1440px, 0, 0); }
+  }
+
+  @keyframes waveGlideReverse {
+    0% { transform: translate3d(-1440px, 0, 0); }
+    100% { transform: translate3d(0, 0, 0); }
+  }
+
+  /* 3. Wave Stroke Stylings & Distinct Colors */
+  .wave-line {
+    transition: opacity var(--transition-base), stroke var(--transition-base);
+  }
+
+  .wave-line--terracotta {
+    opacity: 0.32;
+  }
+
+  .wave-line--mustard {
+    opacity: 0.38;
+  }
+
+  .wave-line--teal {
+    opacity: 0.28;
+  }
+
+  .wave-line--forest {
+    opacity: 0.22;
+  }
+
+  /* Audio Frequency Dashed Pulse Animation (Like the Intro Wave) */
+  .wave-line--dash {
+    stroke-dasharray: 140 35;
+    animation: audioDashUndulate 10s linear infinite;
+  }
+
+  @keyframes audioDashUndulate {
+    0% { stroke-dashoffset: 0; }
+    50% { stroke-dashoffset: 350; }
+    100% { stroke-dashoffset: 700; }
+  }
+
+  /* 4. Dark Theme Adaptations: Luminous Studio Vibes */
+  html[data-theme='dark'] .ambient-soundscape-bg {
+    opacity: 0.95;
+  }
+
+  html[data-theme='dark'] .resonance-orb--terracotta {
+    opacity: 0.16;
+  }
+
+  html[data-theme='dark'] .resonance-orb--mustard {
+    opacity: 0.14;
+  }
+
+  html[data-theme='dark'] .resonance-orb--teal {
+    opacity: 0.18;
+  }
+
+  html[data-theme='dark'] .wave-line--terracotta {
+    opacity: 0.35;
+    filter: drop-shadow(0 0 6px rgba(224, 122, 95, 0.4));
+  }
+
+  html[data-theme='dark'] .wave-line--mustard {
+    opacity: 0.32;
+    filter: drop-shadow(0 0 6px rgba(244, 162, 97, 0.35));
+  }
+
+  html[data-theme='dark'] .wave-line--teal {
+    opacity: 0.38;
+    filter: drop-shadow(0 0 6px rgba(42, 157, 143, 0.45));
+  }
+
+  html[data-theme='dark'] .wave-line--forest {
+    stroke: #52B788;
+    opacity: 0.30;
+    filter: drop-shadow(0 0 6px rgba(82, 183, 136, 0.35));
+  }
+</style>

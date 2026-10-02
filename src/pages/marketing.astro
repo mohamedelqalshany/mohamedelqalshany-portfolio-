@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../components/layout/BaseLayout.astro';
+import MarketingHero from '../components/marketing/MarketingHero.astro';
+import MarketingDemoSpotlight from '../components/marketing/MarketingDemoSpotlight.astro';
+import MarketingPillars from '../components/marketing/MarketingPillars.astro';
+import WorkflowSteps from '../components/marketing/WorkflowSteps.astro';
+import Packages from '../components/marketing/Packages.astro';
+import CredentialsSection from '../components/sections/CredentialsSection.astro';
+import ContactSection from '../components/sections/ContactSection.astro';
+---
+
+<BaseLayout 
+  locale="ar" 
+  currentTrack="marketing"
+  title="محمد القلشاني — التسويق وصناعة المحتوى"
+  description="تسويق مرئي وصناعة محتوى متكاملة: كتابة إعلانية وهوكات بيعية، تصوير سينمائي 4K، تعليق صوتي استوديو مدمج، ومونتاج سريع جاهز للحملات الإعلانية."
+>
+  <!-- Marketing Hero -->
+  <MarketingHero locale="ar" />
+
+  <!-- Featured Marketing Demo (Saad Zaghawa 2) -->
+  <MarketingDemoSpotlight locale="ar" />
+
+  <!-- The 3 Pillars -->
+  <MarketingPillars locale="ar" />
+
+  <!-- The 5-Step Methodology -->
+  <WorkflowSteps locale="ar" />
+
+  <!-- Packages & Comparison Table -->
+  <Packages locale="ar" />
+
+  <!-- Academic & Practical Credentials -->
+  <CredentialsSection locale="ar" />
+
+  <!-- Direct Booking & Project Inquiry -->
+  <ContactSection locale="ar" />
+</BaseLayout>

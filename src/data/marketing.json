@@ -1,0 +1,119 @@
+{
+  "packages": [
+    {
+      "id": "reels-sprint",
+      "badgeAr": "الأكثر طلباً للشركات والمؤثرين",
+      "badgeEn": "Most Popular for Brands",
+      "titleAr": "باقة سباقات الريلز المركزة (Social Sprint)",
+      "titleEn": "Social Reels Video Sprint",
+      "taglineAr": "4 إلى 8 فيديوهات قصيرة مبنية على هوكات سيكولوجية توقف التمرير وتجلب عملاء حقيقيين.",
+      "taglineEn": "4 to 8 high-retention short videos built with psychological hooks to stop the scroll and capture buyers.",
+      "deliverablesAr": [
+        "جلسة عصف ذهني وبحث تحليلي لسوقك ومنافسيك",
+        "كتابة نصوص وسيناريوهات 4 فيديوهات قصيرة مع 3 هوكات بديلة لكل فيديو",
+        "يوم تصوير سينمائي في موقعك بأحدث كاميرات 4K وإضاءة احترافية",
+        "تسجيل تعليق صوتي استوديو احترافي مدمج في كل حلقة",
+        "مونتاج إيقاعي ديناميكي مع مؤثرات بصرية وصوتية وترجمة نصية كاملة"
+      ],
+      "deliverablesEn": [
+        "In-depth research session analyzing target audience and competitor angles",
+        "Scriptwriting for 4-8 short reels with 3 hook variations per video",
+        "Cinematic on-site shooting with 4K camera gear & professional lighting",
+        "Broadcast-grade studio voiceover directly integrated",
+        "Dynamic rhythmic video editing, sound design, and animated subtitles"
+      ],
+      "timelineAr": "5 إلى 7 أيام عمل",
+      "timelineEn": "5–7 Business Days",
+      "actionTextAr": "طلب باقة الريلز",
+      "actionTextEn": "Book Video Sprint"
+    },
+    {
+      "id": "commercial-campaign",
+      "badgeAr": "لإطلاق المنتجات والحملات الممولة",
+      "badgeEn": "For Product Launches & Paid Ads",
+      "titleAr": "باقة الإعلان الترويجي المتكامل (Ad Engine)",
+      "titleEn": "Full Commercial Campaign Spot",
+      "taglineAr": "فيديو إعلاني بيعي متكامل يركز على نقطة الألم وحل منتجك لخفض تكلفة العميل في إعلانات Meta و Google.",
+      "taglineEn": "A comprehensive conversion video ad addressing audience objections to maximize ROI on Meta & Google Ads.",
+      "deliverablesAr": [
+        "دراسة زوايا البيع الأكثر ربحية لمنتجك (Angles of Appeal)",
+        "كتابة إسكريبت إعلاني تحويلي (Problem - Agitate - Solve - Proof - CTA)",
+        "تصوير سينمائي للمنتج ولقطات B-Roll دقيقة توضح تفاصيل الاستخدام",
+        "أداء صوتي إعلاني حماسي ومقنع بنبرة تناسب هوية علامتك",
+        "نسخة إعلانية رئيسية + 3 تنويعات للـ Hook لاختبارها في الحملات الإعلانية"
+      ],
+      "deliverablesEn": [
+        "Strategic market angle research to find the highest-converting hook",
+        "Direct-response script (Problem - Agitation - Solution - Social Proof - CTA)",
+        "High-definition product shoot with close-up macro B-Roll",
+        "Persuasive, energetic commercial voiceover matching your brand persona",
+        "Master ad cut + 3 tested hook variants for split-testing in Meta Ads"
+      ],
+      "timelineAr": "7 إلى 10 أيام عمل",
+      "timelineEn": "7–10 Business Days",
+      "actionTextAr": "طلب إعلانك التجاري",
+      "actionTextEn": "Book Commercial Ad"
+    },
+    {
+      "id": "retainer-engine",
+      "badgeAr": "شراكة نمو شهرية مستمرة",
+      "badgeEn": "Monthly Growth Retainer",
+      "titleAr": "المحرك الشهري المستمر (One-Man Content Partner)",
+      "titleEn": "Monthly Content Production Partner",
+      "taglineAr": "بديل كامل لتوظيف فريق ميديا بدوام كامل — 12 فيديو شهرياً مع إدارة دورة الإنتاج كاملة.",
+      "taglineEn": "A dedicated creative partner replacing a full in-house team — 12 monthly videos with end-to-end production.",
+      "deliverablesAr": [
+        "خطة محتوى شهرية متجددة مبنية على تريندات السوق",
+        "يومي تصوير شهريين لجمع اللقطات وتغطية نشاط الشركة",
+        "كتابة، وتسجيل صوتي، ومونتاج أسبوعي مستمر",
+        "تسليم ملفات الفيديوهات بمقاسات متعددة (Reels 9:16, YouTube 16:9)",
+        "أولوية مطلقة في المواعيد والتعديلات الفورية"
+      ],
+      "deliverablesEn": [
+        "Monthly content editorial plan aligned with market trends",
+        "2 dedicated on-location shooting days per month",
+        "Continuous weekly scripting, voiceover, and video editing",
+        "Multi-aspect ratio delivery (Reels 9:16, Landscape 16:9)",
+        "VIP turnaround priority and instant revisions"
+      ],
+      "timelineAr": "تعاقد شهري متجدد",
+      "timelineEn": "Monthly Rolling Retainer",
+      "actionTextAr": "بدء الشراكة الشهرية",
+      "actionTextEn": "Inquire for Retainer"
+    }
+  ],
+  "comparison": [
+    {
+      "aspectAr": "عدد الأطراف المسؤولة",
+      "aspectEn": "Parties Involved",
+      "traditionalAr": "4 أشخاص (كاتب، مصور، فويس أوفر، مونتير)",
+      "traditionalEn": "4 separate contractors (Copywriter, Cameraman, VO, Editor)",
+      "qalshanyAr": "طرف واحد متكامل (One-Man Crew)",
+      "qalshanyEn": "One single unified partner"
+    },
+    {
+      "aspectAr": "سرعة التنفيذ والتسليم",
+      "aspectEn": "Turnaround Speed",
+      "traditionalAr": "3 إلى 5 أسابيع بسبب انتظار التنسيق",
+      "traditionalEn": "3 to 5 weeks due to coordination lag",
+      "qalshanyAr": "من 4 إلى 7 أيام عمل فقط",
+      "qalshanyEn": "4 to 7 business days"
+    },
+    {
+      "aspectAr": "اتساق الرؤية الفنية",
+      "aspectEn": "Creative Consistency",
+      "traditionalAr": "غالباً ما يضيع المعنى بين الكاتب والمؤدي والمونتير",
+      "traditionalEn": "Vision often gets diluted between hands",
+      "qalshanyAr": "رؤية واحدة متماسكة من أول كلمة لآخر لقطة",
+      "qalshanyEn": "Unified vision from the first word to final cut"
+    },
+    {
+      "aspectAr": "التكلفة الإجمالية",
+      "aspectEn": "Total Overhead Cost",
+      "traditionalAr": "تكاليف مجمعة باهظة مع هوامش أرباح الوكالات",
+      "traditionalEn": "High compounded fees and agency margins",
+      "qalshanyAr": "استثمار اقتصادي ذكي بدون تكاليف إضافية غير ضرورية",
+      "qalshanyEn": "Streamlined investment with zero agency bloat"
+    }
+  ]
+}

@@ -1,0 +1,231 @@
+---
+import { getT } from '../../lib/i18n.js';
+import siteData from '../../data/site.json';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const t = getT(locale);
+const isAr = locale === 'ar';
+---
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="site-footer__grid">
+      <!-- Brand & Mission Column -->
+      <div class="site-footer__col site-footer__brand-col">
+        <div class="footer-brand">
+          <span class="footer-brand__monogram">MQ</span>
+          <div>
+            <h3 class="footer-brand__name">{t.siteName}</h3>
+            <p class="footer-brand__sub">{isAr ? 'التعليق الصوتي · التسويق' : 'Voice Over · Marketing'}</p>
+          </div>
+        </div>
+        <p class="footer-desc">
+          {isAr 
+            ? 'دمج فريد بين عمق الأداء الصوتي الإعلاني، والاستراتيجية التسويقية، والتنفيذ المرئي السينمائي المتكامل.'
+            : 'A unique fusion of broadcast voice acting, conversion copywriting, and agile full-cycle video production.'}
+        </p>
+        <div class="footer-badge-list">
+          <span class="badge badge--forest">Digilians 2026</span>
+          <span class="badge badge--secondary">AASTMT 2019</span>
+        </div>
+      </div>
+
+      <!-- Quick Portals Column -->
+      <div class="site-footer__col">
+        <h4 class="footer-heading">{isAr ? 'المسارات' : 'Tracks'}</h4>
+        <ul class="footer-links">
+          <li><a href={isAr ? '/vo' : '/en/vo'}>🎙️ {t.voiceOverTrack}</a></li>
+          <li><a href={isAr ? '/marketing' : '/en/marketing'}>🎬 {t.marketingTrack}</a></li>
+          <li><a href={isAr ? '/' : '/en'}>🚪 {t.gatewayIntro}</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact & Booking Column -->
+      <div class="site-footer__col" id="footer-contact">
+        <h4 class="footer-heading">{t.navContact}</h4>
+        <ul class="footer-contact-list">
+          <li>
+            <span class="contact-icon">💬</span>
+            <a href={siteData.whatsappUrl} target="_blank" rel="noopener noreferrer">{isAr ? 'محادثة واتساب مباشرة' : 'Direct WhatsApp Chat'}</a>
+          </li>
+          <li>
+            <span class="contact-icon">📱</span>
+            <a href={`tel:${siteData.phoneIntl}`}>{isAr ? 'اتصال هاتفي مباشر' : 'Direct Phone Call'}</a>
+          </li>
+          <li>
+            <span class="contact-icon">✉️</span>
+            <a href={`mailto:${siteData.email}`}>{isAr ? 'إرسال بريد إلكتروني' : 'Send Direct Email'}</a>
+          </li>
+          <li>
+            <span class="contact-icon">📍</span>
+            <span>{isAr ? siteData.locationAr : siteData.locationEn}</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="site-footer__bottom">
+      <p class="copyright">
+        {t.copyright} · {isAr ? siteData.locationAr : siteData.locationEn}
+      </p>
+      <div class="footer-bottom-links">
+        <a href="#top" class="back-to-top">
+          <span>{isAr ? 'العودة للأعلى' : 'Back to top'}</span>
+          <span aria-hidden="true">↑</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background-color: var(--bg-soft);
+    border-top: 1px solid var(--rule);
+    padding-block: 4.5rem 2.5rem;
+    margin-top: auto;
+    transition: background-color var(--transition-base);
+  }
+
+  .site-footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .site-footer__grid {
+      grid-template-columns: 2fr 1fr 1.5fr;
+      gap: 3.5rem;
+    }
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+  }
+
+  .footer-brand__monogram {
+    width: 42px;
+    height: 42px;
+    background-color: var(--brand-primary);
+    color: #FAEDCD;
+    border-radius: var(--radius-sm);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.05rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  html[data-theme='dark'] .footer-brand__monogram {
+    background-color: #1A3426;
+    color: var(--secondary);
+    border: 1px solid rgba(244, 162, 97, 0.3);
+  }
+
+  .footer-brand__name {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0;
+  }
+
+  .footer-brand__sub {
+    font-size: 0.8rem;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  .footer-desc {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: var(--ink-secondary);
+    max-width: 380px;
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-badge-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .footer-heading {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin-bottom: 1.25rem;
+  }
+
+  .footer-links, .footer-contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .footer-links a, .footer-contact-list a {
+    font-size: 0.92rem;
+    color: var(--ink-secondary);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .footer-links a:hover, .footer-contact-list a:hover {
+    color: var(--accent);
+  }
+
+  .footer-contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: 0.92rem;
+    color: var(--ink-secondary);
+  }
+
+  .contact-icon {
+    font-size: 1rem;
+  }
+
+  .site-footer__bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+  }
+
+  @media (min-width: 640px) {
+    .site-footer__bottom {
+      flex-direction: row;
+    }
+  }
+
+  .back-to-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    color: var(--ink-secondary);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: color var(--transition-fast);
+  }
+
+  .back-to-top:hover {
+    color: var(--accent);
+  }
+</style>
