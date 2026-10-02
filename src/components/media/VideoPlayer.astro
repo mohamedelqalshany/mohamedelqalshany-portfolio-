@@ -440,17 +440,25 @@ const isAr = locale === 'ar';
       function togglePlay() {
         if (video.paused) {
           pauseAllOtherMedia(video);
-          video.play();
-          updatePlayState(true);
+          const p = video.play();
+          if (p && p.catch) {
+            p.catch(err => {
+              console.warn('Playback error:', err);
+              updatePlayState(false);
+            });
+          }
         } else {
           video.pause();
-          updatePlayState(false);
         }
       }
 
       if (centerBtn) centerBtn.addEventListener('click', togglePlay);
       if (playMiniBtn) playMiniBtn.addEventListener('click', togglePlay);
       video.addEventListener('click', togglePlay);
+
+      video.addEventListener('play', () => updatePlayState(true));
+      video.addEventListener('pause', () => updatePlayState(false));
+      video.addEventListener('playing', () => updatePlayState(true));
 
       video.addEventListener('loadedmetadata', () => {
         if (timeDuration) timeDuration.textContent = formatTime(video.duration);
