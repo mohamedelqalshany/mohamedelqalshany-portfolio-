@@ -1,0 +1,502 @@
+---
+import copywritingData from '../../data/copywriting.json';
+
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'ar' } = Astro.props;
+const isAr = locale === 'ar';
+
+const categories = [
+  { slug: 'all', labelAr: 'كافة النماذج', labelEn: 'All Samples' },
+  { slug: 'trend-jacking', labelAr: 'ركوب التريند (Trend Jacking)', labelEn: 'Trend Jacking' },
+  { slug: 'copywriting', labelAr: 'كتابة إعلانية (Copywriting)', labelEn: 'Sales Copy' },
+  { slug: 'content-writing', labelAr: 'صناعة المحتوى (Content)', labelEn: 'Content Strategy' },
+  { slug: 'educational', labelAr: 'محتوى تعليمي', labelEn: 'Educational' },
+  { slug: 'integrated', labelAr: 'كتابة + صوت مدمج', labelEn: 'Copy + VO' },
+  { slug: 'sketches', labelAr: 'اسكتشات وسيناريو', labelEn: 'Sketches' },
+  { slug: 'billboard', labelAr: 'إعلانات الطرق والميمز', labelEn: 'OOH & Memes' },
+];
+---
+
+<section class="section copy-section" id="copywriting-samples">
+  <div class="ambient-glow ambient-glow--terracotta" style="top: 15%; right: 5%;" aria-hidden="true"></div>
+  <div class="ambient-glow ambient-glow--forest" style="bottom: 10%; left: 8%;" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="section-head section-head--center">
+      <p class="eyebrow">
+        <span class="eyebrow-dot" aria-hidden="true"></span>
+        {isAr ? 'الكتابة الإعلانية وصناعة الأثر' : 'Copywriting & Content Strategy'}
+      </p>
+      <h2 class="section-head__title">
+        {isAr ? 'نماذج حية لكتابة تصنع تفاعلاً وتحقق مبيعات' : 'Live Copy Samples That Drive Engagement & Conversions'}
+      </h2>
+      <p class="section-head__lede">
+        {isAr 
+          ? 'من ركوب التريند السريع، إلى النصوص الإعلانية المباشرة (Direct Response)، واللوحات الإعلانية الضخمة، والاسكتشات الدرامية. إليك نماذج واقعية من صلب الحملات.'
+          : 'From real-time trend jacking and direct-response sales copy, to high-recall highway billboards and dramatic narrative sketches. Real-world campaign assets.'}
+      </p>
+    </div>
+
+    <!-- Category Filter Tabs -->
+    <div class="copy-filter-bar" role="tablist" aria-label="Filter copy samples">
+      {categories.map((cat, idx) => (
+        <button 
+          type="button" 
+          class:list={['copy-filter-btn', { 'is-active': idx === 0 }]}
+          data-copy-filter={cat.slug}
+          role="tab"
+          aria-selected={idx === 0 ? "true" : "false"}
+        >
+          {isAr ? cat.labelAr : cat.labelEn}
+        </button>
+      ))}
+    </div>
+
+    <!-- Copy Samples Grid -->
+    <div class="copy-grid" data-copy-grid>
+      {copywritingData.map((item) => {
+        const isBillboard = item.categorySlug === 'billboard';
+        const isSpecialCard = item.categorySlug === 'integrated' || item.categorySlug === 'sketches';
+
+        return (
+          <article 
+            class:list={[
+              'copy-card', 
+              { 
+                'copy-card--billboard': isBillboard,
+                'copy-card--special': isSpecialCard,
+                'copy-card--featured': item.isFeatured 
+              }
+            ]}
+            data-copy-item
+            data-category={item.categorySlug}
+          >
+            {item.image && (
+              <div class="copy-card__media">
+                <img 
+                  src={item.image} 
+                  alt={isAr ? item.titleAr : item.titleEn}
+                  loading="lazy"
+                  decoding="async"
+                  class="copy-card__img"
+                />
+                <div class="copy-card__overlay">
+                  <span class="copy-zoom-hint">🔍 {isAr ? 'عرض بالحجم الكامل' : 'View Full Image'}</span>
+                </div>
+              </div>
+            )}
+
+            <div class="copy-card__body">
+              <div class="copy-card__header-meta">
+                <span class="copy-card__category">{isAr ? item.categoryAr : item.categoryEn}</span>
+                {item.isFeatured && (
+                  <span class="badge badge--forest">{isAr ? 'مميز ★' : 'Featured ★'}</span>
+                )}
+              </div>
+
+              <h3 class="copy-card__title">
+                {isAr ? item.titleAr : item.titleEn}
+              </h3>
+
+              <p class="copy-card__desc">
+                {isAr ? item.descriptionAr : item.descriptionEn}
+              </p>
+
+              <div class="copy-card__footer">
+                <span class="copy-card__tag">
+                  {isAr ? item.badgeAr : item.badgeEn}
+                </span>
+
+                {item.link && (
+                  <a 
+                    href={item.link} 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    class="btn btn--secondary btn--sm copy-link-btn"
+                  >
+                    <span>{isAr ? (item.linkTextAr || 'فتح الرابط الأصلي') : (item.linkTextEn || 'Open Original Link')}</span>
+                    <span aria-hidden="true" class="link-arrow">↗</span>
+                  </a>
+                )}
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+
+    <!-- Image Lightbox Modal -->
+    <div class="copy-lightbox" id="copy-lightbox" aria-hidden="true">
+      <div class="copy-lightbox__backdrop" data-lightbox-close></div>
+      <div class="copy-lightbox__content">
+        <button class="copy-lightbox__close" type="button" data-lightbox-close aria-label={isAr ? "إغلاق المعاينة" : "Close image preview"}>✕</button>
+        <img class="copy-lightbox__img" id="copy-lightbox-img" src="" alt="Full preview" />
+        <p class="copy-lightbox__caption" id="copy-lightbox-caption"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .copy-section {
+    position: relative;
+    padding-block: 4.5rem 5.5rem;
+    overflow: hidden;
+  }
+
+  .copy-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 2.75rem;
+    padding: 0.35rem;
+    background-color: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-pill);
+    max-width: 980px;
+    margin-inline: auto;
+  }
+
+  .copy-filter-btn {
+    padding: 0.5rem 1.15rem;
+    border: none;
+    background: transparent;
+    color: var(--ink-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+  }
+
+  .copy-filter-btn:hover {
+    color: var(--brand-primary);
+    background-color: rgba(30, 58, 43, 0.05);
+  }
+
+  html[data-theme='dark'] .copy-filter-btn:hover {
+    color: var(--secondary);
+    background-color: rgba(244, 162, 97, 0.1);
+  }
+
+  .copy-filter-btn.is-active {
+    background-color: var(--brand-primary);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+
+  html[data-theme='dark'] .copy-filter-btn.is-active {
+    background-color: var(--secondary);
+    color: #121F17;
+  }
+
+  .copy-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .copy-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .copy-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .copy-card {
+    background-color: var(--surface);
+    border: 1px solid var(--rule);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .copy-card:hover {
+    transform: translateY(-4px);
+    border-color: var(--rule-accent);
+    box-shadow: var(--shadow-md);
+  }
+
+  .copy-card--featured {
+    border-color: var(--accent);
+  }
+
+  .copy-card--billboard {
+    grid-column: 1 / -1;
+  }
+
+  .copy-card--special {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(30, 58, 43, 0.04) 100%);
+    border-width: 2px;
+  }
+
+  html[data-theme='dark'] .copy-card--special {
+    background: linear-gradient(135deg, var(--surface) 0%, rgba(244, 162, 97, 0.05) 100%);
+  }
+
+  .copy-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background-color: #0d1712;
+    cursor: pointer;
+  }
+
+  .copy-card--billboard .copy-card__media {
+    aspect-ratio: 24 / 7;
+  }
+
+  .copy-card__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .copy-card:hover .copy-card__img {
+    transform: scale(1.04);
+  }
+
+  .copy-card__overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 31, 23, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .copy-card__media:hover .copy-card__overlay {
+    opacity: 1;
+  }
+
+  .copy-zoom-hint {
+    background-color: rgba(255, 255, 255, 0.92);
+    color: #121F17;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 0.4rem 0.85rem;
+    border-radius: var(--radius-pill);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  }
+
+  .copy-card__body {
+    padding: 1.35rem 1.35rem 1.15rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.65rem;
+  }
+
+  .copy-card__header-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .copy-card__category {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--brand-primary);
+  }
+
+  html[data-theme='dark'] .copy-card__category {
+    color: var(--secondary);
+  }
+
+  .copy-card__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  .copy-card__desc {
+    font-size: 0.875rem;
+    color: var(--ink-secondary);
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+  }
+
+  .copy-card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding-top: 0.85rem;
+    border-top: 1px solid var(--rule);
+    margin-top: 0.5rem;
+  }
+
+  .copy-card__tag {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--ink-muted);
+  }
+
+  .copy-link-btn {
+    text-decoration: none;
+    font-size: 0.78rem;
+    padding: 0.3rem 0.75rem;
+  }
+
+  .link-arrow {
+    display: inline-block;
+    transition: transform var(--transition-fast);
+  }
+
+  .copy-link-btn:hover .link-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  /* Lightbox */
+  .copy-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  .copy-lightbox.is-open {
+    display: flex;
+  }
+
+  .copy-lightbox__backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(10, 20, 15, 0.85);
+    backdrop-filter: blur(8px);
+  }
+
+  .copy-lightbox__content {
+    position: relative;
+    z-index: 2;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .copy-lightbox__img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: var(--radius-md);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+  }
+
+  .copy-lightbox__close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    padding: 0.5rem;
+    line-height: 1;
+  }
+
+  .copy-lightbox__caption {
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-top: 0.75rem;
+    text-align: center;
+  }
+</style>
+
+<script>
+  function setupCopywritingSection() {
+    const filterBtns = document.querySelectorAll('[data-copy-filter]');
+    const copyItems = document.querySelectorAll('[data-copy-item]');
+    const lightbox = document.getElementById('copy-lightbox');
+    const lightboxImg = document.getElementById('copy-lightbox-img') as HTMLImageElement;
+    const lightboxCaption = document.getElementById('copy-lightbox-caption');
+    const closeBtns = document.querySelectorAll('[data-lightbox-close]');
+
+    // Filtering
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filter = btn.getAttribute('data-copy-filter');
+        filterBtns.forEach(b => {
+          b.classList.remove('is-active');
+          b.setAttribute('aria-selected', 'false');
+        });
+        btn.classList.add('is-active');
+        btn.setAttribute('aria-selected', 'true');
+
+        copyItems.forEach(item => {
+          const cat = item.getAttribute('data-category');
+          if (filter === 'all' || cat === filter || (filter === 'billboard' && (cat === 'billboard' || cat === 'memes'))) {
+            (item as HTMLElement).style.display = 'flex';
+          } else {
+            (item as HTMLElement).style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // Lightbox image clicks
+    document.querySelectorAll('.copy-card__media').forEach(media => {
+      media.addEventListener('click', () => {
+        const img = media.querySelector('.copy-card__img') as HTMLImageElement;
+        if (img && lightbox && lightboxImg) {
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt;
+          if (lightboxCaption) lightboxCaption.textContent = img.alt;
+          lightbox.classList.add('is-open');
+          lightbox.setAttribute('aria-hidden', 'false');
+          document.body.style.overflow = 'hidden';
+        }
+      });
+    });
+
+    closeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        if (lightbox) {
+          lightbox.classList.remove('is-open');
+          lightbox.setAttribute('aria-hidden', 'true');
+          document.body.style.overflow = '';
+        }
+      });
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && lightbox && lightbox.classList.contains('is-open')) {
+        lightbox.classList.remove('is-open');
+        lightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', setupCopywritingSection);
+</script>
