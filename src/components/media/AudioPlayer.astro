@@ -33,9 +33,13 @@ const isAr = locale === 'ar';
     </div>
 
     <!-- Center YouTube-Style Play/Pause Button -->
-    <button class="yt-center-play-badge" type="button" data-play-btn aria-label={isAr ? "تشغيل المقطع الصوتي" : "Play audio track"}>
-      <svg viewBox="0 0 24 24" width="30" height="30" fill="#ffffff">
+    <button class="stage-center-play yt-center-play-badge" type="button" data-play-btn aria-label={isAr ? "تشغيل المقطع الصوتي" : "Play audio track"}>
+      <svg class="center-icon-play" viewBox="0 0 24 24" width="30" height="30" fill="#ffffff">
         <polygon points="8,5 19,12 8,19"></polygon>
+      </svg>
+      <svg class="center-icon-pause" viewBox="0 0 24 24" width="30" height="30" fill="#ffffff" style="display: none;">
+        <rect x="6" y="5" width="4" height="14"></rect>
+        <rect x="14" y="5" width="4" height="14"></rect>
       </svg>
     </button>
 
@@ -58,23 +62,23 @@ const isAr = locale === 'ar';
     </div>
 
     <!-- YouTube-Style Controls Bar (Strictly LTR) -->
-    <div class="yt-controls-bar">
+    <div class="media-controls-bar yt-controls-bar">
       <!-- Full-Width Progress Scrubber Track -->
-      <div class="yt-progress-container" data-scrubber role="slider" aria-label={isAr ? "شريط التقدم" : "Seek slider"} tabindex="0">
+      <div class="media-progress-track yt-progress-container" data-scrubber role="slider" aria-label={isAr ? "شريط التقدم" : "Seek slider"} tabindex="0">
         <div class="yt-progress-track">
           <div class="yt-progress-buffer" data-audio-buffer style="width: 0%;"></div>
-          <div class="yt-progress-fill" data-fill style="width: 0%;"></div>
+          <div class="media-progress-fill yt-progress-fill" data-fill style="width: 0%;"></div>
           <div class="yt-progress-handle" data-audio-handle style="left: 0%;"></div>
         </div>
         <div class="yt-time-tooltip" data-audio-tooltip style="display: none;">0:00</div>
       </div>
 
       <!-- Controls Row: Strict LTR Layout -->
-      <div class="yt-controls-row">
+      <div class="media-controls-row yt-controls-row">
         <!-- Left Group: [Play/Pause] [Rewind 10s] [Forward 10s] [Volume] [Time] -->
-        <div class="yt-left-controls">
+        <div class="media-left-controls yt-left-controls">
           <!-- 1. Play / Pause Button -->
-          <button class="yt-ctrl-btn yt-play-btn" type="button" data-mini-play-btn aria-label={isAr ? "تشغيل / إيقاف (k / Space)" : "Play/Pause (k / Space)"} title={isAr ? "تشغيل / إيقاف (k)" : "Play/Pause (k)"}>
+          <button class="m-btn m-play-mini yt-ctrl-btn yt-play-btn" type="button" data-mini-play-btn aria-label={isAr ? "تشغيل / إيقاف (k / Space)" : "Play/Pause (k / Space)"} title={isAr ? "تشغيل / إيقاف (k)" : "Play/Pause (k)"}>
             <svg class="m-icon-play" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
               <path d="M8 5v14l11-7z"></path>
             </svg>
@@ -84,7 +88,7 @@ const isAr = locale === 'ar';
           </button>
 
           <!-- 2. Backward 10 Seconds -->
-          <button class="yt-ctrl-btn yt-skip-btn" type="button" data-audio-rewind-btn aria-label={isAr ? "تخطي 10 ثوان للخلف (j)" : "Rewind 10 seconds (j)"} title={isAr ? "رجوع 10 ثوان (j)" : "Rewind 10s (j)"}>
+          <button class="m-btn yt-ctrl-btn yt-skip-btn" type="button" data-audio-rewind-btn aria-label={isAr ? "تخطي 10 ثوان للخلف (j)" : "Rewind 10 seconds (j)"} title={isAr ? "رجوع 10 ثوان (j)" : "Rewind 10s (j)"}>
             <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
               <path d="M12.5 3a9 9 0 0 0-8.6 6.3L2.3 8.1 2 13l4.9-.7-1.7-1.7A7 7 0 1 1 5 12h-2a9 9 0 1 0 9.5-9z"></path>
               <text x="12" y="15.5" font-size="7.5" font-family="system-ui, -apple-system, sans-serif" font-weight="700" text-anchor="middle" fill="currentColor">10</text>
@@ -92,7 +96,7 @@ const isAr = locale === 'ar';
           </button>
 
           <!-- 3. Forward 10 Seconds -->
-          <button class="yt-ctrl-btn yt-skip-btn" type="button" data-audio-forward-btn aria-label={isAr ? "تخطي 10 ثوان للأمام (l)" : "Forward 10 seconds (l)"} title={isAr ? "تقديم 10 ثوان (l)" : "Forward 10s (l)"}>
+          <button class="m-btn yt-ctrl-btn yt-skip-btn" type="button" data-audio-forward-btn aria-label={isAr ? "تخطي 10 ثوان للأمام (l)" : "Forward 10 seconds (l)"} title={isAr ? "تقديم 10 ثوان (l)" : "Forward 10s (l)"}>
             <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
               <path d="M11.5 3a9 9 0 0 1 8.6 6.3l1.6-1.2.3 4.9-4.9-.7 1.7-1.7A7 7 0 1 0 19 12h2a9 9 0 1 1-9.5-9z"></path>
               <text x="12" y="15.5" font-size="7.5" font-family="system-ui, -apple-system, sans-serif" font-weight="700" text-anchor="middle" fill="currentColor">10</text>
@@ -100,8 +104,8 @@ const isAr = locale === 'ar';
           </button>
 
           <!-- 4. Volume Control & YouTube Slider -->
-          <div class="yt-volume-group" data-audio-volume-group>
-            <button class="yt-ctrl-btn yt-mute-btn" type="button" data-mute-btn aria-label={isAr ? "كتم / تشغيل الصوت (m)" : "Mute/Unmute (m)"} title={isAr ? "الصوت (m)" : "Mute (m)"}>
+          <div class="media-volume-group yt-volume-group" data-audio-volume-group>
+            <button class="m-btn m-mute-btn yt-ctrl-btn yt-mute-btn" type="button" data-mute-btn aria-label={isAr ? "كتم / تشغيل الصوت (m)" : "Mute/Unmute (m)"} title={isAr ? "الصوت (m)" : "Mute (m)"}>
               <svg class="icon-volume" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
                 <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path>
               </svg>
@@ -124,7 +128,7 @@ const isAr = locale === 'ar';
           </div>
 
           <!-- 5. Time Display: current / duration -->
-          <div class="yt-time-display" dir="ltr">
+          <div class="m-time-display yt-time-display" dir="ltr">
             <span class="yt-time-current" data-time-current>0:00</span>
             <span class="yt-time-separator">/</span>
             <span class="yt-time-duration" data-time-duration>--:--</span>
@@ -132,10 +136,10 @@ const isAr = locale === 'ar';
         </div>
 
         <!-- Right Group: [Speed Selector] -->
-        <div class="yt-right-controls">
+        <div class="media-right-controls yt-right-controls">
           <!-- Playback Speed -->
-          <button class="yt-ctrl-btn yt-speed-btn" type="button" data-speed-btn aria-label={isAr ? "سرعة التشغيل" : "Playback speed"} title={isAr ? "السرعة" : "Playback speed"}>
-            <span class="yt-speed-label" data-speed-val>1x</span>
+          <button class="m-btn m-speed-btn yt-ctrl-btn yt-speed-btn" type="button" data-speed-btn aria-label={isAr ? "سرعة التشغيل" : "Playback speed"} title={isAr ? "السرعة" : "Playback speed"}>
+            <span class="yt-speed-label" data-speed-val>1.0x</span>
           </button>
         </div>
       </div>
@@ -642,11 +646,11 @@ const isAr = locale === 'ar';
   }
 </style>
 
-<script>
+<script is:inline>
   function setupAudioPlayers() {
     const players = document.querySelectorAll('[data-audio-player]');
     
-    function pauseAllOtherMedia(currentAudio: HTMLAudioElement) {
+    function pauseAllOtherMedia(currentAudio) {
       document.querySelectorAll('audio, video').forEach(media => {
         if (media !== currentAudio && !media.paused) {
           media.pause();
@@ -656,57 +660,62 @@ const isAr = locale === 'ar';
         const audio = p.querySelector('audio');
         if (audio !== currentAudio) {
           p.classList.remove('is-playing');
-          const mPlay = p.querySelector('.m-icon-play') as HTMLElement;
-          const mPause = p.querySelector('.m-icon-pause') as HTMLElement;
-          if (mPlay && mPause) { mPlay.style.display = 'block'; mPause.style.display = 'none'; }
+          const cPlay = p.querySelector('.center-icon-play');
+          const cPause = p.querySelector('.center-icon-pause');
+          const mPlay = p.querySelector('.m-icon-play');
+          const mPause = p.querySelector('.m-icon-pause');
+          if (cPlay && cPause) { cPlay.style.display="block"; cPause.style.display="none"; }
+          if (mPlay && mPause) { mPlay.style.display="block"; mPause.style.display="none"; }
         }
       });
     }
 
     players.forEach(player => {
-      const audio = player.querySelector('.audio-element') as HTMLAudioElement;
-      const centerBtn = player.querySelector('[data-play-btn]') as HTMLButtonElement;
-      const miniPlayBtn = player.querySelector('[data-mini-play-btn]') as HTMLButtonElement;
-      const rewindBtn = player.querySelector('[data-audio-rewind-btn]') as HTMLButtonElement;
-      const forwardBtn = player.querySelector('[data-audio-forward-btn]') as HTMLButtonElement;
-      const miniPlayIcon = player.querySelector('.m-icon-play') as HTMLElement;
-      const miniPauseIcon = player.querySelector('.m-icon-pause') as HTMLElement;
+      const audio = player.querySelector('.audio-element');
+      const centerBtn = player.querySelector('[data-play-btn]');
+      const miniPlayBtn = player.querySelector('[data-mini-play-btn]');
+      const rewindBtn = player.querySelector('[data-audio-rewind-btn]');
+      const forwardBtn = player.querySelector('[data-audio-forward-btn]');
+      const miniPlayIcon = player.querySelector('.m-icon-play');
+      const miniPauseIcon = player.querySelector('.m-icon-pause');
+      const centerPlayIcon = player.querySelector('.center-icon-play');
+      const centerPauseIcon = player.querySelector('.center-icon-pause');
       
-      const scrubber = player.querySelector('[data-scrubber]') as HTMLElement;
-      const fill = player.querySelector('[data-fill]') as HTMLElement;
-      const buffer = player.querySelector('[data-audio-buffer]') as HTMLElement;
-      const handle = player.querySelector('[data-audio-handle]') as HTMLElement;
-      const tooltip = player.querySelector('[data-audio-tooltip]') as HTMLElement;
+      const scrubber = player.querySelector('[data-scrubber]');
+      const fill = player.querySelector('[data-fill]');
+      const buffer = player.querySelector('[data-audio-buffer]');
+      const handle = player.querySelector('[data-audio-handle]');
+      const tooltip = player.querySelector('[data-audio-tooltip]');
 
-      const timeCurrent = player.querySelector('[data-time-current]') as HTMLElement;
-      const timeDuration = player.querySelector('[data-time-duration]') as HTMLElement;
-      const speedBtn = player.querySelector('[data-speed-btn]') as HTMLButtonElement;
-      const speedVal = player.querySelector('[data-speed-val]') as HTMLElement;
-      const muteBtn = player.querySelector('[data-mute-btn]') as HTMLButtonElement;
-      const volIcon = player.querySelector('.icon-volume') as HTMLElement;
-      const mutedIcon = player.querySelector('.icon-muted') as HTMLElement;
-      const volumeSlider = player.querySelector('[data-audio-volume-slider]') as HTMLInputElement;
+      const timeCurrent = player.querySelector('[data-time-current]');
+      const timeDuration = player.querySelector('[data-time-duration]');
+      const speedBtn = player.querySelector('[data-speed-btn]');
+      const speedVal = player.querySelector('[data-speed-val]');
+      const muteBtn = player.querySelector('[data-mute-btn]');
+      const volIcon = player.querySelector('.icon-volume');
+      const mutedIcon = player.querySelector('.icon-muted');
+      const volumeSlider = player.querySelector('[data-audio-volume-slider]');
 
       // Feedback elements
-      const fbCenter = player.querySelector('[data-audio-feedback-center]') as HTMLElement;
-      const fbCenterPlay = player.querySelector('.fb-icon-play') as HTMLElement;
-      const fbCenterPause = player.querySelector('.fb-icon-pause') as HTMLElement;
-      const fbRewind = player.querySelector('[data-audio-feedback-rewind]') as HTMLElement;
-      const fbForward = player.querySelector('[data-audio-feedback-forward]') as HTMLElement;
+      const fbCenter = player.querySelector('[data-audio-feedback-center]');
+      const fbCenterPlay = player.querySelector('.fb-icon-play');
+      const fbCenterPause = player.querySelector('.fb-icon-pause');
+      const fbRewind = player.querySelector('[data-audio-feedback-rewind]');
+      const fbForward = player.querySelector('[data-audio-feedback-forward]');
 
       if (!audio) return;
 
       const speeds = [1.0, 1.25, 1.5, 2.0, 0.75];
       let speedIdx = 0;
 
-      function formatTime(seconds: number) {
+      function formatTime(seconds) {
         if (isNaN(seconds) || seconds < 0) return '0:00';
         const mins = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
       }
 
-      function flashFeedback(el: HTMLElement | null) {
+      function flashFeedback(el) {
         if (!el) return;
         el.classList.add('is-flashing');
         setTimeout(() => {
@@ -714,13 +723,17 @@ const isAr = locale === 'ar';
         }, 450);
       }
 
-      function updatePlayState(isPlaying: boolean) {
+      function updatePlayState(isPlaying) {
         if (isPlaying) {
           player.classList.add('is-playing');
+          if (centerPlayIcon) centerPlayIcon.style.display = 'none';
+          if (centerPauseIcon) centerPauseIcon.style.display = 'block';
           if (miniPlayIcon) miniPlayIcon.style.display = 'none';
           if (miniPauseIcon) miniPauseIcon.style.display = 'block';
         } else {
           player.classList.remove('is-playing');
+          if (centerPlayIcon) centerPlayIcon.style.display = 'block';
+          if (centerPauseIcon) centerPauseIcon.style.display = 'none';
           if (miniPlayIcon) miniPlayIcon.style.display = 'block';
           if (miniPauseIcon) miniPauseIcon.style.display = 'none';
         }
@@ -751,7 +764,7 @@ const isAr = locale === 'ar';
         }
       }
 
-      function skip(seconds: number) {
+      function skip(seconds) {
         if (!audio.duration) return;
         const target = Math.max(0, Math.min(audio.duration, audio.currentTime + seconds));
         audio.currentTime = target;
@@ -801,7 +814,7 @@ const isAr = locale === 'ar';
       // Seeking & Scrubber
       let isDragging = false;
 
-      function seekTo(e: MouseEvent | TouchEvent) {
+      function seekTo(e) {
         if (!scrubber || !audio.duration) return;
         const rect = scrubber.getBoundingClientRect();
         const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
@@ -854,7 +867,7 @@ const isAr = locale === 'ar';
           speedIdx = (speedIdx + 1) % speeds.length;
           const s = speeds[speedIdx];
           audio.playbackRate = s;
-          speedVal.textContent = `${s === 1 ? '1' : s}x`;
+          speedVal.textContent = `${s.toFixed(s === 1 ? 1 : 2)}x`;
         });
       }
 
@@ -904,8 +917,8 @@ const isAr = locale === 'ar';
       }
 
       // YouTube Keyboard Shortcuts
-      player.addEventListener('keydown', (e: KeyboardEvent) => {
-        if ((e.target as HTMLElement).tagName === 'INPUT') return;
+      player.addEventListener('keydown', (e) => {
+        if (e.target && e.target.tagName === 'INPUT') return;
 
         const key = e.key.toLowerCase();
         if (key === ' ' || key === 'k') {
