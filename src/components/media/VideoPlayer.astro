@@ -12,7 +12,7 @@ const { id, src, title, category, locale = 'ar', isFeatured = false } = Astro.pr
 const isAr = locale === 'ar';
 ---
 
-<div class:list={['video-card', { 'is-featured': isFeatured }]} data-video-player data-sample-id={id}>
+<div class:list={['video-card', { 'is-featured': isFeatured }]} data-video-player data-sample-id={id} tabindex="0">
   <div class="video-container">
     <video 
       class="video-element" 
@@ -22,61 +22,87 @@ const isAr = locale === 'ar';
       controlslist="nodownload"
     ></video>
 
-    <!-- Overlay Play Center Button -->
-    <button class="video-center-play" type="button" data-video-center-play aria-label={isAr ? "تشغيل الفيديو" : "Play video"}>
-      <svg class="center-icon-play" viewBox="0 0 24 24" width="32" height="32" fill="currentColor">
-        <polygon points="5 3 19 12 5 21 5 3"></polygon>
-      </svg>
-      <svg class="center-icon-pause" viewBox="0 0 24 24" width="32" height="32" fill="currentColor" style="display: none;">
-        <rect x="6" y="4" width="4" height="16"></rect>
-        <rect x="14" y="4" width="4" height="16"></rect>
+    <!-- Overlay YouTube-Style Center Play Button -->
+    <button class="yt-center-play-badge" type="button" data-video-center-play aria-label={isAr ? "تشغيل الفيديو" : "Play video"}>
+      <svg viewBox="0 0 24 24" width="30" height="30" fill="#ffffff">
+        <polygon points="8,5 19,12 8,19"></polygon>
       </svg>
     </button>
 
-    <!-- Custom Control Bar -->
-    <div class="video-controls-bar">
-      <!-- Progress Bar -->
-      <div class="video-progress-track" data-video-progress>
-        <div class="video-progress-fill" data-video-fill style="width: 0%;"></div>
+    <!-- Quick Action Feedback Overlays (YouTube Ripple / Flash Indicator) -->
+    <div class="yt-feedback-layer" aria-hidden="true">
+      <div class="yt-feedback-icon yt-feedback-center" data-feedback-center>
+        <svg class="fb-icon-play" viewBox="0 0 24 24" width="36" height="36" fill="currentColor">
+          <path d="M8 5v14l11-7z"></path>
+        </svg>
+        <svg class="fb-icon-pause" viewBox="0 0 24 24" width="36" height="36" fill="currentColor" style="display: none;">
+          <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+        </svg>
+      </div>
+      <div class="yt-feedback-icon yt-feedback-rewind" data-feedback-rewind>
+        <span class="fb-badge-text">-10s</span>
+      </div>
+      <div class="yt-feedback-icon yt-feedback-forward" data-feedback-forward>
+        <span class="fb-badge-text">+10s</span>
+      </div>
+    </div>
+
+    <!-- YouTube-Style Controls Bar (Always strict LTR) -->
+    <div class="yt-controls-bar">
+      <!-- Full-Width Progress Scrubber Track -->
+      <div class="yt-progress-container" data-video-progress role="slider" aria-label={isAr ? "شريط التقدم" : "Seek slider"} tabindex="0">
+        <div class="yt-progress-track">
+          <div class="yt-progress-buffer" data-video-buffer style="width: 0%;"></div>
+          <div class="yt-progress-fill" data-video-fill style="width: 0%;"></div>
+          <div class="yt-progress-handle" data-video-handle style="left: 0%;"></div>
+        </div>
+        <div class="yt-time-tooltip" data-video-tooltip style="display: none;">0:00</div>
       </div>
 
-      <div class="video-controls-row">
-        <div class="video-left-controls">
-          <!-- Play / Pause Mini -->
-          <button class="v-btn play-mini-btn" type="button" data-video-play-btn aria-label={isAr ? "تشغيل / إيقاف" : "Play/Pause"}>
-            <svg class="v-icon-play" viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
-              <polygon points="5 3 19 12 5 21 5 3"></polygon>
+      <!-- Controls Row: Strict LTR Layout -->
+      <div class="yt-controls-row">
+        <!-- Left Group: [Play/Pause] [Rewind 10s] [Forward 10s] [Volume] [Time] -->
+        <div class="yt-left-controls">
+          <!-- 1. Play / Pause Button -->
+          <button class="yt-ctrl-btn yt-play-btn" type="button" data-video-play-btn aria-label={isAr ? "تشغيل / إيقاف (k / Space)" : "Play/Pause (k / Space)"} title={isAr ? "تشغيل / إيقاف (k)" : "Play/Pause (k)"}>
+            <svg class="v-icon-play" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M8 5v14l11-7z"></path>
             </svg>
-            <svg class="v-icon-pause" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" style="display: none;">
-              <rect x="6" y="4" width="4" height="16"></rect>
-              <rect x="14" y="4" width="4" height="16"></rect>
+            <svg class="v-icon-pause" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display: none;">
+              <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
             </svg>
           </button>
 
-          <!-- Time Display -->
-          <div class="v-time-display">
-            <span data-video-current>0:00</span> / <span data-video-duration>--:--</span>
-          </div>
-        </div>
+          <!-- 2. Backward 10 Seconds -->
+          <button class="yt-ctrl-btn yt-skip-btn" type="button" data-video-rewind-btn aria-label={isAr ? "تخطي 10 ثوان للخلف (j)" : "Rewind 10 seconds (j)"} title={isAr ? "رجوع 10 ثوان (j)" : "Rewind 10s (j)"}>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M12.5 3a9 9 0 0 0-8.6 6.3L2.3 8.1 2 13l4.9-.7-1.7-1.7A7 7 0 1 1 5 12h-2a9 9 0 1 0 9.5-9z"></path>
+              <text x="12" y="15.5" font-size="7.5" font-family="system-ui, -apple-system, sans-serif" font-weight="700" text-anchor="middle" fill="currentColor">10</text>
+            </svg>
+          </button>
 
-        <div class="video-right-controls">
-          <!-- Volume & Mute Control -->
-          <div class="video-volume-group" data-video-volume-group>
-            <button class="v-btn v-mute-btn" type="button" data-video-mute-btn aria-label={isAr ? "كتم / تشغيل الصوت" : "Mute/Unmute"}>
-              <svg class="v-icon-volume" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-                <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          <!-- 3. Forward 10 Seconds -->
+          <button class="yt-ctrl-btn yt-skip-btn" type="button" data-video-forward-btn aria-label={isAr ? "تخطي 10 ثوان للأمام (l)" : "Forward 10 seconds (l)"} title={isAr ? "تقديم 10 ثوان (l)" : "Forward 10s (l)"}>
+            <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+              <path d="M11.5 3a9 9 0 0 1 8.6 6.3l1.6-1.2.3 4.9-4.9-.7 1.7-1.7A7 7 0 1 0 19 12h2a9 9 0 1 1-9.5-9z"></path>
+              <text x="12" y="15.5" font-size="7.5" font-family="system-ui, -apple-system, sans-serif" font-weight="700" text-anchor="middle" fill="currentColor">10</text>
+            </svg>
+          </button>
+
+          <!-- 4. Volume Control & YouTube Slider -->
+          <div class="yt-volume-group" data-video-volume-group>
+            <button class="yt-ctrl-btn yt-mute-btn" type="button" data-video-mute-btn aria-label={isAr ? "كتم / تشغيل الصوت (m)" : "Mute/Unmute (m)"} title={isAr ? "الصوت (m)" : "Mute (m)"}>
+              <svg class="v-icon-volume" viewBox="0 0 24 24" width="22" height="22" fill="currentColor">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path>
               </svg>
-              <svg class="v-icon-muted" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
-                <line x1="1" y1="1" x2="23" y2="23"></line>
-                <path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"></path>
-                <path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2a7 7 0 0 1-.11 1.23"></path>
+              <svg class="v-icon-muted" viewBox="0 0 24 24" width="22" height="22" fill="currentColor" style="display: none;">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27l4.78 4.78H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"></path>
               </svg>
             </button>
-            <div class="video-volume-slider-wrap">
+            <div class="yt-volume-slider-wrap">
               <input 
                 type="range" 
-                class="video-volume-slider" 
+                class="yt-volume-slider" 
                 data-video-volume-slider 
                 min="0" 
                 max="1" 
@@ -87,15 +113,28 @@ const isAr = locale === 'ar';
             </div>
           </div>
 
-          <!-- Speed Control -->
-          <button class="v-btn v-speed-btn" type="button" data-video-speed-btn aria-label={isAr ? "سرعة التشغيل" : "Playback speed"}>
-            <span data-video-speed-val>1.0x</span>
+          <!-- 5. Time Display: current / duration -->
+          <div class="yt-time-display" dir="ltr">
+            <span class="yt-time-current" data-video-current>0:00</span>
+            <span class="yt-time-separator">/</span>
+            <span class="yt-time-duration" data-video-duration>--:--</span>
+          </div>
+        </div>
+
+        <!-- Right Group: [Speed Selector] [Fullscreen] -->
+        <div class="yt-right-controls">
+          <!-- Playback Speed -->
+          <button class="yt-ctrl-btn yt-speed-btn" type="button" data-video-speed-btn aria-label={isAr ? "سرعة التشغيل" : "Playback speed"} title={isAr ? "السرعة" : "Playback speed"}>
+            <span class="yt-speed-label" data-video-speed-val>1x</span>
           </button>
 
           <!-- Fullscreen Toggle -->
-          <button class="v-btn v-fs-btn" type="button" data-video-fs-btn aria-label={isAr ? "ملء الشاشة" : "Fullscreen"}>
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          <button class="yt-ctrl-btn yt-fs-btn" type="button" data-video-fs-btn aria-label={isAr ? "ملء الشاشة (f)" : "Fullscreen (f)"} title={isAr ? "ملء الشاشة (f)" : "Fullscreen (f)"}>
+            <svg class="v-icon-fs-enter" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+              <path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"></path>
+            </svg>
+            <svg class="v-icon-fs-exit" viewBox="0 0 24 24" width="20" height="20" fill="currentColor" style="display: none;">
+              <path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"></path>
             </svg>
           </button>
         </div>
@@ -103,6 +142,7 @@ const isAr = locale === 'ar';
     </div>
   </div>
 
+  <!-- Bottom Metadata Section -->
   <div class="video-card__meta">
     <div class="video-tag-row">
       <span class="video-badge">{category}</span>
@@ -122,6 +162,7 @@ const isAr = locale === 'ar';
     display: flex;
     flex-direction: column;
     height: 100%;
+    outline: none;
     transition: transform var(--transition-fast), border-color var(--transition-fast), box-shadow var(--transition-fast);
   }
 
@@ -140,11 +181,12 @@ const isAr = locale === 'ar';
     position: relative;
     width: 100%;
     aspect-ratio: 16 / 9;
-    background-color: #070E0A;
+    background-color: #000000;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none;
   }
 
   .video-element {
@@ -153,148 +195,274 @@ const isAr = locale === 'ar';
     object-fit: contain;
     display: block;
     cursor: pointer;
+    background-color: #000;
   }
 
-  /* Big Center Play Button */
-  .video-center-play {
+  /* YouTube Red Center Badge */
+  .yt-center-play-badge {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    background-color: rgba(224, 122, 95, 0.9);
-    color: #fff;
+    width: 68px;
+    height: 48px;
+    border-radius: 14px;
+    background-color: rgba(230, 33, 23, 0.92);
+    color: #ffffff;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
-    transition: all var(--transition-fast);
+    box-shadow: 0 4px 22px rgba(0, 0, 0, 0.6);
+    transition: transform 0.18s cubic-bezier(0.18, 0.89, 0.32, 1.28), background-color 0.15s ease, opacity 0.2s ease;
     z-index: 10;
   }
 
-  .video-center-play:hover {
-    background-color: var(--accent);
-    transform: translate(-50%, -50%) scale(1.1);
+  .yt-center-play-badge svg {
+    margin-left: 3px;
   }
 
-  .video-card.is-playing .video-center-play {
+  .yt-center-play-badge:hover {
+    background-color: #ff0000;
+    transform: translate(-50%, -50%) scale(1.12);
+  }
+
+  .video-card.is-playing .yt-center-play-badge {
     opacity: 0;
     pointer-events: none;
+    transform: translate(-50%, -50%) scale(0.85);
   }
 
-  .video-container:hover .video-center-play {
+  /* Quick Action Feedback Overlays */
+  .yt-feedback-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 12;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .yt-feedback-icon {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+    color: #ffffff;
+    border-radius: 50%;
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.6);
+    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+  }
+
+  .yt-feedback-center {
+    width: 64px;
+    height: 64px;
+  }
+
+  .yt-feedback-rewind {
+    left: 15%;
+    width: 64px;
+    height: 64px;
+  }
+
+  .yt-feedback-forward {
+    right: 15%;
+    width: 64px;
+    height: 64px;
+  }
+
+  .fb-badge-text {
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  .yt-feedback-icon.is-flashing {
     opacity: 1;
-    pointer-events: auto;
+    transform: scale(1.1);
   }
 
-  /* Control Bar */
-  .video-controls-bar {
+  /* YouTube Control Bar (Strictly LTR) */
+  .yt-controls-bar {
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 70%, transparent 100%);
-    padding: 0.75rem 1rem 0.5rem;
+    direction: ltr !important;
+    text-align: left !important;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+    padding: 0 10px 6px 10px;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
     z-index: 15;
     opacity: 0;
-    transition: opacity var(--transition-fast);
+    transition: opacity 0.2s ease;
   }
 
-  .video-container:hover .video-controls-bar,
-  .video-card.is-playing:hover .video-controls-bar {
+  .video-container:hover .yt-controls-bar,
+  .video-card:focus-within .yt-controls-bar,
+  .video-card:not(.is-playing) .yt-controls-bar,
+  .yt-controls-bar.force-visible {
     opacity: 1;
   }
 
-  /* Progress Track */
-  .video-progress-track {
+  /* Full-Width Progress Scrubber */
+  .yt-progress-container {
     width: 100%;
-    height: 5px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 3px;
+    height: 18px;
+    display: flex;
+    align-items: center;
     cursor: pointer;
     position: relative;
+    touch-action: none;
   }
 
-  .video-progress-fill {
+  .yt-progress-track {
+    width: 100%;
+    height: 3px;
+    background-color: rgba(255, 255, 255, 0.25);
+    position: relative;
+    border-radius: 2px;
+    transition: height 0.12s ease;
+  }
+
+  .yt-progress-container:hover .yt-progress-track,
+  .yt-progress-container.is-dragging .yt-progress-track {
+    height: 5px;
+  }
+
+  .yt-progress-buffer {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
-    background-color: var(--accent);
-    border-radius: 3px;
-    transition: width 0.1s linear;
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 2px;
+    pointer-events: none;
   }
 
-  .video-controls-row {
+  .yt-progress-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-color: #ff0000;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  .yt-progress-handle {
+    position: absolute;
+    top: 50%;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background-color: #ff0000;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.12s ease;
+    pointer-events: none;
+  }
+
+  .yt-progress-container:hover .yt-progress-handle,
+  .yt-progress-container.is-dragging .yt-progress-handle {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  /* Time Tooltip */
+  .yt-time-tooltip {
+    position: absolute;
+    bottom: 22px;
+    transform: translateX(-50%);
+    background: rgba(28, 28, 28, 0.95);
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 2px 6px;
+    border-radius: 2px;
+    pointer-events: none;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  /* Controls Row */
+  .yt-controls-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: #fff;
+    direction: ltr !important;
+    text-align: left !important;
+    height: 38px;
+    color: #ffffff;
   }
 
-  .video-left-controls, .video-right-controls {
+  .yt-left-controls {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 4px;
+    direction: ltr !important;
   }
 
-  .v-btn {
+  .yt-right-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    direction: ltr !important;
+  }
+
+  /* Base YouTube Control Buttons */
+  .yt-ctrl-btn {
     background: transparent;
     border: none;
-    color: #fff;
+    color: #ffffff;
     cursor: pointer;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: 0.2rem;
-    border-radius: var(--radius-xs);
-    transition: color var(--transition-fast);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    padding: 0;
+    opacity: 0.9;
+    transition: opacity 0.12s ease, transform 0.12s ease, background-color 0.12s ease;
   }
 
-  .v-btn:hover {
-    color: var(--accent);
+  .yt-ctrl-btn:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.12);
   }
 
-  .v-time-display {
-    font-size: 0.75rem;
-    font-variant-numeric: tabular-nums;
-    color: rgba(255, 255, 255, 0.9);
+  .yt-ctrl-btn:active {
+    transform: scale(0.92);
   }
 
-  .v-speed-btn {
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 0.2rem 0.5rem;
-    font-size: 0.75rem;
-    font-weight: 600;
-  }
-
-  .v-speed-btn:hover {
-    background-color: var(--accent);
-    color: #fff;
-  }
-
-  /* Volume Control */
-  .video-volume-group {
+  /* Volume Group */
+  .yt-volume-group {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
+    margin-right: 4px;
   }
 
-  .video-volume-slider-wrap {
+  .yt-volume-slider-wrap {
     display: flex;
     align-items: center;
-    width: 58px;
+    width: 54px;
+    margin-left: 2px;
+    transition: width 0.18s ease;
   }
 
-  .video-volume-slider {
+  .yt-volume-slider {
     -webkit-appearance: none;
     appearance: none;
     width: 100%;
-    height: 4px;
+    height: 3px;
     border-radius: 2px;
     background: rgba(255, 255, 255, 0.4);
     outline: none;
@@ -302,33 +470,70 @@ const isAr = locale === 'ar';
     margin: 0;
   }
 
-  .video-volume-slider::-webkit-slider-thumb {
+  .yt-volume-slider::-webkit-slider-thumb {
     -webkit-appearance: none;
     appearance: none;
-    width: 12px;
-    height: 12px;
+    width: 11px;
+    height: 11px;
     border-radius: 50%;
-    background: var(--accent);
+    background: #ffffff;
     cursor: pointer;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-    transition: transform var(--transition-fast);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
   }
 
-  .video-volume-slider::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
+  .yt-volume-slider::-moz-range-thumb {
+    width: 11px;
+    height: 11px;
     border: none;
     border-radius: 50%;
-    background: var(--accent);
+    background: #ffffff;
     cursor: pointer;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   }
 
-  .video-volume-slider:hover::-webkit-slider-thumb {
-    transform: scale(1.25);
+  /* Time Display */
+  .yt-time-display {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    font-family: system-ui, -apple-system, sans-serif;
+    color: #dddddd;
+    margin-left: 6px;
+    font-variant-numeric: tabular-nums;
+    user-select: none;
   }
 
-  /* Card Meta */
+  .yt-time-separator {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 1px;
+  }
+
+  .yt-time-current {
+    color: #ffffff;
+    font-weight: 500;
+  }
+
+  .yt-time-duration {
+    color: #aaaaaa;
+  }
+
+  /* Speed Button */
+  .yt-speed-btn {
+    width: auto;
+    height: 28px;
+    padding: 0 8px;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.12);
+    font-size: 0.76rem;
+    font-weight: 600;
+  }
+
+  .yt-speed-btn:hover {
+    background-color: #ff0000;
+    color: #ffffff;
+  }
+
+  /* Bottom Metadata */
   .video-card__meta {
     padding: 1.15rem 1.25rem;
     display: flex;
@@ -363,6 +568,20 @@ const isAr = locale === 'ar';
     color: var(--ink);
     line-height: 1.35;
   }
+
+  @media (max-width: 600px) {
+    .yt-volume-slider-wrap {
+      display: none;
+    }
+    .yt-time-display {
+      font-size: 0.72rem;
+      margin-left: 2px;
+    }
+    .yt-ctrl-btn {
+      width: 32px;
+      height: 32px;
+    }
+  }
 </style>
 
 <script>
@@ -379,11 +598,8 @@ const isAr = locale === 'ar';
         const vid = card.querySelector('video');
         if (vid !== currentVideo) {
           card.classList.remove('is-playing');
-          const cPlay = card.querySelector('.center-icon-play') as HTMLElement;
-          const cPause = card.querySelector('.center-icon-pause') as HTMLElement;
           const mPlay = card.querySelector('.v-icon-play') as HTMLElement;
           const mPause = card.querySelector('.v-icon-pause') as HTMLElement;
-          if (cPlay && cPause) { cPlay.style.display = 'block'; cPause.style.display = 'none'; }
           if (mPlay && mPause) { mPlay.style.display = 'block'; mPause.style.display = 'none'; }
         }
       });
@@ -391,23 +607,37 @@ const isAr = locale === 'ar';
 
     videoCards.forEach(card => {
       const video = card.querySelector('.video-element') as HTMLVideoElement;
-      const centerBtn = card.querySelector('[data-video-center-play]') as HTMLButtonElement;
+      const centerBadge = card.querySelector('[data-video-center-play]') as HTMLButtonElement;
       const playMiniBtn = card.querySelector('[data-video-play-btn]') as HTMLButtonElement;
-      const centerPlayIcon = card.querySelector('.center-icon-play') as HTMLElement;
-      const centerPauseIcon = card.querySelector('.center-icon-pause') as HTMLElement;
+      const rewindBtn = card.querySelector('[data-video-rewind-btn]') as HTMLButtonElement;
+      const forwardBtn = card.querySelector('[data-video-forward-btn]') as HTMLButtonElement;
       const miniPlayIcon = card.querySelector('.v-icon-play') as HTMLElement;
       const miniPauseIcon = card.querySelector('.v-icon-pause') as HTMLElement;
-      const progress = card.querySelector('[data-video-progress]') as HTMLElement;
+      
+      const progressContainer = card.querySelector('[data-video-progress]') as HTMLElement;
       const fill = card.querySelector('[data-video-fill]') as HTMLElement;
+      const buffer = card.querySelector('[data-video-buffer]') as HTMLElement;
+      const handle = card.querySelector('[data-video-handle]') as HTMLElement;
+      const tooltip = card.querySelector('[data-video-tooltip]') as HTMLElement;
+
       const timeCurrent = card.querySelector('[data-video-current]') as HTMLElement;
       const timeDuration = card.querySelector('[data-video-duration]') as HTMLElement;
       const speedBtn = card.querySelector('[data-video-speed-btn]') as HTMLButtonElement;
       const speedVal = card.querySelector('[data-video-speed-val]') as HTMLElement;
       const fsBtn = card.querySelector('[data-video-fs-btn]') as HTMLButtonElement;
+      const fsEnter = card.querySelector('.v-icon-fs-enter') as HTMLElement;
+      const fsExit = card.querySelector('.v-icon-fs-exit') as HTMLElement;
       const muteBtn = card.querySelector('[data-video-mute-btn]') as HTMLButtonElement;
       const volIcon = card.querySelector('.v-icon-volume') as HTMLElement;
       const mutedIcon = card.querySelector('.v-icon-muted') as HTMLElement;
       const volumeSlider = card.querySelector('[data-video-volume-slider]') as HTMLInputElement;
+
+      // Feedback elements
+      const fbCenter = card.querySelector('[data-feedback-center]') as HTMLElement;
+      const fbCenterPlay = card.querySelector('.fb-icon-play') as HTMLElement;
+      const fbCenterPause = card.querySelector('.fb-icon-pause') as HTMLElement;
+      const fbRewind = card.querySelector('[data-feedback-rewind]') as HTMLElement;
+      const fbForward = card.querySelector('[data-feedback-forward]') as HTMLElement;
 
       if (!video) return;
 
@@ -415,23 +645,27 @@ const isAr = locale === 'ar';
       let speedIdx = 0;
 
       function formatTime(seconds: number) {
-        if (isNaN(seconds)) return '0:00';
+        if (isNaN(seconds) || seconds < 0) return '0:00';
         const mins = Math.floor(seconds / 60);
         const secs = Math.floor(seconds % 60);
         return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
       }
 
+      function flashFeedback(el: HTMLElement | null) {
+        if (!el) return;
+        el.classList.add('is-flashing');
+        setTimeout(() => {
+          el.classList.remove('is-flashing');
+        }, 450);
+      }
+
       function updatePlayState(isPlaying: boolean) {
         if (isPlaying) {
           card.classList.add('is-playing');
-          if (centerPlayIcon) centerPlayIcon.style.display = 'none';
-          if (centerPauseIcon) centerPauseIcon.style.display = 'block';
           if (miniPlayIcon) miniPlayIcon.style.display = 'none';
           if (miniPauseIcon) miniPauseIcon.style.display = 'block';
         } else {
           card.classList.remove('is-playing');
-          if (centerPlayIcon) centerPlayIcon.style.display = 'block';
-          if (centerPauseIcon) centerPauseIcon.style.display = 'none';
           if (miniPlayIcon) miniPlayIcon.style.display = 'block';
           if (miniPauseIcon) miniPauseIcon.style.display = 'none';
         }
@@ -447,13 +681,36 @@ const isAr = locale === 'ar';
               updatePlayState(false);
             });
           }
+          if (fbCenter && fbCenterPlay && fbCenterPause) {
+            fbCenterPlay.style.display = 'block';
+            fbCenterPause.style.display = 'none';
+            flashFeedback(fbCenter);
+          }
         } else {
           video.pause();
+          if (fbCenter && fbCenterPlay && fbCenterPause) {
+            fbCenterPlay.style.display = 'none';
+            fbCenterPause.style.display = 'block';
+            flashFeedback(fbCenter);
+          }
         }
       }
 
-      if (centerBtn) centerBtn.addEventListener('click', togglePlay);
+      function skip(seconds: number) {
+        if (!video.duration) return;
+        const target = Math.max(0, Math.min(video.duration, video.currentTime + seconds));
+        video.currentTime = target;
+        if (seconds < 0) {
+          flashFeedback(fbRewind);
+        } else {
+          flashFeedback(fbForward);
+        }
+      }
+
+      if (centerBadge) centerBadge.addEventListener('click', togglePlay);
       if (playMiniBtn) playMiniBtn.addEventListener('click', togglePlay);
+      if (rewindBtn) rewindBtn.addEventListener('click', () => skip(-10));
+      if (forwardBtn) forwardBtn.addEventListener('click', () => skip(10));
       video.addEventListener('click', togglePlay);
 
       video.addEventListener('play', () => updatePlayState(true));
@@ -468,25 +725,72 @@ const isAr = locale === 'ar';
         if (video.duration) {
           const pct = (video.currentTime / video.duration) * 100;
           if (fill) fill.style.width = `${pct}%`;
+          if (handle) handle.style.left = `${pct}%`;
           if (timeCurrent) timeCurrent.textContent = formatTime(video.currentTime);
+        }
+      });
+
+      video.addEventListener('progress', () => {
+        if (video.duration && video.buffered.length > 0 && buffer) {
+          const end = video.buffered.end(video.buffered.length - 1);
+          const pct = (end / video.duration) * 100;
+          buffer.style.width = `${pct}%`;
         }
       });
 
       video.addEventListener('ended', () => {
         updatePlayState(false);
         if (fill) fill.style.width = '0%';
+        if (handle) handle.style.left = '0%';
         if (timeCurrent) timeCurrent.textContent = '0:00';
       });
 
-      // Seeking
-      if (progress) {
-        progress.addEventListener('click', (e) => {
-          const rect = progress.getBoundingClientRect();
+      // Seeking & Scrubber
+      let isDragging = false;
+
+      function seekTo(e: MouseEvent | TouchEvent) {
+        if (!progressContainer || !video.duration) return;
+        const rect = progressContainer.getBoundingClientRect();
+        const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+        const clickX = clientX - rect.left;
+        const pct = Math.max(0, Math.min(1, clickX / rect.width));
+        video.currentTime = pct * video.duration;
+      }
+
+      if (progressContainer) {
+        progressContainer.addEventListener('mousedown', (e) => {
+          isDragging = true;
+          progressContainer.classList.add('is-dragging');
+          seekTo(e);
+        });
+
+        window.addEventListener('mousemove', (e) => {
+          if (isDragging) {
+            seekTo(e);
+          }
+        });
+
+        window.addEventListener('mouseup', () => {
+          if (isDragging) {
+            isDragging = false;
+            progressContainer.classList.remove('is-dragging');
+          }
+        });
+
+        // Hover tooltip
+        progressContainer.addEventListener('mousemove', (e) => {
+          if (!video.duration || !tooltip) return;
+          const rect = progressContainer.getBoundingClientRect();
           const clickX = e.clientX - rect.left;
           const pct = Math.max(0, Math.min(1, clickX / rect.width));
-          if (video.duration) {
-            video.currentTime = pct * video.duration;
-          }
+          const previewTime = pct * video.duration;
+          tooltip.textContent = formatTime(previewTime);
+          tooltip.style.left = `${clickX}px`;
+          tooltip.style.display = 'block';
+        });
+
+        progressContainer.addEventListener('mouseleave', () => {
+          if (tooltip) tooltip.style.display = 'none';
         });
       }
 
@@ -497,19 +801,37 @@ const isAr = locale === 'ar';
           speedIdx = (speedIdx + 1) % speeds.length;
           const s = speeds[speedIdx];
           video.playbackRate = s;
-          speedVal.textContent = `${s.toFixed(s === 1 ? 1 : 2)}x`;
+          speedVal.textContent = `${s === 1 ? '1' : s}x`;
         });
       }
 
       // Fullscreen
+      function updateFullscreenUI() {
+        const isFullscreen = document.fullscreenElement === card || (card as any).webkitFullscreenElement === card;
+        if (fsEnter && fsExit) {
+          fsEnter.style.display = isFullscreen ? 'none' : 'block';
+          fsExit.style.display = isFullscreen ? 'block' : 'none';
+        }
+      }
+
       if (fsBtn) {
         fsBtn.addEventListener('click', (e) => {
           e.stopPropagation();
-          if (video.requestFullscreen) {
-            video.requestFullscreen();
+          if (!document.fullscreenElement) {
+            if (card.requestFullscreen) {
+              card.requestFullscreen();
+            } else if ((video as any).webkitEnterFullscreen) {
+              (video as any).webkitEnterFullscreen();
+            }
+          } else {
+            if (document.exitFullscreen) {
+              document.exitFullscreen();
+            }
           }
         });
       }
+
+      document.addEventListener('fullscreenchange', updateFullscreenUI);
 
       // Volume & Mute control
       let lastVolume = 1;
@@ -553,11 +875,46 @@ const isAr = locale === 'ar';
           }
           updateVolumeUI();
         });
-
-        volumeSlider.addEventListener('click', (e) => {
-          e.stopPropagation();
-        });
+        volumeSlider.addEventListener('click', (e) => e.stopPropagation());
       }
+
+      // YouTube Keyboard Shortcuts
+      card.addEventListener('keydown', (e: KeyboardEvent) => {
+        // Prevent interfering with standard form typing
+        if ((e.target as HTMLElement).tagName === 'INPUT') return;
+
+        const key = e.key.toLowerCase();
+        if (key === ' ' || key === 'k') {
+          e.preventDefault();
+          togglePlay();
+        } else if (key === 'j' || e.key === 'ArrowLeft') {
+          e.preventDefault();
+          skip(-10);
+        } else if (key === 'l' || e.key === 'ArrowRight') {
+          e.preventDefault();
+          skip(10);
+        } else if (key === 'm') {
+          e.preventDefault();
+          video.muted = !video.muted;
+          updateVolumeUI();
+        } else if (key === 'f') {
+          e.preventDefault();
+          if (fsBtn) fsBtn.click();
+        } else if (e.key === 'ArrowUp') {
+          e.preventDefault();
+          video.volume = Math.min(1, video.volume + 0.1);
+          video.muted = false;
+          updateVolumeUI();
+        } else if (e.key === 'ArrowDown') {
+          e.preventDefault();
+          video.volume = Math.max(0, video.volume - 0.1);
+          updateVolumeUI();
+        } else if (key >= '0' && key <= '9' && video.duration) {
+          e.preventDefault();
+          const targetPct = parseInt(key) * 0.1;
+          video.currentTime = targetPct * video.duration;
+        }
+      });
     });
   }
 
