@@ -43,7 +43,7 @@ describe('Tier 4: Real-World Application Scenarios (5 End-to-End User Journeys)'
     it('Step 1.1: Lands on Arabic Gateway, reads poetic manifesto thesis', () => {
       const arHtml = pages.arGateway.html;
       assert.ok(arHtml.includes('الحبر يكتبُ حرفًا... والصوتُ يبعثُ فيه روحًا.'), 'Gateway must render opening thesis');
-      assert.ok(arHtml.includes('صوتٌ لا يُسمَع فقط... بل يُصدَّق، ويُتذكَّر، ويُشترى.'), 'Gateway must render commercial punchline');
+      assert.ok(arHtml.includes('صوتٌ لا يُسمَع فقط... بل يُصدَّق، ويُتذكَّر.'), 'Gateway must render commercial punchline');
     });
 
     it('Step 1.2: Selects VO portal card navigating to /vo hub', () => {

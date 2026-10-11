@@ -216,7 +216,7 @@ describe('Tier 1: Feature Coverage (26 Features in PROJECT.md)', () => {
     });
 
     it('7.3 should render line 9 with commercial punchline', () => {
-      assert.ok(pages.arGateway.html.includes('صوتٌ لا يُسمَع فقط... بل يُصدَّق، ويُتذكَّر، ويُشترى.'));
+      assert.ok(pages.arGateway.html.includes('صوتٌ لا يُسمَع فقط... بل يُصدَّق، ويُتذكَّر.'));
     });
 
     it('7.4 should render line 10 with declarative signature', () => {
