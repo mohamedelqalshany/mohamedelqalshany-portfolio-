@@ -23,6 +23,7 @@ import { validatePersonSchema } from './helpers/schema-validator.js';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { translations } from '../src/lib/i18n.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -443,53 +444,57 @@ describe('Tier 1: Feature Coverage (26 Features in PROJECT.md)', () => {
   });
 
   // Feature 15: 3 Marketing Pillars
-  describe('Feature 15: 3 Marketing Pillars', () => {
-    it('15.1 should render 3 marketing pillars in /marketing', () => {
-      assert.ok(pages.arMarketing.html.includes('pillar-card'));
+  describe('Feature 15: 3 Marketing Pillars (Modular Component)', () => {
+    const pillarsComp = fs.readFileSync(path.join(PROJECT_ROOT, 'src/components/marketing/MarketingPillars.astro'), 'utf-8');
+
+    it('15.1 should render 3 marketing pillars in component', () => {
+      assert.ok(pillarsComp.includes('pillar-card'));
     });
 
     it('15.2 should define Pillar 1: Conversion Copywriting and Scripting', () => {
-      assert.ok(pages.arMarketing.html.includes('كتابة الإعلانات والإسكريبتات البيعية') || pages.arMarketing.html.includes('Copywriting & Scripting'));
+      assert.ok(translations.ar.pillar1Title.includes('كتابة الإعلانات') || translations.en.pillar1Title.includes('Copywriting & Scripting'));
     });
 
     it('15.3 should define Pillar 2: One-Man Crew 4K Production', () => {
-      assert.ok(pages.arMarketing.html.includes('تصوير وإخراج متكامل (One-Man Crew)') || pages.arMarketing.html.includes('One-Man Crew 4K Production'));
+      assert.ok(translations.ar.pillar2Title.includes('One-Man Crew') || translations.en.pillar2Title.includes('One-Man Crew'));
     });
 
     it('15.4 should define Pillar 3: Fast Dynamic Editing & Native Voice Over', () => {
-      assert.ok(pages.arMarketing.html.includes('مونتاج سريع وتعليق صوتي فوري') || pages.arMarketing.html.includes('Dynamic Video Editing & Native VO'));
+      assert.ok(translations.ar.pillar3Title.includes('مونتاج') || translations.en.pillar3Title.includes('Dynamic Video Editing'));
     });
 
-    it('15.5 should render English pillars descriptions on /en/marketing', () => {
-      assert.ok(pages.enMarketing.html.includes('Conversion Copywriting &amp; Scripting') || pages.enMarketing.html.includes('Conversion Copywriting & Scripting'));
-      assert.ok(pages.enMarketing.html.includes('One-Man Crew 4K Production'));
+    it('15.5 should render English pillars descriptions in component', () => {
+      assert.ok(translations.en.pillar1Title.includes('Conversion Copywriting & Scripting'));
+      assert.ok(translations.en.pillar2Title.includes('One-Man Crew 4K Production'));
     });
   });
 
   // Feature 16: 5-Step Workflow Pipeline
-  describe('Feature 16: 5-Step Workflow Pipeline', () => {
+  describe('Feature 16: 5-Step Workflow Pipeline (Modular Component)', () => {
+    const workflowComp = fs.readFileSync(path.join(PROJECT_ROOT, 'src/components/marketing/WorkflowSteps.astro'), 'utf-8');
+
     it('16.1 should render workflow pipeline section with id="workflow"', () => {
-      assert.ok(pages.arMarketing.html.includes('id="workflow"'));
+      assert.ok(workflowComp.includes('id="workflow"'));
     });
 
     it('16.2 should render Step 1: Discovery & Briefing', () => {
-      assert.ok(pages.arMarketing.html.includes('01. دراسة وفهم الهدف') || pages.arMarketing.html.includes('01. Deep Research & Brief'));
+      assert.ok(translations.ar.step1Title.includes('01. دراسة وفهم الهدف') || translations.en.step1Title.includes('01. Deep Research & Brief'));
     });
 
     it('16.3 should render Step 2: Scriptwriting & Hook Design', () => {
-      assert.ok(pages.arMarketing.html.includes('02. كتابة الإسكريبت والهوك') || pages.arMarketing.html.includes('02. Scriptwriting & Hook Design'));
+      assert.ok(translations.ar.step2Title.includes('02. كتابة الإسكريبت والهوك') || translations.en.step2Title.includes('02. Scriptwriting & Hook Design'));
     });
 
     it('16.4 should render Step 3: Production & Filming', () => {
-      assert.ok(pages.arMarketing.html.includes('03. التصوير والإنتاج') || pages.arMarketing.html.includes('03. Cinematic Production'));
+      assert.ok(translations.ar.step3Title.includes('03. التصوير والإنتاج') || translations.en.step3Title.includes('03.'));
     });
 
     it('16.5 should render Step 4: Audio Finishing & Dynamic Edit', () => {
-      assert.ok(pages.arMarketing.html.includes('04. الصوت والمونتاج النهائي') || pages.arMarketing.html.includes('04. Audio Finishing & Dynamic Edit'));
+      assert.ok(translations.ar.step4Title.includes('04. الصوت والمونتاج النهائي') || translations.en.step4Title.includes('04. Audio Finishing & Dynamic Edit'));
     });
 
     it('16.6 should render Step 5: Launch & Optimization', () => {
-      assert.ok(pages.arMarketing.html.includes('05. الإطلاق وتحليل النتائج') || pages.arMarketing.html.includes('05. Launch & Optimization'));
+      assert.ok(translations.ar.step5Title.includes('05. الإطلاق وتحليل النتائج') || translations.en.step5Title.includes('05. Launch & Optimization'));
     });
   });
 

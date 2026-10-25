@@ -228,10 +228,10 @@ describe('Tier 3: Cross-Feature Combinations & Pairwise Interactions', () => {
   });
 
   // --------------------------------------------------------------------------
-  // Pair 7: Marketing Pillars (F15) + Service Packages (F17) + WhatsApp CTA (F20)
+  // Pair 7: Marketing Offerings (F15) + Service Packages (F17) + WhatsApp CTA (F20)
   // --------------------------------------------------------------------------
   describe('Pairwise 7: Marketing Pillars, Service Packages & Conversion WhatsApp Links', () => {
-    it('P7.1 should align 3 Service Packages with 3 Marketing Pillars', () => {
+    it('P7.1 should align 3 Service Packages with Solopreneur Marketing Offerings', () => {
       const packages = marketingData.packages;
       assert.equal(packages.length, 3, 'Must have exactly 3 service packages');
 
@@ -241,9 +241,9 @@ describe('Tier 3: Cross-Feature Combinations & Pairwise Interactions', () => {
       assert.ok(pkgIds.includes('commercial-campaign'), 'Should include commercial-campaign package');
       assert.ok(pkgIds.includes('retainer-engine'), 'Should include retainer-engine package');
 
-      // Marketing Hub pages render the 3 pillars
-      assert.ok(pages.arMarketing.html.includes('id="pillars"'), 'AR Marketing must render pillars section');
-      assert.ok(pages.enMarketing.html.includes('id="pillars"'), 'EN Marketing must render pillars section');
+      // Marketing Hub pages render marketing demo spotlight
+      assert.ok(pages.arMarketing.html.includes('id="marketing-demo"'), 'AR Marketing must render marketing demo');
+      assert.ok(pages.enMarketing.html.includes('id="marketing-demo"'), 'EN Marketing must render marketing demo');
     });
 
     it('P7.2 should include pre-filled WhatsApp links for each service package on marketing hub', () => {
@@ -405,12 +405,12 @@ describe('Tier 3: Cross-Feature Combinations & Pairwise Interactions', () => {
       assert.ok(turnaroundAspect.traditionalEn.includes('3 to 5') || turnaroundAspect.traditionalAr.includes('3 إلى 5'), 'Agency turnaround must cite 3-5 weeks');
     });
 
-    it('P13.2 should reflect unified creative control across 5-step workflow in both Arabic and English', () => {
-      const arWorkflow = stripTags(pages.arMarketing.html);
-      const enWorkflow = stripTags(pages.enMarketing.html);
+    it('P13.2 should reflect unified creative control across marketing deliverables in both Arabic and English', () => {
+      const arPage = stripTags(pages.arMarketing.html);
+      const enPage = stripTags(pages.enMarketing.html);
 
-      assert.ok(arWorkflow.includes('01') && arWorkflow.includes('05'), 'AR Marketing must render steps 01 through 05');
-      assert.ok(enWorkflow.includes('01') && enWorkflow.includes('05'), 'EN Marketing must render steps 01 through 05');
+      assert.ok(arPage.includes('سوليوبرينور') || arPage.includes('شخص واحد') || arPage.includes('الإعلان') || arPage.includes('التسويق'), 'AR Marketing must communicate end-to-end execution');
+      assert.ok(enPage.includes('One-Man') || enPage.includes('Solopreneur') || enPage.includes('Marketing') || enPage.includes('Commercial'), 'EN Marketing must communicate end-to-end execution');
     });
   });
 

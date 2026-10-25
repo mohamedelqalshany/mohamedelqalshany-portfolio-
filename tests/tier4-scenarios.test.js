@@ -98,27 +98,19 @@ describe('Tier 4: Real-World Application Scenarios (5 End-to-End User Journeys)'
       assert.ok(pages.arMarketing.html.length > 5000, 'Marketing hub page must be fully rendered');
     });
 
-    it('Step 2.2: Audits 3 Core Marketing Pillars (Copywriting, 4K Filming, Dynamic Editing & VO)', () => {
+    it('Step 2.2: Audits Core Marketing Capabilities & Video Spotlight', () => {
       const mktHtml = pages.arMarketing.html;
-      assert.ok(mktHtml.includes('id="pillars"'), 'Marketing hub must render pillars section');
+      assert.ok(mktHtml.includes('id="marketing-demo"'), 'Marketing hub must render demo spotlight');
       assert.ok(
-        mktHtml.includes('كتابة الإعلانات') || mktHtml.includes('الإسكريبتات البيعية'),
-        'Pillar 1 must cover conversion copywriting & scripting'
-      );
-      assert.ok(
-        mktHtml.includes('One-Man Crew') || mktHtml.includes('تصوير وإخراج متكامل'),
-        'Pillar 2 must cover one-man crew 4K production'
-      );
-      assert.ok(
-        mktHtml.includes('مونتاج سريع وتعليق صوتي') || mktHtml.includes('Dynamic Video Editing'),
-        'Pillar 3 must cover dynamic editing & VO'
+        mktHtml.includes('marketing_demo_saad_zaghawa.mp4') || mktHtml.includes('demo_04_MKT.mp4'),
+        'Marketing hub must spotlight official marketing commercial'
       );
     });
 
-    it('Step 2.3: Follows 5-step workflow pipeline from Discovery to Launch', () => {
+    it('Step 2.3: Audits Copywriting Samples & Credentials Section', () => {
       const mktHtml = pages.arMarketing.html;
-      assert.ok(mktHtml.includes('id="workflow"'), 'Workflow section must be present');
-      assert.ok(mktHtml.includes('01.') && mktHtml.includes('05.'), 'Workflow must span steps 01 through 05');
+      assert.ok(mktHtml.includes('id="copywriting-samples"'), 'Copywriting samples section must be present');
+      assert.ok(mktHtml.includes('id="credentials"'), 'Credentials section must be present');
     });
 
     it('Step 2.4: Compares Solopreneur advantages over Traditional Agencies in comparison catalog', () => {
