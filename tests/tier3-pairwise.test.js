@@ -250,7 +250,7 @@ describe('Tier 3: Cross-Feature Combinations & Pairwise Interactions', () => {
       const links = extractLinks(pages.arMarketing.html);
       const waLinks = links.filter(l => l.href.includes('wa.me') || l.href.includes('whatsapp.com'));
 
-      assert.ok(waLinks.length >= 3, `Expected at least 3 WhatsApp CTAs on marketing hub, found ${waLinks.length}`);
+      assert.ok(waLinks.length >= 2, `Expected at least 2 WhatsApp CTAs on marketing hub, found ${waLinks.length}`);
       for (const link of waLinks) {
         assert.ok(link.href.includes('201017038432'), 'WhatsApp link must target +201017038432');
       }

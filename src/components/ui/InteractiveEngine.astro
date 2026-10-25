@@ -1,0 +1,424 @@
+---
+/**
+ * InteractiveEngine.astro — Creative Frontend Interaction Engine for Mohamed Elbana
+ * 
+ * Includes:
+ * 1. MetaLab-inspired Morphing Inertial Custom Cursor with contextual text badges
+ * 2. Lenis Momentum Smooth Scrolling (60-120fps)
+ * 3. Magnetic Button Springs
+ * 4. Ambient Dynamic Card Spotlight Glow
+ */
+interface Props {
+  locale?: 'ar' | 'en';
+}
+
+const { locale = 'en' } = Astro.props;
+const isAr = locale === 'ar';
+---
+
+<div id="elbana-cursor" class="elbana-cursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring">
+    <span class="cursor-label"></span>
+  </div>
+</div>
+
+<script>
+  import Lenis from 'lenis';
+  import 'lenis/dist/lenis.css';
+
+  // =========================================================================
+  // 1. LENIS MOMENTUM SMOOTH SCROLLING
+  // =========================================================================
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let lenis: Lenis | null = null;
+  if (!prefersReducedMotion) {
+    try {
+      lenis = new Lenis({
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smoothWheel: true,
+      });
+
+      function raf(time: number) {
+        lenis?.raf(time);
+        requestAnimationFrame(raf);
+      }
+      requestAnimationFrame(raf);
+      (window as any).__lenis = lenis;
+    } catch (err) {
+      console.warn('[Lenis] smooth scroll initialization skipped:', err);
+    }
+  }
+
+  // =========================================================================
+  // 2. METALAB MORPHING & TRAILING CURSOR ENGINE
+  // =========================================================================
+  const cursor = document.getElementById('elbana-cursor');
+  const dot = cursor?.querySelector('.cursor-dot') as HTMLElement;
+  const ring = cursor?.querySelector('.cursor-ring') as HTMLElement;
+  const label = cursor?.querySelector('.cursor-label') as HTMLElement;
+
+  if (cursor && dot && ring && label) {
+    let mouseX = -200;
+    let mouseY = -200;
+    let ringX = -200;
+    let ringY = -200;
+    let isVisible = false;
+    let isDesktop = window.innerWidth > 768;
+
+    window.addEventListener('resize', () => {
+      isDesktop = window.innerWidth > 768;
+      if (!isDesktop) cursor.classList.remove('is-visible');
+    });
+
+    // Activate as soon as mouse moves (Works on laptops, touchscreens with mice, desktop PCs)
+    window.addEventListener('pointermove', (e) => {
+      if (e.pointerType === 'touch') {
+        cursor.classList.remove('is-visible');
+        return;
+      }
+
+      if (!isDesktop) return;
+
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      if (!isVisible) {
+        isVisible = true;
+        cursor.classList.add('is-visible');
+      }
+    });
+
+    document.addEventListener('mouseleave', () => {
+      isVisible = false;
+      cursor.classList.remove('is-visible');
+    });
+
+    // Physics animation loop (Linear Interpolation for smooth trailing momentum)
+    function render() {
+      if (isVisible) {
+        // Dot moves with crisp immediacy
+        dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+
+        // Ring trails with smooth spring momentum (15% interpolation per frame)
+        ringX += (mouseX - ringX) * 0.15;
+        ringY += (mouseY - ringY) * 0.15;
+        ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+      }
+      requestAnimationFrame(render);
+    }
+    requestAnimationFrame(render);
+
+    const isRtl = document.documentElement.dir === 'rtl' || document.documentElement.lang === 'ar';
+
+    // Event delegation for reactive hover states
+    document.addEventListener('mouseover', (e) => {
+      if (!isDesktop) return;
+      const target = (e.target as HTMLElement).closest(
+        '[data-cursor-text], a, button, [role="button"], input, textarea, .project-card, .case-card, .experiment-card, .card, .preview-card, .work-card'
+      ) as HTMLElement | null;
+
+      if (!target) {
+        cursor.classList.remove('is-hovering', 'is-labeled');
+        label.textContent = '';
+        return;
+      }
+
+      const customText = target.getAttribute('data-cursor-text');
+      
+      if (customText) {
+        label.textContent = customText;
+        cursor.classList.add('is-labeled');
+        cursor.classList.remove('is-hovering');
+      } else if (target.matches('.project-card, .case-card, .work-card, [href*="/work/"]')) {
+        label.textContent = isRtl ? 'عرض المشروع' : 'VIEW CASE';
+        cursor.classList.add('is-labeled');
+        cursor.classList.remove('is-hovering');
+      } else if (target.matches('.experiment-card, [href*="/ai"]')) {
+        label.textContent = isRtl ? 'تجربة' : 'EXPLORE';
+        cursor.classList.add('is-labeled');
+        cursor.classList.remove('is-hovering');
+      } else {
+        cursor.classList.remove('is-labeled');
+        cursor.classList.add('is-hovering');
+        label.textContent = '';
+      }
+    });
+
+    document.addEventListener('mouseout', (e) => {
+      const toElement = e.relatedTarget as HTMLElement | null;
+      if (!toElement || !toElement.closest('a, button, [role="button"], [data-cursor-text], .project-card, .case-card, .experiment-card, .card')) {
+        cursor.classList.remove('is-hovering', 'is-labeled');
+        label.textContent = '';
+      }
+    });
+  }
+
+  // =========================================================================
+  // 3. MAGNETIC BUTTONS EFFECT (Always enabled for pointing devices)
+  // =========================================================================
+  function initMagneticButtons() {
+    const magneticElements = document.querySelectorAll(
+      'button, .btn, .button, .cta, .nav-link, .theme-toggle, .lang-toggle, .back-to-top, a.button'
+    );
+
+    magneticElements.forEach((el) => {
+      const htmlEl = el as HTMLElement;
+      
+      htmlEl.addEventListener('pointermove', (e) => {
+        if (e.pointerType === 'touch') return;
+        const rect = htmlEl.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const distanceX = (e.clientX - centerX) * 0.28;
+        const distanceY = (e.clientY - centerY) * 0.28;
+
+        htmlEl.style.transform = `translate3d(${distanceX}px, ${distanceY}px, 0)`;
+        htmlEl.style.transition = 'transform 0.08s ease-out';
+      });
+
+      htmlEl.addEventListener('pointerleave', () => {
+        htmlEl.style.transform = 'translate3d(0, 0, 0)';
+        htmlEl.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
+      });
+    });
+  }
+
+  // =========================================================================
+  // 4. INTERACTIVE 3D SPOTLIGHT ON CARDS
+  // =========================================================================
+  function initCardSpotlights() {
+    const cards = document.querySelectorAll(
+      '.project-card, .case-card, .experiment-card, .card, .capability-card, .service-card, .credential-card, .preview-card'
+    );
+
+    cards.forEach((card) => {
+      const htmlCard = card as HTMLElement;
+
+      htmlCard.addEventListener('pointermove', (e) => {
+        if (e.pointerType === 'touch') return;
+        const rect = htmlCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        htmlCard.style.setProperty('--mouse-x', `${x}px`);
+        htmlCard.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+  }
+
+  // Run on initial load and page view transitions
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      initMagneticButtons();
+      initCardSpotlights();
+    });
+  } else {
+    initMagneticButtons();
+    initCardSpotlights();
+  }
+</script>
+
+<style is:global>
+  /* -------------------------------------------------------------------------
+     ELBANA INTERACTIVE CURSOR STYLES (MetaLab Aesthetic)
+     ------------------------------------------------------------------------- */
+  @media (min-width: 769px) {
+    /* Smooth pointer feedback */
+    a, button, [role="button"], input, textarea, select {
+      cursor: pointer;
+    }
+  }
+
+  .elbana-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 9999999;
+    opacity: 0;
+    transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .elbana-cursor.is-visible {
+    opacity: 1;
+  }
+
+  /* Center point dot */
+  .cursor-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 8px;
+    height: 8px;
+    margin-top: -4px;
+    margin-left: -4px;
+    border-radius: 50%;
+    background-color: var(--brand-main, #2323c0);
+    box-shadow: 0 0 8px rgba(35, 35, 192, 0.6);
+    pointer-events: none;
+    will-change: transform;
+    z-index: 2;
+    transition: background-color 0.25s ease, opacity 0.2s ease;
+  }
+
+  /* Trailing physics ring */
+  .cursor-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 42px;
+    height: 42px;
+    margin-top: -21px;
+    margin-left: -21px;
+    border-radius: 9999px;
+    border: 2px solid var(--brand-main, #2323c0);
+    background-color: transparent;
+    pointer-events: none;
+    will-change: transform, width, height, background-color;
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                margin 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.35s ease,
+                backdrop-filter 0.35s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  /* Hover state over buttons / links */
+  .elbana-cursor.is-hovering .cursor-ring {
+    width: 58px;
+    height: 58px;
+    margin-top: -29px;
+    margin-left: -29px;
+    background-color: rgba(35, 35, 192, 0.12);
+    border-color: var(--brand-main, #2323c0);
+    backdrop-filter: blur(2px);
+  }
+
+  .elbana-cursor.is-hovering .cursor-dot {
+    opacity: 0.3;
+  }
+
+  /* Labeled badge state (MetaLab expanded cursor with case study label) */
+  .elbana-cursor.is-labeled .cursor-ring {
+    width: 104px;
+    height: 104px;
+    margin-top: -52px;
+    margin-left: -52px;
+    background-color: var(--brand-main, #2323c0);
+    border-color: var(--brand-side, #dec802);
+    box-shadow: 0 14px 40px rgba(35, 35, 192, 0.45);
+  }
+
+  .elbana-cursor.is-labeled .cursor-dot {
+    opacity: 0;
+  }
+
+  .cursor-label {
+    opacity: 0;
+    transform: scale(0.75);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #FFFFFF;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    text-transform: uppercase;
+    white-space: nowrap;
+    user-select: none;
+    font-family: inherit;
+    text-align: center;
+    padding: 0 6px;
+  }
+
+  .elbana-cursor.is-labeled .cursor-label {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Dark mode cursor tuning */
+  [data-theme="dark"] .cursor-dot {
+    background-color: var(--brand-side, #dec802);
+    box-shadow: 0 0 8px rgba(222, 200, 2, 0.6);
+  }
+
+  [data-theme="dark"] .cursor-ring {
+    border-color: var(--brand-side, #dec802);
+  }
+
+  [data-theme="dark"] .elbana-cursor.is-hovering .cursor-ring {
+    background-color: rgba(222, 200, 2, 0.16);
+    border-color: var(--brand-side, #dec802);
+  }
+
+  /* -------------------------------------------------------------------------
+     AMBIENT CARD SPOTLIGHT GLOW
+     ------------------------------------------------------------------------- */
+  .project-card, .case-card, .experiment-card, .card, .capability-card, .service-card, .credential-card, .preview-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card::before, 
+  .case-card::before, 
+  .experiment-card::before, 
+  .card::before, 
+  .capability-card::before, 
+  .service-card::before, 
+  .credential-card::before,
+  .preview-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+      500px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(35, 35, 192, 0.12),
+      transparent 75%
+    );
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  [data-theme="dark"] .project-card::before,
+  [data-theme="dark"] .case-card::before,
+  [data-theme="dark"] .experiment-card::before,
+  [data-theme="dark"] .card::before {
+    background: radial-gradient(
+      500px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(222, 200, 2, 0.12),
+      transparent 75%
+    );
+  }
+
+  .project-card:hover::before, 
+  .case-card:hover::before, 
+  .experiment-card:hover::before, 
+  .card:hover::before, 
+  .capability-card:hover::before, 
+  .service-card:hover::before, 
+  .credential-card:hover::before,
+  .preview-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Hide on mobile devices */
+  @media (max-width: 768px) {
+    .elbana-cursor {
+      display: none !important;
+    }
+  }
+</style>

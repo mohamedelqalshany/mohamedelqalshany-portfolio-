@@ -1,0 +1,348 @@
+---
+// src/components/common/MetaLabInteractions.astro
+// MetaLab-inspired Creative Frontend Interaction Engine:
+// 1. Morphing Inertial Custom Cursor with text labels
+// 2. Lenis Momentum Smooth Scrolling
+// 3. Magnetic Button Springs
+// 4. Ambient Card Spotlight Glow
+---
+
+<div id="metalab-cursor" class="metalab-cursor" aria-hidden="true">
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring">
+    <span class="cursor-label"></span>
+  </div>
+</div>
+
+<script>
+  import Lenis from 'lenis';
+
+  // =========================================================================
+  // 1. LENIS MOMENTUM SMOOTH SCROLLING
+  // =========================================================================
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (!prefersReducedMotion) {
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+      touchMultiplier: 1.5,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Expose lenis globally for any scroll anchors
+    (window as any).__lenis = lenis;
+  }
+
+  // =========================================================================
+  // 2. METALAB MORPHING & TRAILING CURSOR ENGINE
+  // =========================================================================
+  const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || !window.matchMedia('(hover: hover)').matches;
+
+  if (!isTouchDevice && !prefersReducedMotion) {
+    const cursor = document.getElementById('metalab-cursor');
+    const dot = cursor?.querySelector('.cursor-dot') as HTMLElement;
+    const ring = cursor?.querySelector('.cursor-ring') as HTMLElement;
+    const label = cursor?.querySelector('.cursor-label') as HTMLElement;
+
+    if (cursor && dot && ring && label) {
+      let mouseX = -100;
+      let mouseY = -100;
+      let ringX = -100;
+      let ringY = -100;
+      let isVisible = false;
+
+      // Track mouse position
+      window.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        if (!isVisible) {
+          isVisible = true;
+          cursor.classList.add('is-visible');
+        }
+      });
+
+      document.addEventListener('mouseleave', () => {
+        isVisible = false;
+        cursor.classList.remove('is-visible');
+      });
+
+      // Physics animation loop (LERP - Linear Interpolation for buttery inertia)
+      function render() {
+        // Dot moves fast (90% response)
+        dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+
+        // Ring lags behind with smooth lerp (14% per frame)
+        ringX += (mouseX - ringX) * 0.14;
+        ringY += (mouseY - ringY) * 0.14;
+        ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0)`;
+
+        requestAnimationFrame(render);
+      }
+      requestAnimationFrame(render);
+
+      // Event delegation for reactive cursor states
+      document.addEventListener('mouseover', (e) => {
+        const target = (e.target as HTMLElement).closest(
+          '[data-cursor-text], a, button, [role="button"], input, textarea, audio, video, .audio-player, .track-card, .sample-card'
+        ) as HTMLElement | null;
+
+        if (!target) {
+          cursor.classList.remove('is-hovering', 'is-labeled');
+          label.textContent = '';
+          return;
+        }
+
+        const customText = target.getAttribute('data-cursor-text');
+        
+        if (customText) {
+          label.textContent = customText;
+          cursor.classList.add('is-labeled');
+          cursor.classList.remove('is-hovering');
+        } else if (target.matches('audio, video, .audio-player, [data-play-trigger]')) {
+          label.textContent = document.documentElement.lang === 'ar' ? 'تشغيل' : 'Play';
+          cursor.classList.add('is-labeled');
+        } else if (target.matches('.sample-card, .track-card')) {
+          label.textContent = document.documentElement.lang === 'ar' ? 'استكشف' : 'Explore';
+          cursor.classList.add('is-labeled');
+        } else {
+          cursor.classList.remove('is-labeled');
+          cursor.classList.add('is-hovering');
+          label.textContent = '';
+        }
+      });
+
+      document.addEventListener('mouseout', (e) => {
+        const toElement = e.relatedTarget as HTMLElement | null;
+        if (!toElement || !toElement.closest('a, button, [role="button"], [data-cursor-text], .sample-card, .track-card')) {
+          cursor.classList.remove('is-hovering', 'is-labeled');
+          label.textContent = '';
+        }
+      });
+    }
+
+    // =========================================================================
+    // 3. MAGNETIC BUTTONS EFFECT
+    // =========================================================================
+    const magneticElements = document.querySelectorAll(
+      'button, .btn, .track-btn, .theme-toggle, a.cta, .magnetic-target'
+    );
+
+    magneticElements.forEach((el) => {
+      const htmlEl = el as HTMLElement;
+      
+      htmlEl.addEventListener('mousemove', (e) => {
+        const rect = htmlEl.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+
+        const distanceX = (e.clientX - centerX) * 0.25;
+        const distanceY = (e.clientY - centerY) * 0.25;
+
+        htmlEl.style.transform = `translate3d(${distanceX}px, ${distanceY}px, 0)`;
+        htmlEl.style.transition = 'transform 0.1s ease-out';
+      });
+
+      htmlEl.addEventListener('mouseleave', () => {
+        htmlEl.style.transform = 'translate3d(0, 0, 0)';
+        htmlEl.style.transition = 'transform 0.45s cubic-bezier(0.25, 1, 0.5, 1)';
+      });
+    });
+
+    // =========================================================================
+    // 4. INTERACTIVE 3D SPOTLIGHT ON CARDS
+    // =========================================================================
+    const cards = document.querySelectorAll(
+      '.card, .track-card, .sample-card, .copy-card, .feature-card, .tier-card'
+    );
+
+    cards.forEach((card) => {
+      const htmlCard = card as HTMLElement;
+
+      htmlCard.addEventListener('mousemove', (e) => {
+        const rect = htmlCard.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        htmlCard.style.setProperty('--mouse-x', `${x}px`);
+        htmlCard.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+  }
+</script>
+
+<style is:global>
+  /* -------------------------------------------------------------------------
+     METALAB INTERACTIVE CURSOR STYLES
+     ------------------------------------------------------------------------- */
+  @media (hover: hover) and (pointer: fine) {
+    /* Hide default cursor on desktop when interactive cursor is active */
+    body:not(.no-custom-cursor) {
+      cursor: default;
+    }
+
+    a, button, [role="button"], input, textarea, select {
+      cursor: pointer;
+    }
+  }
+
+  .metalab-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 0;
+    pointer-events: none;
+    z-index: 999999;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .metalab-cursor.is-visible {
+    opacity: 1;
+  }
+
+  /* Center point dot */
+  .cursor-dot {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 6px;
+    margin-top: -3px;
+    margin-left: -3px;
+    border-radius: 50%;
+    background-color: var(--brand-accent, #E07A5F);
+    pointer-events: none;
+    will-change: transform;
+    z-index: 2;
+  }
+
+  /* Trailing physics ring */
+  .cursor-ring {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 38px;
+    height: 38px;
+    margin-top: -19px;
+    margin-left: -19px;
+    border-radius: 9999px;
+    border: 1.5px solid var(--brand-accent, #E07A5F);
+    background-color: transparent;
+    pointer-events: none;
+    will-change: transform, width, height, background-color;
+    transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                height 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                margin 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+                backdrop-filter 0.35s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1;
+  }
+
+  /* Hover state over buttons / links */
+  .metalab-cursor.is-hovering .cursor-ring {
+    width: 54px;
+    height: 54px;
+    margin-top: -27px;
+    margin-left: -27px;
+    background-color: rgba(224, 122, 95, 0.14);
+    border-color: var(--brand-accent, #E07A5F);
+    backdrop-filter: blur(2px);
+  }
+
+  .metalab-cursor.is-hovering .cursor-dot {
+    opacity: 0.5;
+  }
+
+  /* Labeled badge state (MetaLab expanded cursor with text) */
+  .metalab-cursor.is-labeled .cursor-ring {
+    width: 84px;
+    height: 84px;
+    margin-top: -42px;
+    margin-left: -42px;
+    background-color: var(--brand-primary, #1E3A2B);
+    border-color: var(--brand-accent, #E07A5F);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .metalab-cursor.is-labeled .cursor-dot {
+    opacity: 0;
+  }
+
+  .cursor-label {
+    opacity: 0;
+    transform: scale(0.8);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #FAEDCD;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    text-transform: uppercase;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .metalab-cursor.is-labeled .cursor-label {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* -------------------------------------------------------------------------
+     AMBIENT CARD SPOTLIGHT GLOW
+     ------------------------------------------------------------------------- */
+  .card, .track-card, .sample-card, .copy-card, .feature-card, .tier-card {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .card::before, 
+  .track-card::before, 
+  .sample-card::before, 
+  .copy-card::before, 
+  .feature-card::before, 
+  .tier-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+      500px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+      rgba(224, 122, 95, 0.12),
+      transparent 80%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  .card:hover::before, 
+  .track-card:hover::before, 
+  .sample-card:hover::before, 
+  .copy-card:hover::before, 
+  .feature-card:hover::before, 
+  .tier-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Hide on touch devices */
+  @media (pointer: coarse) {
+    .metalab-cursor {
+      display: none !important;
+    }
+  }
+</style>

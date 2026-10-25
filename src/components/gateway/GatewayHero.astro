@@ -94,19 +94,16 @@ const mktHref = isAr ? '/marketing' : '/en/marketing';
         <div class="card-lighting-halo" aria-hidden="true"></div>
         <div class="card-top-row">
           <div class="icon-wrap icon-wrap--marketing">
-            <span class="section-icon clapper-icon">🎬</span>
-            <!-- Live Cinema REC Badge -->
-            <div class="mini-rec-signal" aria-hidden="true">
-              <span class="rec-blink-dot"></span>
-              <span class="rec-code">4K</span>
-            </div>
+            <img 
+              src="/images/marketing-content-icon.png" 
+              alt={isAr ? "أيقونة التسويق والمحتوى" : "Marketing & Content icon"} 
+              class="marketing-card-img-icon"
+              width="32"
+              height="32"
+            />
           </div>
           <div class="card-badges-row">
             <span class="badge badge--secondary">{isAr ? 'التسويق وصناعة الإعلانات' : 'Marketing & Production'}</span>
-            <span class="live-signal-badge live-signal-badge--mustard">
-              <span class="signal-dot signal-dot--mustard"></span>
-              <span>{isAr ? 'إنتاج إعلاني 4K' : '4K Video Production'}</span>
-            </span>
           </div>
         </div>
 
@@ -408,6 +405,13 @@ const mktHref = isAr ? '/marketing' : '/en/marketing';
     gap: 0.35rem;
     border: 1px solid var(--rule);
     transition: all var(--transition-fast);
+  }
+
+  .marketing-card-img-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    display: block;
   }
 
   .section-card:hover .icon-wrap {

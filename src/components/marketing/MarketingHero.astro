@@ -21,7 +21,6 @@ const isAr = locale === 'ar';
           <span class="eyebrow-dot" aria-hidden="true"></span>
           {t.mktHeroBadge}
         </span>
-        <span class="badge badge--secondary">Script · 4K Shoot · Pro VO · Edit</span>
       </div>
 
       <h1 class="mkt-hero__headline">
@@ -46,24 +45,20 @@ const isAr = locale === 'ar';
             />
             <div class="bio-author-info">
               <span class="bio-author-name">{t.siteName}</span>
-              <span class="bio-author-title">{isAr ? 'خبير تسويق وصانع محتوى' : 'Marketer & Content Creator'}</span>
+              <span class="bio-author-title">{isAr ? 'مسوق وكاتب محتوى' : 'Marketer & Copywriter'}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <p class="mkt-hero__sub">
-        {t.mktHeroSub}
-      </p>
-
       <div class="mkt-hero__actions">
-        <a href="#packages" class="btn btn--primary btn--lg">
-          <span>{t.mktExplorePackages}</span>
-          <span aria-hidden="true">↓</span>
-        </a>
-        <a href="#marketing-demo" class="btn btn--secondary btn--lg">
-          <span>{isAr ? 'شاهد ديمو العمل' : 'Watch Demo'}</span>
+        <a href="#marketing-demo" class="btn btn--primary btn--lg">
+          <span>{isAr ? 'شاهد One-man crew Sample' : 'Watch One-man crew Sample'}</span>
           <span aria-hidden="true">🎬</span>
+        </a>
+        <a href="#contact" class="btn btn--secondary btn--lg">
+          <span>{t.ctaTalk}</span>
+          <span aria-hidden="true">💬</span>
         </a>
       </div>
     </div>
@@ -72,48 +67,23 @@ const isAr = locale === 'ar';
     <div class="mkt-hero__card-box">
       <div class="mkt-engine-card">
         <div class="engine-header">
-          <span class="engine-badge">{isAr ? 'منظومة الإنتاج الموحدة' : 'Unified Production Engine'}</span>
+          <span class="engine-badge">One-man crew</span>
           <span class="engine-dot" aria-hidden="true"></span>
         </div>
 
-        <div class="engine-pipeline">
-          <div class="pipeline-node">
-            <span class="node-icon">✍️</span>
-            <div>
-              <h4 class="node-title">{isAr ? 'الإسكريبت البيعي' : 'Conversion Copy'}</h4>
-              <p class="node-desc">{isAr ? 'هوك قوي يوقف التمرير وسيناريو يقنع العميل' : 'Psychological hook & sales storytelling'}</p>
-            </div>
+        <div class="crew-skills-list">
+          <div class="crew-skill-item">
+            <span class="crew-skill-icon">✍️</span>
+            <span class="crew-skill-title">{isAr ? 'الكتابة الإبداعية' : 'Creative Copywriting'}</span>
           </div>
-          <div class="pipeline-connector" aria-hidden="true"></div>
-          <div class="pipeline-node">
-            <span class="node-icon">🎥</span>
-            <div>
-              <h4 class="node-title">{isAr ? 'تصوير 4K وإضاءة سينمائية' : '4K Cinema Shooting'}</h4>
-              <p class="node-desc">{isAr ? 'معدات متنقلة، عدسات برايم، ومايكات وايرلس' : 'Mobile cinema rig & wireless audio'}</p>
-            </div>
+          <div class="crew-skill-item">
+            <span class="crew-skill-icon">🎥</span>
+            <span class="crew-skill-title">{isAr ? 'معرفة بمبادئ التصوير' : 'Cinematography Fundamentals'}</span>
           </div>
-          <div class="pipeline-connector" aria-hidden="true"></div>
-          <div class="pipeline-node">
-            <span class="node-icon">🎙️</span>
-            <div>
-              <h4 class="node-title">{isAr ? 'تعليق صوتي استوديو مدمج' : 'Native Studio Voice'}</h4>
-              <p class="node-desc">{isAr ? 'بدون انتظار مؤدي خارجي؛ التسجيل الفوري بصوتي' : 'Zero vendor lag; recorded in-house'}</p>
-            </div>
+          <div class="crew-skill-item">
+            <span class="crew-skill-icon">⚡</span>
+            <span class="crew-skill-title">{isAr ? 'معرفة بأساسيات المونتاج' : 'Video Editing Fundamentals'}</span>
           </div>
-          <div class="pipeline-connector" aria-hidden="true"></div>
-          <div class="pipeline-node">
-            <span class="node-icon">⚡</span>
-            <div>
-              <h4 class="node-title">{isAr ? 'مونتاج إيقاعي جاهز للإعلان' : 'Dynamic Edit & Ads'}</h4>
-              <p class="node-desc">{isAr ? 'مؤثرات، ترند، ألوان سينمائية، وتنسيق منصات' : 'Sound design, kinetic text, Meta specs'}</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="engine-footer">
-          <span class="result-highlight">
-            {isAr ? 'النتيجة: إعلانك يخرج بأعلى جودة في ربع الوقت المعتاد.' : 'Result: Broadcast quality delivered in 1/4 the typical agency timeline.'}
-          </span>
         </div>
       </div>
     </div>
@@ -284,62 +254,36 @@ const isAr = locale === 'ar';
     box-shadow: 0 0 10px var(--secondary);
   }
 
-  .engine-pipeline {
+  .crew-skills-list {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.85rem;
   }
 
-  .pipeline-node {
+  .crew-skill-item {
     display: flex;
-    align-items: flex-start;
-    gap: 1rem;
+    align-items: center;
+    gap: 1.15rem;
     background-color: var(--bg-soft);
-    padding: 1rem 1.15rem;
+    padding: 1.15rem 1.25rem;
     border-radius: var(--radius-md);
     border: 1px solid var(--rule);
+    transition: transform var(--transition-fast), border-color var(--transition-fast);
   }
 
-  .node-icon {
+  .crew-skill-item:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+  }
+
+  .crew-skill-icon {
     font-size: 1.5rem;
     flex-shrink: 0;
   }
 
-  .node-title {
-    font-size: 1rem;
+  .crew-skill-title {
+    font-size: 1.05rem;
     font-weight: 700;
     color: var(--ink);
-    margin-bottom: 0.2rem;
-  }
-
-  .node-desc {
-    font-size: 0.84rem;
-    color: var(--ink-muted);
-    line-height: 1.4;
-    margin: 0;
-  }
-
-  .pipeline-connector {
-    width: 2px;
-    height: 12px;
-    background-color: var(--accent);
-    margin-inline: 1.75rem;
-  }
-
-  .engine-footer {
-    margin-top: 1.75rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--rule);
-    text-align: center;
-  }
-
-  .result-highlight {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--brand-primary);
-  }
-
-  html[data-theme='dark'] .result-highlight {
-    color: var(--secondary);
   }
 </style>

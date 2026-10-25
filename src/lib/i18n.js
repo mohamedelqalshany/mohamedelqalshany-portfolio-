@@ -35,7 +35,7 @@ export const translations = {
     gatewayCardVOAction: 'استمع لأعمال التعليق الصوتي ←',
     gatewayCardMarketingTitle: 'التسويق',
     gatewayCardMarketingSubtitle: 'Marketing',
-    gatewayCardMarketingDesc: 'استراتيجيات تسويقية، صناعة محتوى بيعي، وتصوير وإخراج إعلانات تجلب عملاء حقيقيين.',
+    gatewayCardMarketingDesc: 'كتابة محتوى وإعلانات قائمة على استراتيجيات تسويقية لتحويل المتابعين إلى عملاء فعليين',
     gatewayCardMarketingAction: 'استكشف خدمات التسويق وصناعة الإعلانات ←',
 
     // Voice Over Hub
@@ -66,14 +66,14 @@ export const translations = {
     whyVo1Desc: 'دراستي للإعلام والتسويق تعني أنني لا أقرأ مجرد حروف؛ بل أحلل المشاعر والهدف التجاري وراء كل جملة.',
     whyVo2Title: 'مرونة صوتية وتنوّع في طبقات الأداء',
     whyVo2Desc: 'من النبرة الدافئة الهادئة، إلى الحماس الشبابي، والوقار الوثائقي، إلى الشخصيات الدرامية التي تعلق بالذاكرة.',
-    whyVo3Title: 'عزل استوديو عالي النقاء وسرعة تسليم',
-    whyVo3Desc: 'تسجيل احترافي معزول ومُعالج بأعلى معايير الهندسة الصوتية مع التزام تام بالمواعيد والتعديلات المطلوبة.',
+    whyVo3Title: 'سرعة التسليم وجودة عالية',
+    whyVo3Desc: 'التسليم في الوقت المتفق عليه، بجودة عالية وبالصيغة المناسبة',
 
     // Marketing Hub
     mktHeroBadge: 'تسويق · صناعة محتوى',
-    mktHeroHeadline: 'فريق إنتاج وتسويق كامل في شخص واحد. بدون تشتيت الوكالات.',
+    mktHeroHeadline: 'فريق إنتاج وتسويق كامل في شخص واحد.',
     marketingBio: 'أمتلك موهبة صياغة قصص تعلق في الأذهان، مدعومة بخلفية أكاديمية راسخة ونجاح عملي مثبت في المبيعات. منهجي يضمن وضع كل كلمة بموقع استراتيجي مدروس لجذب الانتباه، والتأثير في اتخاذ القرار، وتسريع نمو الأرباح.',
-    mktHeroSub: 'أغلب الشركات تضيع ميزانيتها بين كاتب إعلانات، ومصور، ومؤدي صوتي، ومونتير لا يتفاهمون. أنا أجمع هذه الحلقات كاملة: أكتب الإسكريبت البيعي، أصوّره بأعلى جودة، أسجل التعليق الصوتي بنفسي، وأنتجه للنشر والإعلانات الممولة.',
+    mktHeroSub: '',
     mktExplorePackages: 'استكشف الباقات والخدمات',
     mktWatchReel: 'شاهد أسلوب العمل',
 
@@ -81,7 +81,7 @@ export const translations = {
     pillar1Title: 'كتابة الإعلانات والإسكريبتات البيعية',
     pillar1Desc: 'صياغة نصوص إعلانية مبنية على دراسة الجمهور، ومخاطبة دوافع الشراء، وصناعة هوك قوي يوقف التمرير في أول ثانيتين.',
     pillar2Title: 'تصوير وإخراج متكامل (One-Man Crew)',
-    pillar2Desc: 'تصوير عملي عالي الدقة في موقعك، بزوايا تُبرز تفاصيل منتجك وصوت واضح للمقابلات. مرونة كاملة في الحركة بدون تعطيل لمكان عملك، وبدون تكاليف الفرق الكبيرة.',
+    pillar2Desc: 'تصوير عالي الدقة ، يُبرز تفاصيل منتجك',
     pillar3Title: 'مونتاج سريع وتعليق صوتي فوري',
     pillar3Desc: 'دمج المؤثرات البصرية، وتصحيح الألوان، مع بصمتي الصوتية في التعليق، لتخرج لك المادة جاهزة تماماً للحملات الإعلانية.',
 
@@ -107,7 +107,7 @@ export const translations = {
     cred2Title: 'الأكاديمية العربية للعلوم والتكنولوجيا (AASTMT)',
     cred2Sub: 'دبلوم التسويق الرقمي وتخطيط الحملات (2019)',
     cred3Title: 'دراسة الإعلام وتدريب الصوت التخصصي',
-    cred3Sub: 'كورسات متقدمة في هندسة الصوت والأداء الدرامي والإذاعي (Edlal, Udemy, ورش متخصصة)',
+    cred3Sub: 'بكالوريوس إعلام،<br/>كورسات متقدمة في فنون التعليق الصوتي والأداء الإذاعي<br/>التعليم المستمر من خلال منصات: (Edlal, Udemy, ورش متخصصة)',
 
     // Contact
     contactEyebrow: 'جاهز نبدأ؟',
@@ -153,7 +153,7 @@ export const translations = {
     gatewayCardVOAction: 'Enter Voice Over Studio →',
     gatewayCardMarketingTitle: 'Marketing',
     gatewayCardMarketingSubtitle: 'Marketing Hub',
-    gatewayCardMarketingDesc: 'Conversion marketing strategies, persuasive ad scripting, and high-impact campaigns built to drive sales.',
+    gatewayCardMarketingDesc: 'Content creation and ad copywriting grounded in strategic marketing that turns followers into paying customers.',
     gatewayCardMarketingAction: 'Enter Marketing Hub →',
 
     // Voice Over Hub
@@ -184,14 +184,14 @@ export const translations = {
     whyVo1Desc: 'My background in Media and Marketing ensures I do not simply read words — I dissect the emotional trigger and commercial goal behind every sentence.',
     whyVo2Title: 'Dynamic Range & Vocal Color',
     whyVo2Desc: 'From warm, intimate storytelling to energetic youth anthems, corporate gravitas, and memorable character voice acting.',
-    whyVo3Title: 'Studio-Grade Acoustics & Rapid Turnaround',
-    whyVo3Desc: 'Broadcast-quality isolated recording, professional audio processing, and reliable SLA with revisions included.',
+    whyVo3Title: 'Fast Turnaround & High Quality',
+    whyVo3Desc: 'Delivered reliably within the agreed schedule, with pristine quality and optimal specifications.',
 
     // Marketing Hub
     mktHeroBadge: 'Marketing · Content Creation',
     mktHeroHeadline: 'A complete marketing and video production team in one person.',
     marketingBio: 'I have a talent for crafting stories that stick, backed by a solid academic foundation and proven success in sales. My approach ensures that every word is strategically positioned to capture attention, influence decision-making, and accelerate revenue growth.',
-    mktHeroSub: 'Most businesses waste time and budget juggling disconnected copywriters, videographers, voice actors, and editors who rarely align. I bridge the entire pipeline: writing conversion hooks, filming in 4K, voicing the narrative, and editing dynamic assets ready to generate sales.',
+    mktHeroSub: '',
     mktExplorePackages: 'Explore Services & Packages',
     mktWatchReel: 'See Production Workflow',
 
@@ -199,7 +199,7 @@ export const translations = {
     pillar1Title: 'Conversion Copywriting & Scripting',
     pillar1Desc: 'Direct-response scripts based on customer sentiment analysis, objection handling, and involuntary hooks designed to stop the scroll.',
     pillar2Title: 'One-Man Crew 4K Production',
-    pillar2Desc: 'High-definition on-site filming capturing crisp product details and clean audio for interviews. Total operational agility at your location without bloated crew overhead.',
+    pillar2Desc: 'High-definition cinematography highlighting your product details.',
     pillar3Title: 'Dynamic Video Editing & Native VO',
     pillar3Desc: 'Seamless color grading, kinetic typography, and immediate studio voiceover integration for ready-to-run Meta & TikTok ad campaigns.',
 
@@ -225,7 +225,7 @@ export const translations = {
     cred2Title: 'Arab Academy for Science & Technology (AASTMT)',
     cred2Sub: 'Professional Digital Marketing & Campaign Strategy (2019)',
     cred3Title: 'Media Studies & Voice Mastery Coaching',
-    cred3Sub: 'Advanced audio engineering, dramatic acting, and voice over workshops (Edlal, Udemy, specialized studios)',
+    cred3Sub: 'Bachelor of Mass Communication,<br/>Advanced Voice Over & Radio Performance Coaching<br/>Continuous learning via: (Edlal, Udemy, specialized workshops)',
 
     // Contact
     contactEyebrow: 'Ready to Create?',
