@@ -12,7 +12,7 @@ interface Props {
   title?: string;
   description?: string;
   locale?: 'ar' | 'en';
-  currentTrack?: 'gateway' | 'vo' | 'marketing';
+  currentTrack?: 'gateway' | 'vo' | 'marketing' | 'digilians';
 }
 
 const { 
@@ -29,6 +29,7 @@ const dir = isAr ? 'rtl' : 'ltr';
 const pageTitle = title || (
   currentTrack === 'vo' ? t.siteTitleVO :
   currentTrack === 'marketing' ? t.siteTitleMarketing :
+  currentTrack === 'digilians' ? (isAr ? 'ديجيليانز — محمد محمد محمد القلشاني' : 'Digilians — Mohamed Mohamed Mohamed El-Qalshany') :
   `${t.siteName} — ${isAr ? 'مؤدي صوتي وتسويق متكامل' : 'Voice Over & Marketing Engine'}`
 );
 

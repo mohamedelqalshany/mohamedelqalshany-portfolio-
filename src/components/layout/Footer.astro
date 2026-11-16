@@ -29,7 +29,7 @@ const isAr = locale === 'ar';
             : 'A unique fusion of broadcast voice acting, conversion copywriting, and agile full-cycle video production.'}
         </p>
         <div class="footer-badge-list">
-          <span class="badge badge--forest">Digilians 2026</span>
+          <a href={isAr ? '/digilians' : '/en/digilians'} class="badge badge--forest" style="text-decoration: none;">🚀 Digilians 2026</a>
           <span class="badge badge--secondary">AASTMT 2019</span>
         </div>
       </div>
@@ -38,6 +38,7 @@ const isAr = locale === 'ar';
       <div class="site-footer__col">
         <h4 class="footer-heading">{isAr ? 'المسارات' : 'Tracks'}</h4>
         <ul class="footer-links">
+          <li><a href={isAr ? '/digilians' : '/en/digilians'}>🚀 Digilians</a></li>
           <li><a href={isAr ? '/vo' : '/en/vo'}>🎙️ {t.voiceOverTrack}</a></li>
           <li><a href={isAr ? '/marketing' : '/en/marketing'}>🎬 {t.marketingTrack}</a></li>
           <li><a href={isAr ? '/' : '/en'}>🚪 {t.gatewayIntro}</a></li>

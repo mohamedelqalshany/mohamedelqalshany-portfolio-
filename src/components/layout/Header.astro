@@ -4,7 +4,7 @@ import ThemeToggle from '../common/ThemeToggle.astro';
 
 interface Props {
   locale?: 'ar' | 'en';
-  currentTrack?: 'gateway' | 'vo' | 'marketing';
+  currentTrack?: 'gateway' | 'vo' | 'marketing' | 'digilians';
 }
 
 const { locale = 'ar', currentTrack = 'gateway' } = Astro.props;
@@ -21,6 +21,8 @@ if (currentTrack === 'vo') {
   altLangHref = isAr ? '/en/vo' : '/vo';
 } else if (currentTrack === 'marketing') {
   altLangHref = isAr ? '/en/marketing' : '/marketing';
+} else if (currentTrack === 'digilians') {
+  altLangHref = isAr ? '/en/digilians' : '/digilians';
 }
 ---
 
@@ -32,7 +34,7 @@ if (currentTrack === 'vo') {
       <div class="brand__text">
         <span class="brand__name">{t.siteName}</span>
         <span class="brand__subtitle">
-          {currentTrack === 'vo' ? t.voiceOverTrack : currentTrack === 'marketing' ? t.marketingTrack : (isAr ? 'الصوت والتسويق' : 'Voice & Marketing')}
+          {currentTrack === 'vo' ? t.voiceOverTrack : currentTrack === 'marketing' ? t.marketingTrack : currentTrack === 'digilians' ? 'Digilians' : (isAr ? 'الصوت والتسويق' : 'Voice & Marketing')}
         </span>
       </div>
       <span class="header-live-badge" title={isAr ? "متاح لاستقبال وتسجيل المشاريع الجديدة" : "Studio active for bookings"}>
@@ -42,7 +44,14 @@ if (currentTrack === 'vo') {
     </a>
 
     <!-- Dual Mode Switcher (Pill Switcher) -->
-    {currentTrack !== 'gateway' && (
+    {currentTrack === 'digilians' ? (
+      <div class="track-switcher digilians-badge-header" role="navigation" aria-label="Digilians Track">
+        <span class="track-switcher__btn is-active">
+          <span class="track-icon">🚀</span>
+          <span>Digilians 2026</span>
+        </span>
+      </div>
+    ) : currentTrack !== 'gateway' && (
       <div class="track-switcher" role="navigation" aria-label="Portfolio Track Switcher">
         <a 
           href={voHref} 
@@ -68,8 +77,17 @@ if (currentTrack === 'vo') {
       <ul class="site-nav__list">
         {currentTrack === 'gateway' ? (
           <>
+            <li><a href={isAr ? '/digilians' : '/en/digilians'} class="site-nav__link" style="color: var(--accent); font-weight: 700;">🚀 Digilians</a></li>
             <li><a href={voHref} class="site-nav__link">🎙️ {t.voiceOverTrack}</a></li>
             <li><a href={mktHref} class="site-nav__link">🎬 {t.marketingTrack}</a></li>
+          </>
+        ) : currentTrack === 'digilians' ? (
+          <>
+            <li><a href="#profile" class="site-nav__link">{isAr ? 'الملف التعريفي' : 'Profile'}</a></li>
+            <li><a href="#cv" class="site-nav__link">{isAr ? 'السيرة الذاتية' : 'CV'}</a></li>
+            <li><a href="#linkedin" class="site-nav__link">{isAr ? 'لينكد إن' : 'LinkedIn'}</a></li>
+            <li><a href="#infographic" class="site-nav__link">{isAr ? 'الإنفوجرافيك' : 'Infographic'}</a></li>
+            <li><a href="#contact" class="site-nav__link">{t.navContact}</a></li>
           </>
         ) : currentTrack === 'vo' ? (
           <>
@@ -130,8 +148,19 @@ if (currentTrack === 'vo') {
       <ul class="mobile-nav__list">
         {currentTrack === 'gateway' ? (
           <>
+            <li><a href={isAr ? '/digilians' : '/en/digilians'} class="mobile-nav__link" style="color: var(--accent); font-weight: 700;">🚀 Digilians 2026</a></li>
             <li><a href={voHref} class="mobile-nav__link">🎙️ {t.voiceOverTrack}</a></li>
             <li><a href={mktHref} class="mobile-nav__link">🎬 {t.marketingTrack}</a></li>
+          </>
+        ) : currentTrack === 'digilians' ? (
+          <>
+            <li><a href="#profile" class="mobile-nav__link">{isAr ? 'الملف التعريفي' : 'Profile'}</a></li>
+            <li><a href="#cv" class="mobile-nav__link">{isAr ? 'السيرة الذاتية' : 'CV'}</a></li>
+            <li><a href="#linkedin" class="mobile-nav__link">{isAr ? 'لينكد إن' : 'LinkedIn'}</a></li>
+            <li><a href="#infographic" class="mobile-nav__link">{isAr ? 'الإنفوجرافيك' : 'Infographic'}</a></li>
+            <li><a href={voHref} class="mobile-nav__link">🎙️ {t.voiceOverTrack}</a></li>
+            <li><a href={mktHref} class="mobile-nav__link">🎬 {t.marketingTrack}</a></li>
+            <li><a href="#contact" class="mobile-nav__link">{t.navContact}</a></li>
           </>
         ) : currentTrack === 'vo' ? (
           <>
