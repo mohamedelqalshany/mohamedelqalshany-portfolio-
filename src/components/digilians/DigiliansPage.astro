@@ -45,16 +45,54 @@ const infographicDrive = 'https://drive.google.com/file/d/1QKdIMm0JOaS3a7V74cTn6
   <!-- Action Buttons -->
   <div class="digi-actions">
     <a href={cvDrive} target="_blank" rel="noopener noreferrer" class="digi-btn">
-      <span>View my CV</span>
-      <span>📄</span>
+      <span class="digi-btn__icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+          <polyline points="14 2 14 8 20 8"></polyline>
+          <line x1="16" y1="13" x2="8" y2="13"></line>
+          <line x1="16" y1="17" x2="8" y2="17"></line>
+          <polyline points="10 9 9 9 8 9"></polyline>
+        </svg>
+      </span>
+      <span class="digi-btn__text">View my CV</span>
+      <span class="digi-btn__arrow" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </span>
     </a>
+
     <a href={linkedInUrl} target="_blank" rel="noopener noreferrer" class="digi-btn">
-      <span>LinkedIn Profile</span>
-      <span>💼</span>
+      <span class="digi-btn__icon" aria-hidden="true">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9h2.79v8.37H6.46v-8.37M7.86 6.54a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26Z"/>
+        </svg>
+      </span>
+      <span class="digi-btn__text">LinkedIn Profile</span>
+      <span class="digi-btn__arrow" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </span>
     </a>
+
     <a href={infographicDrive} target="_blank" rel="noopener noreferrer" class="digi-btn">
-      <span>View Infographic</span>
-      <span>📊</span>
+      <span class="digi-btn__icon" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="20" x2="18" y2="10"></line>
+          <line x1="12" y1="20" x2="12" y2="4"></line>
+          <line x1="6" y1="20" x2="6" y2="14"></line>
+          <circle cx="18" cy="7" r="1.5" fill="currentColor"></circle>
+          <circle cx="12" cy="2.5" r="1.5" fill="currentColor"></circle>
+          <circle cx="6" cy="11.5" r="1.5" fill="currentColor"></circle>
+        </svg>
+      </span>
+      <span class="digi-btn__text">View Infographic</span>
+      <span class="digi-btn__arrow" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </span>
     </a>
   </div>
 </div>
@@ -103,24 +141,19 @@ const infographicDrive = 'https://drive.google.com/file/d/1QKdIMm0JOaS3a7V74cTn6
   .digi-name-badge {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    background: linear-gradient(135deg, #1a4731, #2d6a4f);
-    color: #d4af5a;
-    font-size: 1.05rem;
-    font-weight: 700;
-    padding: 0.75rem 1.75rem;
-    border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(26, 71, 49, 0.35), inset 0 2px 4px rgba(255,255,255,0.2);
-    text-align: center;
-    max-width: 420px;
-    width: 100%;
     justify-content: center;
-    transform: perspective(600px) rotateX(5deg);
-  }
-
-  .digi-name-icon {
+    background: linear-gradient(135deg, #1a4731 0%, #24573e 100%);
+    border: 1px solid rgba(212, 175, 90, 0.45);
+    color: #d4af5a;
     font-size: 1.1rem;
-    flex-shrink: 0;
+    font-weight: 700;
+    padding: 0.85rem 2rem;
+    border-radius: 999px;
+    box-shadow: 0 8px 24px rgba(26, 71, 49, 0.28), inset 0 1px 2px rgba(255, 255, 255, 0.15);
+    text-align: center;
+    max-width: 440px;
+    width: 100%;
+    letter-spacing: 0.015em;
   }
 
   .digi-name-text {
@@ -131,40 +164,35 @@ const infographicDrive = 'https://drive.google.com/file/d/1QKdIMm0JOaS3a7V74cTn6
   .digi-title-badge {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    background: linear-gradient(135deg, #2d6a4f, #40916c);
-    color: #fff;
-    padding: 0.75rem 1.75rem;
-    border-radius: 999px;
-    box-shadow: 0 8px 24px rgba(26, 71, 49, 0.35), inset 0 2px 4px rgba(255,255,255,0.2);
-    max-width: 380px;
-    width: 100%;
     justify-content: center;
-    transform: perspective(600px) rotateX(5deg);
-  }
-
-  .digi-title-icon {
-    font-size: 1.1rem;
-    flex-shrink: 0;
+    background: linear-gradient(135deg, #1e4f37 0%, #2d6a4f 100%);
+    border: 1px solid rgba(212, 175, 90, 0.3);
+    padding: 0.8rem 1.8rem;
+    border-radius: 999px;
+    box-shadow: 0 6px 20px rgba(26, 71, 49, 0.22);
+    max-width: 400px;
+    width: 100%;
   }
 
   .digi-title-text {
     display: flex;
     flex-direction: column;
+    align-items: center;
     text-align: center;
+    gap: 0.2rem;
   }
 
   .digi-title-text strong {
     color: #d4af5a;
-    font-size: 1rem;
+    font-size: 1.05rem;
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.25;
   }
 
   .digi-title-text span {
-    font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.85);
-    margin-top: 0.1rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+    font-weight: 500;
   }
 
   /* Action Buttons */
@@ -173,51 +201,113 @@ const infographicDrive = 'https://drive.google.com/file/d/1QKdIMm0JOaS3a7V74cTn6
     flex-direction: column;
     gap: 0.9rem;
     width: 100%;
-    max-width: 320px;
+    max-width: 360px;
     margin-top: 0.5rem;
   }
 
   .digi-btn {
     display: flex;
     align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    background: linear-gradient(135deg, #1a4731 0%, #2d6a4f 100%);
-    color: #d4af5a;
-    font-size: 1rem;
-    font-weight: 700;
-    padding: 0.85rem 1.5rem;
+    direction: ltr;
+    padding: 0.75rem 1.25rem;
+    background: linear-gradient(135deg, #1a4731 0%, #143826 100%);
+    border: 1px solid rgba(212, 175, 90, 0.45);
     border-radius: 999px;
     text-decoration: none;
-    box-shadow: 0 4px 16px rgba(26, 71, 49, 0.22);
-    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-    letter-spacing: 0.01em;
+    box-shadow: 0 4px 18px rgba(26, 71, 49, 0.22);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
 
   .digi-btn:hover {
-    background: linear-gradient(135deg, #1a4731 0%, #2d6a4f 100%);
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(26, 71, 49, 0.32);
+    border-color: rgba(212, 175, 90, 0.9);
+    box-shadow: 0 8px 24px rgba(26, 71, 49, 0.32), 0 0 16px rgba(212, 175, 90, 0.25);
+    background: linear-gradient(135deg, #1f543a 0%, #1a4731 100%);
+  }
+
+  .digi-btn:hover .digi-btn__arrow {
+    transform: translateX(3px);
+    color: #d4af5a;
   }
 
   .digi-btn:active {
     transform: translateY(0);
   }
 
+  .digi-btn__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(212, 175, 90, 0.12);
+    border: 1px solid rgba(212, 175, 90, 0.25);
+    color: #d4af5a;
+    flex-shrink: 0;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+
+  .digi-btn:hover .digi-btn__icon {
+    background: rgba(212, 175, 90, 0.22);
+    transform: scale(1.05);
+  }
+
+  .digi-btn__text {
+    flex: 1;
+    text-align: center;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #d4af5a;
+    letter-spacing: 0.02em;
+    padding: 0 0.5rem;
+  }
+
+  .digi-btn__arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    color: rgba(212, 175, 90, 0.7);
+    flex-shrink: 0;
+    transition: transform 0.2s ease, color 0.2s ease;
+  }
+
   /* Mobile */
   @media (max-width: 480px) {
     .digi-name-badge {
-      font-size: 0.9rem;
-      padding: 0.65rem 1.25rem;
+      font-size: 0.95rem;
+      padding: 0.75rem 1.25rem;
     }
 
     .digi-title-badge {
-      padding: 0.65rem 1.25rem;
+      padding: 0.7rem 1.25rem;
+    }
+
+    .digi-title-text strong {
+      font-size: 0.95rem;
+    }
+
+    .digi-title-text span {
+      font-size: 0.8rem;
     }
 
     .digi-avatar-wrap {
       width: 150px;
       height: 150px;
+    }
+
+    .digi-actions {
+      max-width: 320px;
+    }
+
+    .digi-btn {
+      padding: 0.65rem 1rem;
+    }
+
+    .digi-btn__text {
+      font-size: 0.95rem;
     }
   }
 </style>
